@@ -1,0 +1,25 @@
+{
+  "name": "@leafage/config",
+  "version": "1.2.0",
+  "description": "The React Server Side Render Framework",
+  "author": "mingdev <mingdev@163.com>",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "babel src --out-dir dist"
+  },
+  "dependencies": {
+    "c12": "^3.1.0",
+    "lodash": "^4.17.21",
+    "std-env": "^3.9.0"
+  },
+  "homepage": "https://github.com/leafage-team/leafage",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "webpack",
+    "react",
+    "leafage"
+  ]
+}

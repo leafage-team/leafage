@@ -1,0 +1,32 @@
+{
+  "name": "leafage-framework",
+  "private": true,
+  "version": "1.2.0",
+  "description": "The React Server Side Render Framework",
+  "author": "mingdev <mingdev@163.com>",
+  "license": "MIT",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "cross-env NODE_ENV=production pnpm -r --filter=./packages/* run build",
+    "lint-staged": "lint-staged",
+    "lint:eslint": "eslint --ext .js,.jsx packages"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.35.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "lint-staged": "^13.1.2",
+    "pre-commit": "^1.2.2"
+  },
+  "homepage": "https://github.com/leafage-team/leafage",
+  "pre-commit": "lint-staged",
+  "packageManager": "pnpm@9.6.0",
+  "engines": {
+    "node": ">= 22.0.0",
+    "pnpm": ">= 9.6.0"
+  }
+}

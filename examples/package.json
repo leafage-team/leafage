@@ -1,0 +1,13 @@
+{
+  "name": "@leafage/examples",
+  "version": "1.2.0",
+  "description": "The React Server Side Render Framework",
+  "author": "mingdev <mingdev@163.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "node ./test.js"
+  },
+  "dependencies": {
+    "@leafage/config": "workspace:*"
+  }
+}
