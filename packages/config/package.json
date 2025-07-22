@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "./dist/index.js",
   "scripts": {
-    "build": "babel src --out-dir dist"
+    "build": "rollup --config rollup.config.js --bundleConfigAsCjs"
   },
   "dependencies": {
     "c12": "^3.1.0",

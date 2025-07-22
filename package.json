@@ -9,18 +9,23 @@
     "preinstall": "npx only-allow pnpm",
     "build": "cross-env NODE_ENV=production pnpm -r --filter=./packages/* run build",
     "lint-staged": "lint-staged",
-    "lint:eslint": "eslint --ext .js,.jsx packages"
+    "lint:eslint": "eslint --ext .js,.jsx packages examples"
   },
   "devDependencies": {
-    "@babel/cli": "^7.21.0",
-    "@babel/core": "^7.21.0",
-    "@babel/preset-env": "^7.20.2",
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.35.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
     "lint-staged": "^13.1.2",
-    "pre-commit": "^1.2.2"
+    "pre-commit": "^1.2.2",
+    "rollup": "^4.45.1",
+    "rollup-plugin-node-externals": "^8.0.1"
   },
   "homepage": "https://github.com/leafage-team/leafage",
   "pre-commit": "lint-staged",
