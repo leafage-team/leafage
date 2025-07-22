@@ -6,10 +6,15 @@ import json from '@rollup/plugin-json';
 import { nodeExternals } from 'rollup-plugin-node-externals';
 
 export default defineConfig({
-  input: './src/index.js',
+  input: [
+    './src/App.jsx',
+    './src/Document.jsx',
+    './src/Error.jsx',
+    './src/RenderJudge.jsx',
+  ],
   output: {
     dir: 'dist',
-    format: 'cjs',
+    format: 'esm',
   },
   plugins: [
     // 支持第三方模块
@@ -22,6 +27,7 @@ export default defineConfig({
     babel({
       presets: [
         '@babel/preset-env',
+        '@babel/preset-react',
       ],
     }),
     // json
