@@ -1,5 +1,5 @@
 import React from 'react';
-import devalue from 'devalue';
+import { stringify } from 'devalue';
 import RenderJudge from './RenderJudge';
 
 const Document = ({ body, scripts, styles, props, helmet, context, id }) => (
@@ -22,7 +22,7 @@ const Document = ({ body, scripts, styles, props, helmet, context, id }) => (
           <script
             type="text/javascript"
             // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: `${context}=${devalue(props)}` }}
+            dangerouslySetInnerHTML={{ __html: `${context}=${stringify(props)}` }}
           />
         )}
       />

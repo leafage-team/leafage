@@ -1,5 +1,5 @@
 {
-  "name": "leafage-framework",
+  "name": "leafage-monorepo",
   "private": true,
   "version": "1.2.0",
   "description": "The React Server Side Render Framework",
@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "build": "cross-env NODE_ENV=production pnpm --filter './packages/*' build",
+    "build": "rollup --config rollup.config.js",
     "lint-staged": "lint-staged",
     "lint:eslint": "eslint --ext .js,.jsx packages examples"
   },
@@ -25,9 +25,12 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
+    "fast-glob": "^3.3.3",
     "lint-staged": "^13.1.2",
     "pre-commit": "^1.2.2",
+    "rimraf": "^6.0.1",
     "rollup": "^4.45.1",
+    "rollup-merge-config": "^0.0.12",
     "rollup-plugin-node-externals": "^8.0.1"
   },
   "homepage": "https://github.com/leafage-team/leafage",
