@@ -6,6 +6,7 @@ const { babel } = require('@rollup/plugin-babel');
 const { default: json } = require('@rollup/plugin-json');
 const { nodeExternals } = require('rollup-plugin-node-externals');
 const mergeFn = require('rollup-merge-config');
+const replace = require('@rollup/plugin-replace');
 
 const resolve = (...dir) => path.join(process.cwd(), ...dir);
 
@@ -35,6 +36,7 @@ const getRollupConfig = ({ packageDir, config, format } = {}) => {
         dir: resolveFn(format === 'cjs' ? 'dist' : `dist/${format || ''}`),
         format,
         preserveModules: true,
+        exports: 'named',
         banner: createBanner(packageDir),
       },
       plugins: [
@@ -55,6 +57,14 @@ const getRollupConfig = ({ packageDir, config, format } = {}) => {
           packagePath: resolveFn('package.json'),
           deps: true,
           devDeps: true,
+        }),
+        // 替换环境变量
+        replace({
+          values: {
+            'process.env.PACKAGE_NAME': JSON.stringify('leafage'),
+            'process.env.PACKAGE_VERSION': JSON.stringify(process.env.npm_package_version),
+          },
+          preventAssignment: true,
         }),
       ],
     }),
