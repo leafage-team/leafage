@@ -1,14 +1,29 @@
+import { join } from 'path';
 import { isDevelopment } from 'std-env';
+import dotEnv from 'dotenv-defaults';
+import { mergeProps } from '../utils';
+
+const root = process.cwd();
+const env = mergeProps(
+  process.env,
+  dotEnv.config({
+    path: join(root, `.env.${process.env.NODE_ENV}`),
+    encoding: 'utf8',
+    defaults: join(root, '.env'),
+  }).parsed,
+);
 
 export default {
   // 是否是开发环境
   dev: Boolean(isDevelopment),
+  // 环境
+  env,
   // 导入外部文件
   external: [],
   // 目录
   dir: {
     // 根目录
-    root: process.cwd(),
+    root,
     // 构建目录
     dist: 'dist',
     // 源码目录

@@ -7,7 +7,7 @@ import statuses from 'statuses';
  * @return {number}
  * @private
  */
-const getErrorStatusCode = (err) => {
+export const getErrorStatusCode = (err) => {
   // check err.status
   if (typeof err.status === 'number' && err.status >= 400 && err.status < 600) {
     return err.status;
@@ -17,10 +17,7 @@ const getErrorStatusCode = (err) => {
   if (typeof err.statusCode === 'number' && err.statusCode >= 400 && err.statusCode < 600) {
     return err.statusCode;
   }
-
-  return undefined;
 };
-
 /**
  * Get status code from response.
  *
@@ -28,7 +25,7 @@ const getErrorStatusCode = (err) => {
  * @return {number}
  * @private
  */
-const getResponseStatusCode = (res) => {
+export const getResponseStatusCode = (res) => {
   let status = res.statusCode;
 
   // default status code to 500 if outside valid range
@@ -38,7 +35,6 @@ const getResponseStatusCode = (res) => {
 
   return status;
 };
-
 /**
  * Get headers from Error object.
  *
@@ -46,7 +42,7 @@ const getResponseStatusCode = (res) => {
  * @return {object}
  * @private
  */
-const getErrorHeaders = (err) => {
+export const getErrorHeaders = (err) => {
   if (!err.headers || typeof err.headers !== 'object') {
     return undefined;
   }
@@ -61,7 +57,6 @@ const getErrorHeaders = (err) => {
 
   return headers;
 };
-
 /**
  * Determine if the response headers have been sent.
  *
@@ -69,12 +64,19 @@ const getErrorHeaders = (err) => {
  * @returns {boolean}
  * @private
  */
-const headersSent = (res) => (typeof res.headersSent !== 'boolean'
+export const headersSent = (res) => (typeof res.headersSent !== 'boolean'
   // eslint-disable-next-line no-underscore-dangle
   ? Boolean(res._header)
   : res.headersSent);
 
-export default (err, req, res) => {
+/**
+ * 处理HTTP响应错误，设置适当的状态码、消息和响应头
+ * @param {Error} err - 错误对象，如果没有错误则为undefined
+ * @param {Request} req - HTTP请求对象
+ * @param {Response} res - HTTP响应对象
+ * @returns {Object} 包含状态码和消息的对象
+ */
+export const handleErrorResponse = (err, req, res) => {
   let headers = {};
   let message;
   let status;

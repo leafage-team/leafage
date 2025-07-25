@@ -8,6 +8,6 @@
     "test": "node ./test.js"
   },
   "dependencies": {
-    "@leafage/config": "workspace:*"
+    "@leafage/toolkit": "workspace:*"
   }
 }

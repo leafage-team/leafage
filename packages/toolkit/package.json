@@ -1,5 +1,5 @@
 {
-  "name": "@leafage/config",
+  "name": "@leafage/toolkit",
   "version": "1.2.0",
   "description": "The React Server Side Render Framework",
   "author": "mingdev <mingdev@163.com>",
@@ -8,6 +8,7 @@
   "module": "dist/esm/index.js",
   "dependencies": {
     "c12": "^3.1.0",
+    "dotenv-defaults": "^5.0.2",
     "lodash": "^4.17.21",
     "std-env": "^3.9.0"
   },

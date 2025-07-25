@@ -41,5 +41,6 @@ module.exports = {
     'no-tabs': 0,
     camelcase: 0,
     'default-param-last': 0,
+    'class-methods-use-this': 0,
   },
 };

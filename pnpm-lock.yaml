@@ -72,6 +72,12 @@ importers:
         specifier: ^8.0.1
         version: 8.0.1(rollup@4.45.1)
 
+  examples/config:
+    dependencies:
+      '@leafage/toolkit':
+        specifier: workspace:*
+        version: link:../../packages/toolkit
+
   packages/client:
     dependencies:
       devalue:
@@ -88,18 +94,6 @@ importers:
         specifier: ^18.2.0
         version: 18.3.1
 
-  packages/config:
-    dependencies:
-      c12:
-        specifier: ^3.1.0
-        version: 3.1.0
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
-      std-env:
-        specifier: ^3.9.0
-        version: 3.9.0
-
   packages/server:
     dependencies:
       express:
@@ -108,6 +102,21 @@ importers:
       statuses:
         specifier: ^2.0.2
         version: 2.0.2
+
+  packages/toolkit:
+    dependencies:
+      c12:
+        specifier: ^3.1.0
+        version: 3.1.0
+      dotenv-defaults:
+        specifier: ^5.0.2
+        version: 5.0.2
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      std-env:
+        specifier: ^3.9.0
+        version: 3.9.0
 
 packages:
 
@@ -1225,6 +1234,13 @@ packages:
   doctrine@3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
     engines: {node: '>=6.0.0'}
+
+  dotenv-defaults@5.0.2:
+    resolution: {integrity: sha512-y5z4NhblzwNk8XBIYVzjLcFkANK0rxbRDO6kGOfH9QrVYIGVEX52IqwSprKVsaLHM9pnNkCSxazZF/JPydDPvA==}
+
+  dotenv@14.3.2:
+    resolution: {integrity: sha512-vwEppIphpFdvaMCaHfCEv9IgwcxMljMw2TnAQBB4VWPvzXQLTb82jwmdOKzlEVUL3gNFT4l4TPKO+Bn+sqcrVQ==}
+    engines: {node: '>=12'}
 
   dotenv@16.6.1:
     resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
@@ -3840,6 +3856,12 @@ snapshots:
   doctrine@3.0.0:
     dependencies:
       esutils: 2.0.3
+
+  dotenv-defaults@5.0.2:
+    dependencies:
+      dotenv: 14.3.2
+
+  dotenv@14.3.2: {}
 
   dotenv@16.6.1: {}
 

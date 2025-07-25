@@ -1,6 +1,6 @@
-const config = require('@leafage/config');
+const toolkit = require('@leafage/toolkit');
 
-config.loadConfig({
+toolkit.loadConfig({
   onUpdate: (c) => {
     // eslint-disable-next-line no-console
     console.log('ccccc', c);
