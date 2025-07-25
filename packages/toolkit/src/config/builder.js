@@ -8,13 +8,13 @@ export default {
   // 文件名
   filenames: {
     // { isDev, isClient, isServer }
-    app: ({ isDev }) => (isDev ? '[name].js' : 'js/[contenthash:8].js'),
-    chunk: ({ isDev }) => (isDev ? '[name].js' : 'js/[contenthash:8].js'),
-    css: ({ isDev }) => (isDev ? '[name].css' : 'css/[contenthash:8].css'),
-    image: ({ isDev }) => (isDev ? '[path][name][ext]' : 'images/[contenthash:8][ext]'),
-    font: ({ isDev }) => (isDev ? '[path][name][ext]' : 'fonts/[contenthash:8][ext]'),
-    video: ({ isDev }) => (isDev ? '[path][name][ext]' : 'videos/[contenthash:8][ext]'),
-    cssModules: ({ isDev }) => (isDev ? '[name]__[local]--[hash:base64:5]' : '_[hash:base64:10]'),
+    app: ({ isDev }) => (isDev ? '[name].js' : 'js/js/[contenthash:10].js'),
+    chunk: ({ isDev }) => (isDev ? '[name].js' : 'js/js/[contenthash:10].js'),
+    css: ({ isDev }) => (isDev ? '[name].css' : 'css/[contenthash:10].css'),
+    image: ({ isDev }) => (isDev ? '[path][name][ext]' : 'image/[contenthash:10][ext]'),
+    font: ({ isDev }) => (isDev ? '[path][name][ext]' : 'font/[contenthash:10][ext]'),
+    media: ({ isDev }) => (isDev ? '[path][name][ext]' : 'media/[contenthash:10][ext]'),
+    cssModuleName: ({ isDev }) => (isDev ? '[name]__[local]--[hash:base64:8]' : '_[hash:base64:10]'),
   },
   // webpack watch配置
   watch: {},

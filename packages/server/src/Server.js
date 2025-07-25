@@ -1,6 +1,6 @@
 import path from 'path';
 import express from 'express';
-import { handleErrorResponse } from './common/error';
+import { handleErrorResponse } from '@/common/error';
 
 class Server {
   constructor(leafage) {

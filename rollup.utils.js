@@ -7,6 +7,7 @@ const { default: json } = require('@rollup/plugin-json');
 const { nodeExternals } = require('rollup-plugin-node-externals');
 const mergeFn = require('rollup-merge-config');
 const replace = require('@rollup/plugin-replace');
+const alias = require('@rollup/plugin-alias');
 
 const resolve = (...dir) => path.join(process.cwd(), ...dir);
 
@@ -65,6 +66,15 @@ const getRollupConfig = ({ packageDir, config, format } = {}) => {
             'process.env.PACKAGE_VERSION': JSON.stringify(process.env.npm_package_version),
           },
           preventAssignment: true,
+        }),
+        // 别名
+        alias({
+          entries: [
+            {
+              find: '@',
+              replacement: resolveFn('src'),
+            },
+          ],
         }),
       ],
     }),
