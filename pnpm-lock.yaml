@@ -97,6 +97,18 @@ importers:
         specifier: ^18.2.0
         version: 18.3.1
 
+  packages/leafage:
+    dependencies:
+      '@leafage/server':
+        specifier: workspace:*
+        version: link:../server
+      '@leafage/toolkit':
+        specifier: workspace:*
+        version: link:../toolkit
+      hookable:
+        specifier: ^5.5.3
+        version: 5.5.3
+
   packages/server:
     dependencies:
       express:
@@ -1614,6 +1626,9 @@ packages:
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
+
+  hookable@5.5.3:
+    resolution: {integrity: sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ==}
 
   http-errors@2.0.0:
     resolution: {integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==}
@@ -4420,6 +4435,8 @@ snapshots:
   hasown@2.0.2:
     dependencies:
       function-bind: 1.1.2
+
+  hookable@5.5.3: {}
 
   http-errors@2.0.0:
     dependencies:
