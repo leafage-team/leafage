@@ -4,3 +4,5 @@ export { loadConfig } from './config';
 export * as utils from './utils';
 // imports
 export * as imports from './imports';
+// context
+export { runWithContext, useContext } from './context';
