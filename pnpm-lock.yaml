@@ -35,9 +35,6 @@ importers:
       '@rollup/plugin-replace':
         specifier: ^6.0.2
         version: 6.0.2(rollup@4.45.1)
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
       eslint:
         specifier: ^8.35.0
         version: 8.57.1
@@ -80,6 +77,19 @@ importers:
       '@leafage/toolkit':
         specifier: workspace:*
         version: link:../../packages/toolkit
+
+  examples/simple:
+    dependencies:
+      '@leafage/toolkit':
+        specifier: workspace:*
+        version: link:../../packages/toolkit
+      leafage:
+        specifier: workspace:*
+        version: link:../../packages/leafage
+    devDependencies:
+      cross-env:
+        specifier: ^7.0.3
+        version: 7.0.3
 
   packages/client:
     dependencies:
