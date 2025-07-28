@@ -1,0 +1,17 @@
+{
+  "name": "@leafage/examples-simple",
+  "version": "1.0.0",
+  "description": "The React Server Side Render Framework",
+  "author": "mingdev <mingdev@163.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node ./bin/build.js"
+  },
+  "dependencies": {
+    "@leafage/toolkit": "workspace:*",
+    "leafage": "workspace:*"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
