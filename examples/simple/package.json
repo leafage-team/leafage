@@ -8,6 +8,8 @@
     "dev": "cross-env NODE_ENV=development node ./bin/build.js"
   },
   "dependencies": {
+    "@leafage/toolkit": "workspace:*",
+    "@leafage/webpack": "workspace:*",
     "leafage": "workspace:*"
   },
   "devDependencies": {
