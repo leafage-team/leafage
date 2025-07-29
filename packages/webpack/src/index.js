@@ -1,0 +1,1 @@
+export { getWebpackConfig } from './builder';

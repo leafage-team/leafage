@@ -42,5 +42,6 @@ module.exports = {
     camelcase: 0,
     'default-param-last': 0,
     'class-methods-use-this': 0,
+    'no-param-reassign': 0,
   },
 };

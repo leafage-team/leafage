@@ -1,0 +1,40 @@
+{
+  "name": "@leafage/webpack",
+  "version": "1.2.0",
+  "description": "The React Server Side Render Framework",
+  "author": "mingdev <mingdev@163.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
+  "dependencies": {
+    "@leafage/toolkit": "workspace:*",
+    "@pieced/font-config-webpack-plugin": "^1.1.18",
+    "@pieced/image-config-webpack-plugin": "^1.1.18",
+    "@pieced/js-config-webpack-plugin": "^1.1.18",
+    "@pieced/media-config-webpack-plugin": "^1.1.18",
+    "@pieced/style-config-webpack-plugin": "^1.1.18",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.6.1",
+    "consola": "^3.4.2",
+    "fast-glob": "^3.3.3",
+    "memory-fs": "^0.5.0",
+    "node-polyfill-webpack-plugin": "^4.1.0",
+    "pify": "^6.1.0",
+    "rimraf": "^6.0.1",
+    "webpack": "^5.101.0",
+    "webpack-dev-middleware": "^7.4.2",
+    "webpack-hot-middleware": "^2.26.1",
+    "webpack-manifest-plugin": "^5.0.1",
+    "webpack-merge": "^6.0.1",
+    "webpack-node-externals": "^3.0.0",
+    "webpackbar": "^7.0.0"
+  },
+  "homepage": "https://github.com/leafage-team/leafage",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "webpack",
+    "react",
+    "leafage"
+  ]
+}
