@@ -1,20 +1,9 @@
+import path from 'path';
 import { createHooks } from 'hookable';
-import { runWithContext, useContext, loadConfig } from '@leafage/toolkit';
+import { imports, runWithContext } from '@leafage/toolkit';
+import { importModule } from '@leafage/toolkit/src/imports';
 
-const dev = () => {
-  const context = useContext();
-
-  console.log('xxxx', context.version);
-};
-
-const initFn = async (context) => {
-  if (context.options.dev) {
-    dev();
-  }
-};
-
-export const createContext = async () => {
-  const options = await loadConfig();
+export const createContext = (options) => {
   const hooks = createHooks();
   // eslint-disable-next-line no-use-before-define
   const callHook = (...args) => runWithContext(context, () => hooks.callHook(...args));
@@ -26,8 +15,22 @@ export const createContext = async () => {
       hook: hooks.hook,
       callHook,
     },
-    ready: () => runWithContext(context, () => initFn(context)),
+    resolveModule: (id) => imports.resolveModule(id, {
+      paths: [
+        import.meta.url,
+        options.dir.root,
+        path.join(options.dir.root, 'node_modules'),
+      ],
+    }),
+    importModule: (id) => importModule(id, {
+      paths: [
+        import.meta.url,
+        options.dir.root,
+        path.join(options.dir.root, 'node_modules'),
+      ],
+    }),
     close: () => callHook('close', context),
+    runWithContext: (fn) => runWithContext(context, fn),
   };
 
   return context;

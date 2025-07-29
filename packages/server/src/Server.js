@@ -3,9 +3,9 @@ import express from 'express';
 import { handleErrorResponse } from '@/common/error';
 
 class Server {
-  constructor(leafage) {
-    this.leafage = leafage;
-    this.options = leafage.options;
+  constructor(context) {
+    this.context = context;
+    this.options = context.options;
 
     this.app = express()
       // 关闭版权
@@ -14,9 +14,9 @@ class Server {
       .set('trust proxy', 'loopback');
     this.devMiddleware = null;
 
-    if (leafage.options.dev) {
+    if (context.options.dev) {
       // devMiddleware placeholder
-      leafage.hook('builder:devMiddleware', (devMiddleware) => {
+      context.hook('builder:devMiddleware', (devMiddleware) => {
         this.devMiddleware = devMiddleware;
       });
       // disable etag
@@ -43,7 +43,7 @@ class Server {
         if (typeof row === 'string') {
           this.useMiddleware({
             route: `${row}`,
-            handle: express.static(this.leafage.resolve(row)),
+            handle: express.static(this.context.resolveModule(row)),
           });
         } else if (typeof row === 'object') {
           const { publicPath, directory, ...staticArgs } = row;
@@ -82,8 +82,8 @@ class Server {
   }
 
   requireMiddleware(entry) {
-    const entryPath = this.leafage.resolve(entry);
-    const middlewareFn = this.leafage.require(entryPath);
+    const entryPath = this.context.resolveModule(entry);
+    const middlewareFn = this.context.importModule(entryPath);
 
     return middlewareFn.default ?? middlewareFn;
   }
@@ -105,7 +105,7 @@ class Server {
     this.setupMiddleware();
 
     this.app.listen(this.options.server.port, this.options.server.host, () => {
-      this.leafage.callHook('server:start');
+      this.context.callHook('server:start');
     });
   }
 }

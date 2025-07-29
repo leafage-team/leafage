@@ -1,10 +1,10 @@
-const { createContext } = require('leafage');
+const { createContext, loadConfig } = require('leafage');
 
 const start = async () => {
-  const content = await createContext();
+  const options = loadConfig();
+  const context = await createContext(options);
 
-  console.log('contentcontentcontent', content.version);
-  await content.ready();
+  console.log('context', context.version);
 };
 
 start().catch(() => {
