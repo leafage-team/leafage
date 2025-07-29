@@ -6,3 +6,5 @@ export * as utils from './utils';
 export * as imports from './imports';
 // context
 export { runWithContext, useContext } from './context';
+// logger
+export { logger, useLogger } from './logger';

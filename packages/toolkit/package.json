@@ -8,6 +8,7 @@
   "module": "dist/esm/index.js",
   "dependencies": {
     "c12": "^3.1.0",
+    "consola": "^3.4.2",
     "dotenv-defaults": "^5.0.2",
     "exsolve": "^1.0.7",
     "lodash": "^4.17.21",
