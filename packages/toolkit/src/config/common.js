@@ -30,12 +30,14 @@ export default {
     src: 'src',
     // 页面目录
     page: 'pages',
+    // 获取页面文件的glob正则
+    pattern: '**/index.{js,jsx}',
     // 构建的静态资源目录
     static: 'static',
+    // 服务端代码存放位置
+    server: 'server',
     // manifest存放位置
     manifest: 'manifest.json',
-    // 服务端代码存放位置
-    server: 'server/views',
   },
   // 全局设置
   globals: {
