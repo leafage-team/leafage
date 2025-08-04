@@ -1,0 +1,36 @@
+{
+  "name": "@leafage/rspack",
+  "version": "1.2.0",
+  "description": "The React Server Side Render Framework",
+  "author": "mingdev <mingdev@163.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
+  "dependencies": {
+    "@leafage/client": "workspace:*",
+    "@leafage/toolkit": "workspace:*",
+    "@rspack/core": "^1.4.11",
+    "@rspack/plugin-react-refresh": "^1.4.3",
+    "css-loader": "^7.1.2",
+    "fast-glob": "^3.3.3",
+    "glob-base": "^0.3.0",
+    "pathe": "^2.0.3",
+    "react-refresh": "^0.17.0",
+    "sass": "^1.85.0",
+    "sass-loader": "^16.0.5",
+    "style-loader": "^4.0.0",
+    "webpack-dev-middleware": "^7.4.2",
+    "webpack-hot-middleware": "^2.26.1",
+    "webpack-manifest-plugin": "^5.0.1",
+    "webpack-node-externals": "^3.0.0",
+    "webpackbar": "^7.0.0"
+  },
+  "homepage": "https://github.com/leafage-team/leafage",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "react",
+    "leafage"
+  ]
+}
