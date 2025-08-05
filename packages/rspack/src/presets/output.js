@@ -9,7 +9,7 @@ export const outputPreset = (ctx) => {
   };
 
   if (ctx.isClient) {
-    result.path = resolve(ctx.options.dir.dist, ctx.options.dir.static);
+    result.path = resolve(ctx.options.dir.dist, ctx.options.dir.client);
     result.filename = getFileName(ctx, 'app');
     result.chunkFilename = getFileName(ctx, 'chunk');
   }

@@ -7,8 +7,8 @@ export const staticPreset = (app, context) => {
 
   if (!context.options.dev && !/^https?:\/\//.test(context.options.builder.publicPath)) {
     staticList.push({
-      path: `${context.options.builder.publicPath}${context.options.dir.static}`,
-      handle: path.join(context.options.dir.root, context.options.dir.dist, context.options.dir.static),
+      path: context.options.builder.publicPath,
+      handle: path.join(context.options.dir.root, context.options.dir.dist, context.options.dir.client),
     });
   }
 
