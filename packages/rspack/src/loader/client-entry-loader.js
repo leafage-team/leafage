@@ -13,7 +13,7 @@ export default function clientEntryLoader() {
     import App from '${app}';
     import Component from '${normalize(this.resourcePath)}';
 
-    const props = '${context.options.globals.context}';
+    const props = ${context.options.globals.context};
     const mainEl = document.getElementById('${context.options.globals.id}');
 
     createRoot(mainEl).render(React.createElement(App, { Component, props }));

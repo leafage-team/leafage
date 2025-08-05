@@ -6,7 +6,14 @@ import { getInnerComponentPath } from '@/common/utils';
 export const entryPreset = (ctx) => {
   const resolve = (...dir) => path.join(ctx.options.dir.root, ...dir);
   const entryFn = (id) => {
-    if (ctx.isClient) return `${id}?useClientEntryLoader`;
+    if (ctx.isClient) {
+      const entryList = [`${id}?useClientEntryLoader`];
+      if (ctx.isDev) {
+        // https://github.com/glenjamin/webpack-hot-middleware#config
+        entryList.unshift(require.resolve('webpack-hot-middleware/client'));
+      }
+      return entryList;
+    }
 
     return id;
   };
