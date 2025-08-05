@@ -45,3 +45,8 @@ export const getInnerComponentPath = (name, options) => {
   return componentPath || normalize(require.resolve(`@leafage/component/dist/${name}`));
 };
 export const createMfs = (options) => (options.dev ? memfs : fs);
+export const getBuildStatsError = (stats) => {
+  const error = new Error('Builder error');
+  error.stack = stats.toString('normal');
+  return error;
+};

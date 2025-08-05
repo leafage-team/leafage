@@ -4,7 +4,7 @@ import rm from 'rimraf';
 import pify from 'pify';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import { createMfs } from '@/common/utils';
+import { createMfs, getBuildStatsError } from '@/common/utils';
 import { client } from './config/client';
 import { server } from './config/server';
 
@@ -30,11 +30,6 @@ const webpackDev = async (compiler, context, mfs) => {
     next();
   });
 };
-const genStatsError = (stats) => {
-  const error = new Error('Builder error');
-  error.stack = stats.toString('normal');
-  return error;
-};
 const webpackCompile = async (compiler, context) => {
   if (context.options.dev) {
     if (compiler.name === 'client') {
@@ -45,7 +40,7 @@ const webpackCompile = async (compiler, context) => {
       return new Promise((resolve, reject) => {
         compiler.hooks.done.tap('bundle-dev', (stats) => {
           if (stats?.hasErrors()) {
-            reject(genStatsError(stats));
+            reject(getBuildStatsError(stats));
             return;
           }
 
@@ -58,8 +53,15 @@ const webpackCompile = async (compiler, context) => {
 
     if (compiler.name === 'server') {
       return new Promise((resolve, reject) => {
-        compiler.watch(context.options.builder.watch, (err) => {
-          if (err) return reject(err);
+        compiler.watch(context.options.builder.watch, (err, stats) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+          if (stats?.hasErrors()) {
+            reject(getBuildStatsError(stats));
+            return;
+          }
 
           resolve();
         });
@@ -71,7 +73,7 @@ const webpackCompile = async (compiler, context) => {
   const stats = await compiler.run();
 
   if (stats?.hasErrors()) {
-    throw genStatsError(stats);
+    throw getBuildStatsError(stats);
   }
 };
 const build = async (context) => {
