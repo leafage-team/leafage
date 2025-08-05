@@ -32,6 +32,6 @@ export const createServer = (context) => {
 
   return {
     app,
-    start: startServer,
+    start: () => startServer(app, context),
   };
 };

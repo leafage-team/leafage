@@ -1,1 +1,1 @@
-export { createServer } from './core';
+export { createServer } from './server';
