@@ -2,6 +2,7 @@ import { applyPresets, createContext } from '@/common/utils';
 import { basePreset } from '@/presets/base';
 import { entryPreset } from '@/presets/entry';
 import { outputPreset } from '@/presets/output';
+import { envPreset } from '@/presets/env';
 import { scriptPreset } from '@/presets/script';
 import { stylePreset } from '@/presets/style';
 import { assetPreset } from '@/presets/asset';
@@ -12,7 +13,7 @@ export const server = (options = {}) => {
   ctx.name = 'server';
   ctx.isServer = true;
 
-  applyPresets(ctx, [basePreset, entryPreset, outputPreset, scriptPreset, stylePreset, assetPreset, externalPreset]);
+  applyPresets(ctx, [basePreset, entryPreset, outputPreset, envPreset, scriptPreset, stylePreset, assetPreset, externalPreset]);
 
   return ctx.config;
 };

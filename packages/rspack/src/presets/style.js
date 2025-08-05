@@ -6,7 +6,7 @@ export const stylePreset = (ctx) => {
     const sourceMap = ctx.isDev && ctx.isClient;
 
     const cssLoader = {
-      loader: 'css-loader',
+      loader: require.resolve('css-loader'),
       options: {
         modules: {
           localIdentName: getFileName(ctx, 'cssModuleName'),
@@ -38,7 +38,7 @@ export const stylePreset = (ctx) => {
 
       if (ctx.isClient) {
         if (ctx.isDev) {
-          return ['style-loader'].concat(loaders);
+          return [require.resolve('style-loader')].concat(loaders);
         }
 
         return [rspack.CssExtractRspackPlugin.loader].concat(loaders);
