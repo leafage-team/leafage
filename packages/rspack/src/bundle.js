@@ -4,11 +4,11 @@ import rm from 'rimraf';
 import pify from 'pify';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import { mfs } from '@/common/fs';
+import { createMfs } from '@/common/utils';
 import { client } from './config/client';
 import { server } from './config/server';
 
-const webpackDev = async (compiler, context) => {
+const webpackDev = async (compiler, context, mfs) => {
   const devMiddleware = pify(
     webpackDevMiddleware(compiler, {
       stats: false,
@@ -38,6 +38,7 @@ const genStatsError = (stats) => {
 const webpackCompile = async (compiler, context) => {
   if (context.options.dev) {
     if (compiler.name === 'client') {
+      const mfs = createMfs(context.options);
       compiler.hooks.done.tap('load-resources', async () => {
         await context.callHook('bundle:resources', mfs);
       });
@@ -51,7 +52,7 @@ const webpackCompile = async (compiler, context) => {
           resolve();
         });
 
-        webpackDev(compiler, context);
+        webpackDev(compiler, context, mfs);
       });
     }
 

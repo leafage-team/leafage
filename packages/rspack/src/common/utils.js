@@ -1,5 +1,7 @@
+import fs from 'fs';
 import { join, normalize } from 'pathe';
 import glob from 'fast-glob';
+import { fs as memfs } from 'memfs';
 import { logger } from '@leafage/toolkit';
 
 export const createContext = (context) => ({
@@ -42,3 +44,4 @@ export const getInnerComponentPath = (name, options) => {
 
   return componentPath || normalize(require.resolve(`@leafage/component/dist/${name}`));
 };
+export const createMfs = (options) => (options.dev ? memfs : fs);
