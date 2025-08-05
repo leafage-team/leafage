@@ -80,12 +80,6 @@ importers:
 
   examples/simple:
     dependencies:
-      '@leafage/rspack':
-        specifier: workspace:*
-        version: link:../../packages/rspack
-      '@leafage/toolkit':
-        specifier: workspace:*
-        version: link:../../packages/toolkit
       leafage:
         specifier: workspace:*
         version: link:../../packages/leafage
