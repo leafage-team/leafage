@@ -5,12 +5,15 @@
   "author": "mingdev <mingdev@163.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node ./bin/build.js"
+    "dev": "cross-env NODE_ENV=development node ./bin/build.js",
+    "build": "cross-env NODE_ENV=production node ./bin/build.js"
   },
   "dependencies": {
+    "@leafage/rspack": "workspace:*",
     "@leafage/toolkit": "workspace:*",
-    "@leafage/webpack": "workspace:*",
-    "leafage": "workspace:*"
+    "leafage": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3"

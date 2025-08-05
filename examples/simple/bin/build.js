@@ -1,14 +1,14 @@
-const { createContext, loadConfig } = require('leafage');
+const { createContext, loadConfig, createServer } = require('leafage');
 const { logger } = require('@leafage/toolkit');
-const { getWebpackConfig } = require('@leafage/webpack');
+const { bundle } = require('@leafage/rspack');
 
 const start = async () => {
   const options = await loadConfig();
   const context = createContext(options);
 
-  const configs = await getWebpackConfig(context);
+  await bundle(context);
 
-  logger.log(configs);
+  createServer(context).start();
 };
 
 start().catch((error) => {
