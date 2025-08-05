@@ -1,1 +1,1 @@
-export { getBundleConfig, bundle } from './bundle';
+export { bundle } from './bundle';

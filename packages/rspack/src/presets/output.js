@@ -5,7 +5,6 @@ export const outputPreset = (ctx) => {
   const resolve = (...dir) => path.join(ctx.options.dir.root, ...dir);
   const result = {
     publicPath: ctx.options.builder.publicPath,
-    clean: true,
   };
 
   if (ctx.isClient) {

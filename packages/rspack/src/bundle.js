@@ -1,34 +1,85 @@
+import path from 'path';
 import { rspack } from '@rspack/core';
-import { logger } from '@leafage/toolkit';
+import rm from 'rimraf';
+import pify from 'pify';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import { mfs } from '@/common/fs';
 import { client } from './config/client';
 import { server } from './config/server';
 
-export const getBundleConfig = (context) => context.runWithContext(() => [client, server].map((preset) => preset(context)));
-export const bundle = (context) => {
-  const configs = getBundleConfig(context);
+const webpackDev = async (compiler, context) => {
+  const devMiddleware = pify(
+    webpackDevMiddleware(compiler, {
+      stats: false,
+      outputFileSystem: mfs,
+    }),
+  );
+  const hotMiddleware = pify(
+    webpackHotMiddleware(compiler, {
+      log: false,
+      heartbeat: 10000,
+    }),
+  );
 
-  return new Promise((resolve, reject) => {
-    context.runWithContext(() => {
-      rspack(configs, (err, stats) => {
-        if (err) {
-          logger.error(`Compilation error process: \n${err}`);
+  await context.callHook('bundle:devMiddleware', async (req, res, next) => {
+    await devMiddleware(req, res);
 
-          reject(err);
+    await hotMiddleware(req, res);
 
-          return;
-        }
-        if (stats.hasErrors()) {
-          const statsErr = new Error(stats.toString('normal'));
-
-          logger.error(`Compilation error process: \n${statsErr.message}`);
-
-          reject(statsErr);
-
-          return;
-        }
-
-        resolve();
-      });
-    });
+    next();
   });
+};
+const genStatsError = (stats) => {
+  const error = new Error('Builder error');
+  error.stack = stats.toString('normal');
+  return error;
+};
+const webpackCompile = async (compiler, context) => {
+  if (context.options.dev) {
+    if (compiler.name === 'client') {
+      compiler.hooks.done.tap('load-resources', async () => {
+        await context.callHook('bundle:resources', mfs);
+      });
+      return new Promise((resolve, reject) => {
+        compiler.hooks.done.tap('bundle-dev', (stats) => {
+          if (stats?.hasErrors()) {
+            reject(genStatsError(stats));
+            return;
+          }
+
+          resolve();
+        });
+
+        webpackDev(compiler, context);
+      });
+    }
+
+    if (compiler.name === 'server') {
+      return new Promise((resolve, reject) => {
+        compiler.watch(context.options.builder.watch, (err) => {
+          if (err) return reject(err);
+
+          resolve();
+        });
+      });
+    }
+  }
+
+  compiler.run = pify(compiler.run);
+  const stats = await compiler.run();
+
+  if (stats?.hasErrors()) {
+    throw genStatsError(stats);
+  }
+};
+const build = async (context) => {
+  const configs = [client, server].map((preset) => preset(context));
+
+  await Promise.all(configs.map((c) => webpackCompile(rspack(c), context)));
+};
+export const bundle = async (context) => {
+  rm.sync(path.join(context.options.dir.root, context.options.dir.dist));
+
+  await context.runWithContext(() => build(context));
 };

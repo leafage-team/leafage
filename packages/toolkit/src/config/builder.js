@@ -12,5 +12,7 @@ export default {
     font: ({ isDev }) => (isDev ? '[path][name][ext]' : 'static/font/[contenthash:10][ext]'),
     media: ({ isDev }) => (isDev ? '[path][name][ext]' : 'static/media/[contenthash:10][ext]'),
     cssModuleName: ({ isDev }) => (isDev ? '[name]__[local]--[hash:base64:8]' : '_[hash:base64:10]'),
-  }
+  },
+  // watch options
+  watch: {},
 };
