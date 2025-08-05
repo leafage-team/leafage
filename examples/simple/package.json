@@ -10,10 +10,13 @@
   },
   "dependencies": {
     "leafage": "workspace:*",
+    "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "sass": "^1.89.2",
+    "sass-loader": "^16.0.5"
   }
 }
