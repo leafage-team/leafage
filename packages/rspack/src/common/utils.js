@@ -40,5 +40,5 @@ export const getFileName = (ctx, key) => {
 export const getInnerComponentPath = (name, options) => {
   const [componentPath] = glob.sync(join(options.dir.root, options.dir.src, `${name}.{js,jsx}`));
 
-  return componentPath || normalize(require.resolve(`@leafage/client/dist/${name}`));
+  return componentPath || normalize(require.resolve(`@leafage/component/dist/${name}`));
 };
