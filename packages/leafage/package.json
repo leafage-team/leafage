@@ -9,6 +9,7 @@
   "dependencies": {
     "@leafage/server": "workspace:*",
     "@leafage/toolkit": "workspace:*",
+    "@leafage/rspack": "workspace:*",
     "hookable": "^5.5.3"
   },
   "homepage": "https://github.com/leafage-team/leafage",
