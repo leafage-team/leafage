@@ -11,6 +11,11 @@ export const basePreset = (ctx) => {
     output: {},
     module: {
       rules: [],
+      parser: {
+        'css/auto': {
+          namedExports: false,
+        },
+      },
     },
     resolve: {
       extensions: ['.js', '.jsx', '.json'],
