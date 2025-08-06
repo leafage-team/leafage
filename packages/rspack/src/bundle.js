@@ -4,15 +4,16 @@ import rm from 'rimraf';
 import pify from 'pify';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import { createMfs, getBuildStatsError } from '@/common/utils';
+import { getBuildStatsError } from '@/common/utils';
+import { createMfs } from '@/common/mfs';
 import { client } from './config/client';
 import { server } from './config/server';
 
-const webpackDev = async (compiler, context, mfs) => {
+const webpackDev = async (compiler, context) => {
   const devMiddleware = pify(
     webpackDevMiddleware(compiler, {
       stats: false,
-      outputFileSystem: mfs,
+      outputFileSystem: compiler.outputFileSystem,
     }),
   );
   const hotMiddleware = pify(
@@ -31,12 +32,18 @@ const webpackDev = async (compiler, context, mfs) => {
   });
 };
 const webpackCompile = async (compiler, context) => {
+  await context.callHook('bundle:compile', { name: compiler.options.name, compiler });
+
   if (context.options.dev) {
-    if (compiler.name === 'client') {
-      const mfs = createMfs(context.options);
-      compiler.hooks.done.tap('load-resources', async () => {
-        await context.callHook('bundle:resources', mfs);
-      });
+    compiler.outputFileSystem = createMfs();
+
+    compiler.hooks.done.tap('load-resources', async (stats) => {
+      await context.callHook('bundle:compiled', { name: compiler.options.name, compiler, stats });
+
+      await context.callHook('bundle:resources', compiler.outputFileSystem);
+    });
+
+    if (compiler.options.name === 'client') {
       return new Promise((resolve, reject) => {
         compiler.hooks.done.tap('bundle-dev', (stats) => {
           if (stats?.hasErrors()) {
@@ -47,11 +54,11 @@ const webpackCompile = async (compiler, context) => {
           resolve();
         });
 
-        webpackDev(compiler, context, mfs);
+        webpackDev(compiler, context);
       });
     }
 
-    if (compiler.name === 'server') {
+    if (compiler.options.name === 'server') {
       return new Promise((resolve, reject) => {
         compiler.watch(context.options.builder.watch, (err, stats) => {
           if (err) {
@@ -67,6 +74,8 @@ const webpackCompile = async (compiler, context) => {
         });
       });
     }
+
+    return;
   }
 
   compiler.run = pify(compiler.run);
@@ -78,6 +87,8 @@ const webpackCompile = async (compiler, context) => {
 };
 const build = async (context) => {
   const configs = [client, server].map((preset) => preset(context));
+
+  await context.callHook('bundle:config', configs);
 
   await Promise.all(configs.map((c) => webpackCompile(rspack(c), context)));
 };
