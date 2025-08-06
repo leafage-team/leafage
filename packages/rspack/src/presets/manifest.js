@@ -1,10 +1,10 @@
 import path from 'pathe';
-import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
+import { RspackManifestPlugin } from 'rspack-manifest-plugin';
 
 export const manifestPreset = (ctx) => {
   if (ctx.isClient) {
     ctx.config.plugins.push(
-      new WebpackManifestPlugin({
+      new RspackManifestPlugin({
         fileName: path.join(ctx.options.dir.root, ctx.options.dir.dist, ctx.options.dir.manifest),
         generate: (seed, files, entryPoints) => {
           const manifest = Object.keys(entryPoints).map((view) => {
