@@ -2,28 +2,26 @@ import path from 'pathe';
 import globBase from 'glob-base';
 import glob from 'fast-glob';
 import { getInnerComponentPath } from '@/common/utils';
+import { CLIENT_ENTRY_QUERY } from '@/common/constants';
 
 export const entryPreset = (ctx) => {
-  const resolve = (...dir) => path.join(ctx.options.dir.root, ...dir);
-  const entryFn = (id) => {
-    if (ctx.isClient) {
-      const entryList = [`${id}?useClientEntryLoader`];
-      if (ctx.isDev) {
-        // https://github.com/glenjamin/webpack-hot-middleware#config
-        entryList.unshift(require.resolve('webpack-hot-middleware/client'));
-      }
-      return entryList;
-    }
-
-    return id;
-  };
-
-  const pattern = resolve(ctx.options.dir.src, ctx.options.dir.page, ctx.options.dir.pattern);
+  const pattern = path.join(ctx.options.dir.root, ctx.options.dir.src, ctx.options.dir.page, ctx.options.dir.pattern);
   const { base } = globBase(pattern);
+
   glob.sync(pattern).forEach((file) => {
     const name = path.relative(base, file).replace(path.extname(file), '');
+    if (ctx.isServer) {
+      ctx.config.entry[name] = file;
+      return;
+    }
 
-    ctx.config.entry[name] = entryFn(file);
+    const entryPath = `${file}?${CLIENT_ENTRY_QUERY}`;
+    if (ctx.isDev) {
+      ctx.config.entry[name] = [require.resolve('webpack-hot-middleware/client'), entryPath];
+      return;
+    }
+
+    ctx.config.entry[name] = entryPath;
   });
 
   if (ctx.isServer) {
