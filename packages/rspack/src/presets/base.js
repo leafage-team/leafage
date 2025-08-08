@@ -23,6 +23,9 @@ export const basePreset = (ctx) => {
         '@': path.join(ctx.options.dir.root, ctx.options.dir.src),
       },
     },
+    resolveLoader: {
+      alias: {},
+    },
     plugins: [
       new WebpackBarPlugin({
         name: ctx.name,
