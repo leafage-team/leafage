@@ -1,5 +1,5 @@
 {
-  "name": "leafage",
+  "name": "@leafage/renderer",
   "version": "1.2.0",
   "description": "The React Server Side Render Framework",
   "author": "mingdev <mingdev@163.com>",
@@ -7,11 +7,13 @@
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
   "dependencies": {
-    "@leafage/server": "workspace:*",
-    "@leafage/toolkit": "workspace:*",
-    "@leafage/rspack": "workspace:*",
-    "@leafage/renderer": "workspace:*",
-    "hookable": "^5.5.3"
+    "@leafage/toolkit": "workspace:*"
+  },
+  "devDependencies": {
+    "react": "^18.2.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0"
   },
   "homepage": "https://github.com/leafage-team/leafage",
   "files": [

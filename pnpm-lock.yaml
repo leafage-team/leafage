@@ -118,6 +118,9 @@ importers:
 
   packages/leafage:
     dependencies:
+      '@leafage/renderer':
+        specifier: workspace:*
+        version: link:../renderer
       '@leafage/rspack':
         specifier: workspace:*
         version: link:../rspack
@@ -130,6 +133,16 @@ importers:
       hookable:
         specifier: ^5.5.3
         version: 5.5.3
+
+  packages/renderer:
+    dependencies:
+      '@leafage/toolkit':
+        specifier: workspace:*
+        version: link:../toolkit
+    devDependencies:
+      react:
+        specifier: ^18.2.0
+        version: 18.3.1
 
   packages/rspack:
     dependencies:
