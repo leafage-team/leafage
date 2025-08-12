@@ -62,7 +62,7 @@ export const renderPreset = (ctx) => {
     }
     const Component = await requireComponentByName(resource.view, ctx.options);
     // render body
-    const body = renderToString(<Component {...props} />);
+    const body = renderToString(<App Component={Component} props={props} />);
     // helmet
     const helmet = Helmet.renderStatic();
     // render content
