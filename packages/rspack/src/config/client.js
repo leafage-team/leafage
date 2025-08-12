@@ -1,4 +1,5 @@
-import { applyPresets, createContext } from '@/common/utils';
+import { utils } from '@leafage/toolkit';
+import { createContext } from '@/common/utils';
 import { basePreset } from '@/presets/base';
 import { entryPreset } from '@/presets/entry';
 import { outputPreset } from '@/presets/output';
@@ -13,7 +14,7 @@ export const client = (options = {}) => {
   ctx.name = 'client';
   ctx.isClient = true;
 
-  applyPresets(ctx, [basePreset, entryPreset, outputPreset, envPreset, scriptPreset, stylePreset, assetPreset, manifestPreset]);
+  utils.applyPresets(ctx, [basePreset, entryPreset, outputPreset, envPreset, scriptPreset, stylePreset, assetPreset, manifestPreset]);
 
   return ctx.config;
 };

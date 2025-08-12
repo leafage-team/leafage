@@ -1,5 +1,5 @@
 import express from 'express';
-import { useContext } from '@leafage/toolkit';
+import { useContext, utils } from '@leafage/toolkit';
 
 export const useMiddleware = (app, middleware) => {
   if (!middleware) return app;
@@ -22,13 +22,7 @@ export const useMiddleware = (app, middleware) => {
   return app.use(middleware);
 };
 export const applyPresets = (app, presets = []) => {
-  if (!presets.length) return app;
-
   const context = useContext();
 
-  const [preset, ...rest] = presets;
-
-  preset?.(app, context);
-
-  return applyPresets(app, rest);
+  return utils.applyPresets(app, presets.map((preset) => () => preset(app, context)));
 };

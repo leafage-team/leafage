@@ -13,15 +13,6 @@ export const createContext = (context) => ({
   isServer: false,
   isClient: false,
 });
-export const applyPresets = (ctx, presets = []) => {
-  if (!presets.length) return ctx;
-
-  const [preset, ...rest] = presets;
-
-  preset?.(ctx);
-
-  applyPresets(ctx, rest);
-};
 export const getFileName = (ctx, key) => {
   let fileName = ctx.options.builder.filenames?.[key];
 
