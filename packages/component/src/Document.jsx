@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Document = ({ Script, Link: DocLink, helmet, context, children }) => (
+const Document = ({ Scripts, Links, helmet, context, children }) => (
   <html {...helmet.htmlAttributes.toComponent()}>
     <head>
       {helmet.base.toComponent()}
@@ -9,12 +9,12 @@ const Document = ({ Script, Link: DocLink, helmet, context, children }) => (
       {helmet.link.toComponent()}
       {helmet.style.toComponent()}
       {helmet.noscript.toComponent()}
-      <DocLink />
+      <Links />
     </head>
     <body {...helmet.bodyAttributes.toComponent()}>
       {children}
       {context}
-      <Script />
+      <Scripts />
       {helmet.script.toComponent()}
     </body>
   </html>
