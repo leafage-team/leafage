@@ -1,14 +1,12 @@
 import { utils } from '@leafage/toolkit';
+import { createContext } from './common/utils';
 import { loadResourcesPreset } from './presets/loadResources';
+import { renderPreset } from './presets/render';
 
 export const createRenderer = (context) => {
-  const ctx = {
-    context,
-    options: context.options,
-    resources: [],
-    renderAndView: () => '',
-    renderAndUrl: () => '',
-  };
+  const ctx = createContext(context);
 
-  return utils.applyPresets(ctx, [loadResourcesPreset]);
+  context.callHook('renderer:create');
+
+  return context.runWithContext(() => utils.applyPresets(ctx, [loadResourcesPreset, renderPreset]));
 };

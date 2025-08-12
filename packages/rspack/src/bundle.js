@@ -35,15 +35,16 @@ const webpackCompile = async (compiler, context) => {
   await context.callHook('bundle:compile', { name: compiler.options.name, compiler });
 
   if (context.options.dev) {
-    compiler.outputFileSystem = createMfs();
-
-    compiler.hooks.done.tap('load-resources', async (stats) => {
+    compiler.hooks.done.tap('bundle-compiled', async (stats) => {
       await context.callHook('bundle:compiled', { name: compiler.options.name, compiler, stats });
-
-      await context.callHook('bundle:resources', compiler.outputFileSystem);
     });
 
     if (compiler.options.name === 'client') {
+      compiler.outputFileSystem = createMfs();
+      compiler.hooks.done.tap('load-resources', async () => {
+        await context.callHook('bundle:resources', compiler.outputFileSystem);
+      });
+
       return new Promise((resolve, reject) => {
         compiler.hooks.done.tap('bundle-dev', (stats) => {
           if (stats?.hasErrors()) {
