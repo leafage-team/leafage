@@ -80,6 +80,9 @@ importers:
 
   examples/simple:
     dependencies:
+      '@leafage/component':
+        specifier: workspace:*
+        version: link:../../packages/component
       leafage:
         specifier: workspace:*
         version: link:../../packages/leafage
