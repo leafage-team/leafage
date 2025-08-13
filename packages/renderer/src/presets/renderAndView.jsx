@@ -37,7 +37,7 @@ export const renderAndViewPreset = (ctx) => {
   ctx.renderAndView = async (view, props) => {
     const resource = ctx.resources.find((row) => row.view === view);
     if (!resource) {
-      throw new Error(`Resource not found for view ${view}`);
+      return;
     }
     const { Component: Document } = await ctx.import('Document');
     const { Component: App } = await ctx.import('App');

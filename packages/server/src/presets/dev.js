@@ -1,13 +1,13 @@
-export const devPreset = (app, context) => {
+export const devPreset = (ctx) => {
   let devMiddleware = null;
 
-  if (context.options.dev) {
-    context.hook('bundle:devMiddleware', (middleware) => {
+  if (ctx.context.options.dev) {
+    ctx.context.hook('bundle:devMiddleware', (middleware) => {
       devMiddleware = middleware;
     });
   }
 
-  app.use((req, res, next) => {
+  ctx.app.use((req, res, next) => {
     if (devMiddleware) {
       devMiddleware(req, res, next);
       return;

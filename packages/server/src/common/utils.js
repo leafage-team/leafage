@@ -1,8 +1,8 @@
 import express from 'express';
-import { useContext, utils } from '@leafage/toolkit';
+import { useContext } from '@leafage/toolkit';
 
-export const useMiddleware = (app, middleware) => {
-  if (!middleware) return app;
+export const useMiddleware = (ctx, middleware) => {
+  if (!middleware) return ctx;
 
   const context = useContext();
 
@@ -14,15 +14,10 @@ export const useMiddleware = (app, middleware) => {
     const route = middleware.path || '/';
 
     if (typeof middleware.handle === 'string') {
-      return app.use(route, express.static(middleware.handle));
+      return ctx.app.use(route, express.static(middleware.handle));
     }
-    return app.use(route, middleware.handle);
+    return ctx.app.use(route, middleware.handle);
   }
 
-  return app.use(middleware);
-};
-export const applyPresets = (app, presets = []) => {
-  const context = useContext();
-
-  return utils.applyPresets(app, presets.map((preset) => () => preset(app, context)));
+  return ctx.app.use(middleware);
 };
