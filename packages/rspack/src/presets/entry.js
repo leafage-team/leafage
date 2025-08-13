@@ -25,10 +25,10 @@ export const entryPreset = (ctx) => {
     ctx.config.entry[name] = entryPath;
   });
 
+  ctx.config.entry.Error = getInnerComponentPath('Error', ctx.options);
   if (ctx.isServer) {
     ctx.config.entry.Document = getInnerComponentPath('Document', ctx.options);
     ctx.config.entry.App = getInnerComponentPath('App', ctx.options);
-    ctx.config.entry.Error = getInnerComponentPath('Error', ctx.options);
   }
   if (ctx.isClient) {
     ctx.config.resolveLoader.alias[CLIENT_ENTRY_LOADER] = require.resolve('../loader/client-entry-loader');
