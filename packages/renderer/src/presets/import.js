@@ -6,7 +6,10 @@ export const importPreset = (ctx) => {
     const component = await imports.importModule(
       `./${name}`,
       {
-        paths: [path.join(ctx.options.dir.root, ctx.options.dir.dist, ctx.options.dir.server)],
+        isDev: ctx.isDev,
+        paths: [
+          path.join(ctx.options.dir.root, ctx.options.dir.dist, ctx.options.dir.server),
+        ],
       },
     );
 

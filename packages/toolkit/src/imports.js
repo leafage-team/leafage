@@ -1,5 +1,6 @@
 import { pathToFileURL } from 'url';
 import { resolveModulePath } from 'exsolve';
+import importFresh from 'import-fresh';
 
 export const directoryToURL = (dir) => pathToFileURL(`${dir}/`);
 export const resolveModule = (id, options = {}) => resolveModulePath(id, {
@@ -9,7 +10,12 @@ export const resolveModule = (id, options = {}) => resolveModulePath(id, {
 export const importModule = async (id, options = {}) => {
   const resolvedPath = resolveModule(id, options);
 
-  const res = await import(pathToFileURL(resolvedPath).href);
+  let res;
+  if (options.isDev) {
+    res = await importFresh(resolvedPath);
+  } else {
+    res = await import(pathToFileURL(resolvedPath).href);
+  }
 
   return res?.default ?? res;
 };

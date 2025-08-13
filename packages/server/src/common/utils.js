@@ -1,13 +1,25 @@
+import path from 'path';
 import express from 'express';
-import { useContext } from '@leafage/toolkit';
+import { imports } from '@leafage/toolkit';
 
 export const useMiddleware = (ctx, middleware) => {
   if (!middleware) return ctx;
 
-  const context = useContext();
-
   if (typeof middleware === 'string') {
-    return useMiddleware(context.importModule(middleware));
+    const handle = imports.importModule(
+      middleware,
+      {
+        isDev: ctx.context.options.dev,
+        paths: [
+          import.meta.url,
+          path.join(ctx.context.options.dir.root, ctx.context.options.dir.src),
+          ctx.context.options.dir.root,
+          path.join(ctx.context.options.dir.root, 'node_modules'),
+        ],
+      },
+    );
+
+    return useMiddleware(handle);
   }
 
   if (typeof middleware === 'object') {
