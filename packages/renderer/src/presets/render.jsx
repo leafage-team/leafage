@@ -1,5 +1,5 @@
 import path from 'path';
-import { stringify } from 'devalue';
+import { uneval } from 'devalue';
 import React from 'react';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { imports } from '@leafage/toolkit';
@@ -39,7 +39,7 @@ const getRenderContext = (props, options) => (
       <script
         type="text/javascript"
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: `${options.globals.context}=${stringify(props)}` }}
+        dangerouslySetInnerHTML={{ __html: `${options.globals.context}=${uneval(props)}` }}
       />
     )}
   />
