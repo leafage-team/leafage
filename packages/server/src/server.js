@@ -1,9 +1,12 @@
 import express from 'express';
+// 捕获express promise异常
+import 'express-async-errors';
 import { logger } from '@leafage/toolkit';
 import { applyPresets } from './common/utils';
 import { basePreset } from './presets/base';
 import { devPreset } from './presets/dev';
 import { staticPreset } from './presets/static';
+import { routerPreset } from './presets/router';
 import { errorPreset } from './presets/error';
 
 const startServer = (app, context) => {
@@ -26,6 +29,7 @@ export const createServer = (context) => {
       basePreset,
       devPreset,
       staticPreset,
+      routerPreset,
       errorPreset,
     ]);
   });

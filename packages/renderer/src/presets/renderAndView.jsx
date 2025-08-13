@@ -1,20 +1,8 @@
-import path from 'path';
 import { uneval } from 'devalue';
 import React from 'react';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
-import { imports } from '@leafage/toolkit';
 import { Helmet, RenderJudge } from '@leafage/component';
 
-const requireComponentByName = async (name, options) => {
-  const component = await imports.importModule(
-    `./${name}`,
-    {
-      paths: [path.join(options.dir.root, options.dir.dist, options.dir.server)],
-    },
-  );
-
-  return component?.default ?? component;
-};
 const genScripts = (resource) => ({ defer = true, ...props }) => resource.scripts.map((src) => (
   <script
     src={src}
@@ -45,22 +33,15 @@ const getRenderContext = (props, options) => (
   />
 );
 
-export const renderPreset = (ctx) => {
-  let Document;
-  let App;
-
-  ctx.render = async (view, props) => {
+export const renderAndViewPreset = (ctx) => {
+  ctx.renderAndView = async (view, props) => {
     const resource = ctx.resources.find((row) => row.view === view);
     if (!resource) {
       throw new Error(`Resource not found for view ${view}`);
     }
-    if (!Document) {
-      Document = await requireComponentByName('Document', ctx.options);
-    }
-    if (!App) {
-      App = await requireComponentByName('App', ctx.options);
-    }
-    const Component = await requireComponentByName(resource.view, ctx.options);
+    const { Component: Document } = await ctx.import('Document');
+    const { Component: App } = await ctx.import('App');
+    const { Component } = await ctx.import(resource.view);
     // render body
     const body = renderToString(<App Component={Component} props={props} />);
     // helmet
