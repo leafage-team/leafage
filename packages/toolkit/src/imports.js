@@ -10,12 +10,11 @@ export const resolveModule = (id, options = {}) => resolveModulePath(id, {
 export const importModule = async (id, options = {}) => {
   const resolvedPath = resolveModule(id, options);
 
-  let res;
   if (options.isDev) {
-    res = await importFresh(resolvedPath);
-  } else {
-    res = await import(pathToFileURL(resolvedPath).href);
+    return importFresh(resolvedPath);
   }
 
-  return res?.default ?? res;
+  const module = await import(pathToFileURL(resolvedPath).href);
+
+  return module?.default ?? module;
 };
