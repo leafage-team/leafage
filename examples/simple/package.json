@@ -5,8 +5,9 @@
   "author": "mingdev <mingdev@163.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node ./bin/build.js",
-    "build": "cross-env NODE_ENV=production node ./bin/build.js"
+    "dev": "cross-env NODE_ENV=development node ./bin/dev.js",
+    "build": "cross-env NODE_ENV=production node ./bin/build.js",
+    "start": "cross-env NODE_ENV=production node ./bin/start.js"
   },
   "dependencies": {
     "leafage": "workspace:*",
