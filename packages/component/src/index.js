@@ -1,13 +1,5 @@
-import { Helmet } from 'react-helmet';
-import Document from './Document';
-import App from './App';
-import Error from './Error';
-import RenderJudge from './RenderJudge';
-
-export {
-  Helmet,
-  Document,
-  App,
-  Error,
-  RenderJudge,
-};
+export { default as Document } from './Document';
+export { default as App } from './App';
+export { default as Error } from './Error';
+export { default as RenderJudge } from './RenderJudge';
+export { Helmet } from 'react-helmet';
