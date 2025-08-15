@@ -9,6 +9,8 @@
     "preinstall": "npx only-allow pnpm",
     "clean:dist-all": "rimraf ./packages/*/dist/ -g",
     "build": "rollup --config rollup.config.js",
+    "release": "node scripts/release.js",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "lint-staged": "lint-staged",
     "lint:eslint": "eslint --ext .js,.jsx packages examples"
   },
@@ -22,6 +24,8 @@
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-replace": "^6.0.2",
+    "conventional-changelog-cli": "^5.0.0",
+    "enquirer": "^2.4.1",
     "eslint": "^8.35.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.27.5",
@@ -29,11 +33,13 @@
     "eslint-plugin-react": "^7.37.5",
     "fast-glob": "^3.3.3",
     "lint-staged": "^13.1.2",
+    "picocolors": "^1.1.1",
     "pre-commit": "^1.2.2",
     "rimraf": "^6.0.1",
     "rollup": "^4.45.1",
     "rollup-merge-config": "^0.0.12",
-    "rollup-plugin-node-externals": "^8.0.1"
+    "rollup-plugin-node-externals": "^8.0.1",
+    "semver": "^7.7.2"
   },
   "homepage": "https://github.com/leafage-team/leafage",
   "pre-commit": "lint-staged",
