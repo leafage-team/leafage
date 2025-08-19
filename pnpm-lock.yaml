@@ -130,6 +130,9 @@ importers:
 
   packages/leafage:
     dependencies:
+      '@leafage/component':
+        specifier: workspace:*
+        version: link:../component
       '@leafage/renderer':
         specifier: workspace:*
         version: link:../renderer
