@@ -4,16 +4,15 @@ import builder from './builder';
 import server from './server';
 import { mergeProps } from '../utils';
 
+export const getConfig = (options = {}) => mergeProps(common, { builder, server }, options);
 export const loadConfig = async (options = {}) => {
-  const defaults = mergeProps(common, { builder, server });
-
   const { config } = await c12.loadConfig(
     mergeProps(
       options,
       {
         name: 'leafage',
         dotenv: false,
-        defaults,
+        defaults: getConfig(),
       },
     ),
   );
