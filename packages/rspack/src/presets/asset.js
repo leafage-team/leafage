@@ -26,7 +26,7 @@ export const assetPreset = (ctx) => {
       },
     },
   }, {
-    test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
+    test: /\.(woff2?|eot|ttf|otf)$/i,
     type: 'asset',
     generator: {
       filename: getFileName(ctx, 'font'),

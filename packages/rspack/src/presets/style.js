@@ -58,7 +58,7 @@ export const stylePreset = (ctx) => {
   };
   const loaders = getCssLoaders();
   Object.keys(loaders).forEach((suffix) => ctx.config.module.rules.push({
-    test: new RegExp(`\\.${suffix}$`),
+    test: new RegExp(`\\.${suffix}$`, 'i'),
     use: loaders[suffix],
   }));
   if (!ctx.isDev && ctx.isClient) {
