@@ -1,3 +1,18 @@
+## [1.3.1](https://github.com/leafage-team/leafage/compare/v1.3.0...v1.3.1) (2025-08-19)
+
+
+### Features
+
+* **build:** 手动定义包路径，根据顺序打包子包模块 ([d084d74](https://github.com/leafage-team/leafage/commit/d084d74989bc4a8ea53199f558167918ea8e9e78))
+* **example:** 组件从主包中导入 ([c3277fc](https://github.com/leafage-team/leafage/commit/c3277fc4c6b3f203e51c20a0678ae124b4b4f024))
+* **leafage:** 增加dev,build,start命令 ([19a9316](https://github.com/leafage-team/leafage/commit/19a9316f99ebc4ab2f3e434cde7a9e69dcbd163e))
+* **leafage:** 主包增加组件导出 ([e473a49](https://github.com/leafage-team/leafage/commit/e473a49cacc0b63a0c5b6ba5a51edfe922b70297))
+* **renderer:** 增加req的params参数返回 ([4ad164a](https://github.com/leafage-team/leafage/commit/4ad164aa6f2b2ee6833dae1f734e09a241c882ea))
+* **server:** 增加默认params和query ([0fc2cbd](https://github.com/leafage-team/leafage/commit/0fc2cbd74cc4e7365ee03836da4b045db295feaf))
+* **toolkit:** 增加获取配置的方法 ([bd94e48](https://github.com/leafage-team/leafage/commit/bd94e48673aaab90a818ab0ceaf1e83277c7ef13))
+
+
+
 # 1.3.0 (2025-08-15)
 
 
