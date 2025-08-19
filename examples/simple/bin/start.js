@@ -1,14 +1,12 @@
-const { createContext, loadConfig, createServer, logger } = require('leafage');
+const { loadConfig, logger, start } = require('leafage');
 
-const start = async () => {
+const run = async () => {
   const options = await loadConfig();
-  const context = createContext(options);
-  const server = createServer(context);
 
-  server.start();
+  await start(options);
 };
 
-start().catch((error) => {
+run().catch((error) => {
   logger.error(error);
   process.exit(1);
 });

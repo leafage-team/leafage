@@ -1,5 +1,8 @@
 export { loadConfig, logger } from '@leafage/toolkit';
 export { createServer } from '@leafage/server';
 export { createRenderer } from '@leafage/renderer';
-export { bundle as build } from '@leafage/rspack';
-export { createContext } from './core';
+export { bundle } from '@leafage/rspack';
+export { dev } from './command/dev';
+export { build } from './command/build';
+export { start } from './command/start';
+export { createContext } from './common/utils';
