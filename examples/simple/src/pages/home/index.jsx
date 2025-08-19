@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from '@leafage/component';
+import { Helmet } from 'leafage/component';
 
 const HomePage = () => (
   <>
