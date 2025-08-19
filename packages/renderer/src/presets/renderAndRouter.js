@@ -11,8 +11,12 @@ export const renderAndRouterPreset = (ctx) => {
   ctx.renderAndRouter = async (req, res) => {
     const resource = ctx.resources.find((row) => {
       const matchFn = createRegexpMatch(row.path, matchOptions);
+      const result = matchFn(req.pathname);
+      if (result) {
+        req.params = result.params || {};
+      }
 
-      return matchFn(req.pathname);
+      return result;
     });
     if (!resource) {
       return;
