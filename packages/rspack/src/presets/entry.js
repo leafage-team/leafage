@@ -1,7 +1,7 @@
 import path from 'pathe';
 import globBase from 'glob-base';
 import glob from 'fast-glob';
-import { getInnerComponentPath } from '@/common/utils';
+import { getInnerComponentPath, searchFileByName } from '../common/utils';
 
 const CLIENT_ENTRY_LOADER = 'client-entry-loader';
 
@@ -27,6 +27,11 @@ export const entryPreset = (ctx) => {
 
   ctx.config.entry.Error = getInnerComponentPath('Error', ctx.options);
   if (ctx.isServer) {
+    const serverEntryPath = searchFileByName('server', ctx.options);
+    if (serverEntryPath) {
+      ctx.config.entry.server = serverEntryPath;
+    }
+
     ctx.config.entry.Document = getInnerComponentPath('Document', ctx.options);
     ctx.config.entry.App = getInnerComponentPath('App', ctx.options);
   }
