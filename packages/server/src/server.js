@@ -6,6 +6,7 @@ import { createRenderer } from '@leafage/renderer';
 import { basePreset } from './presets/base';
 import { devPreset } from './presets/dev';
 import { staticPreset } from './presets/static';
+import { serverPreset } from './presets/server';
 import { routerPreset } from './presets/router';
 import { errorPreset } from './presets/error';
 
@@ -26,13 +27,17 @@ export const createServer = (context) => {
   context.callHook('server:create');
 
   context.runWithContext(() => {
-    utils.applyPresets({ app, renderer, context }, [
-      basePreset,
-      devPreset,
-      staticPreset,
-      routerPreset,
-      errorPreset,
-    ]);
+    utils.applyPresets(
+      { app, context, options: context.options, renderer, isDev: context.options.dev },
+      [
+        basePreset,
+        devPreset,
+        staticPreset,
+        serverPreset,
+        routerPreset,
+        errorPreset,
+      ],
+    );
   });
 
   return {
