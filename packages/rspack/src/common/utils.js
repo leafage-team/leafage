@@ -28,10 +28,16 @@ export const getFileName = (ctx, key) => {
 
   return fileName;
 };
-export const getInnerComponentPath = (name, options) => {
-  const [componentPath] = glob.sync(join(options.dir.root, options.dir.src, `${name}.{js,jsx}`));
+export const searchFiles = (pattern, options) => glob.sync(normalize(pattern), options);
+export const searchFileByName = (name, options) => {
+  const [filePath] = searchFiles(join(options.dir.root, options.dir.src, `${name}.{js,jsx}`));
 
-  return componentPath || normalize(require.resolve(`@leafage/component/dist/${name}`));
+  return filePath;
+};
+export const getInnerComponentPath = (name, options) => {
+  const filePath = searchFileByName(name, options);
+
+  return filePath || normalize(require.resolve(`@leafage/component/dist/${name}`));
 };
 export const getBuildStatsError = (stats) => {
   const error = new Error('Builder error');
