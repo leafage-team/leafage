@@ -5,6 +5,12 @@ export const stylePreset = (ctx) => {
   const getCssLoaders = () => {
     const sourceMap = ctx.isDev && ctx.isClient;
 
+    const cssExtractLoader = {
+      loader: rspack.CssExtractRspackPlugin.loader,
+      options: {
+        emit: ctx.isClient,
+      },
+    };
     const cssLoader = {
       loader: require.resolve('css-loader'),
       options: {
@@ -36,15 +42,11 @@ export const stylePreset = (ctx) => {
         });
       }
 
-      if (ctx.isClient) {
-        if (ctx.isDev) {
-          return [require.resolve('style-loader')].concat(loaders);
-        }
-
-        return [rspack.CssExtractRspackPlugin.loader].concat(loaders);
+      if (ctx.isClient && ctx.isDev) {
+        return [require.resolve('style-loader')].concat(loaders);
       }
 
-      return loaders;
+      return [cssExtractLoader].concat(loaders);
     };
 
     return {
