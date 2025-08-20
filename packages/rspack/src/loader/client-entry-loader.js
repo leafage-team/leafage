@@ -23,10 +23,10 @@ export default function clientEntryLoader() {
   return `
     import React from 'react';
     import { createRoot } from 'react-dom/client';
+    ${external.map((row) => `import '${resolveModule(row)}';`).join(EOL)}
 
     import App from '${app}';
     import Component from '${normalize(this.resourcePath)}';
-    ${external.map((row) => `import '${resolveModule(row)}';`).join(EOL)}
 
     const props = ${context.options.globals.context};
     const mainEl = document.getElementById('${context.options.globals.id}');
