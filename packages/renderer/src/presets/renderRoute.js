@@ -1,14 +1,14 @@
 import { match as createRegexpMatch } from 'path-to-regexp';
 import { imports, utils } from '@leafage/toolkit';
 
-export const renderAndRouterPreset = (ctx) => {
+export const renderRoutePreset = (ctx) => {
   const matchOptions = {
     decode: decodeURIComponent,
     strict: true,
     end: true,
     sensitive: false,
   };
-  ctx.renderAndRouter = async (req, res) => {
+  ctx.renderRoute = async (req, res) => {
     const resource = ctx.resources.find((row) => {
       const matchFn = createRegexpMatch(row.path, matchOptions);
       const result = matchFn(req.pathname);
@@ -28,6 +28,6 @@ export const renderAndRouterPreset = (ctx) => {
     const viewProps = await viewLoader?.(loaderContext);
     const props = utils.mergeProps(appProps, viewProps);
 
-    return ctx.renderAndView(resource.view, props);
+    return ctx.render(resource.view, props);
   };
 };

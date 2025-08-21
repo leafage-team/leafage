@@ -19,7 +19,7 @@ const loadResources = (mfs, options) => {
   return resources;
 };
 
-export const loadResourcesPreset = (ctx) => {
+export const resourcePreset = (ctx) => {
   if (ctx.isDev) {
     ctx.context.hook('bundle:resources', (mfs) => {
       ctx.resources = loadResources(mfs, ctx.options);

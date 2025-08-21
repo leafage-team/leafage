@@ -34,8 +34,8 @@ const getRenderContext = (props, options) => (
   />
 );
 
-export const renderAndViewPreset = (ctx) => {
-  ctx.renderAndView = async (view, props) => {
+export const renderPreset = (ctx) => {
+  ctx.render = async (view, props) => {
     const resource = ctx.resources.find((row) => row.view === view);
     if (!resource) {
       return;
