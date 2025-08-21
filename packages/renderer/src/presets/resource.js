@@ -46,22 +46,21 @@ const findResourcePreset = (ctx) => {
 
         return row;
       }
-      // path find
-      const match = createRegexpMatch(
-        row.path,
-        {
-          decode: decodeURIComponent,
-          strict: true,
-          end: true,
-          sensitive: false,
-        },
-      );
-      const result = match(id);
-      if (result) {
-        const resource = utils.mergeProps(row, { params: result.params || {} });
-        map.set(id, resource);
+      if (path.isAbsolute(id)) {
+        // path find
+        const match = createRegexpMatch(
+          row.path,
+          {
+            sensitive: true,
+          },
+        );
+        const result = match(id);
+        if (result) {
+          const resource = utils.mergeProps(row, { params: result.params || {} });
+          map.set(id, resource);
 
-        return resource;
+          return resource;
+        }
       }
     }
 
