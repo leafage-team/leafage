@@ -29,7 +29,7 @@ export const basePreset = (ctx) => {
     plugins: [
       new WebpackBarPlugin({
         name: ctx.name,
-        color: { client: 'green', server: 'orange' }[ctx.name],
+        color: { client: '#00b400', server: '#ffac00' }[ctx.name],
       }),
     ],
     externals: [],
