@@ -1,5 +1,5 @@
 import { match as createRegexpMatch } from 'path-to-regexp';
-import { utils } from '@leafage/toolkit';
+import { imports, utils } from '@leafage/toolkit';
 
 export const renderAndRouterPreset = (ctx) => {
   const matchOptions = {
@@ -21,8 +21,8 @@ export const renderAndRouterPreset = (ctx) => {
     if (!resource) {
       return;
     }
-    const { loader: appLoader } = await ctx.import('App');
-    const { loader: viewLoader } = await ctx.import(resource.view);
+    const { loader: appLoader } = await imports.importServerModule('App', ctx.options);
+    const { loader: viewLoader } = await imports.importServerModule(resource.view, ctx.options);
     const loaderContext = { req, res };
     const appProps = await appLoader?.(loaderContext);
     const viewProps = await viewLoader?.(loaderContext);

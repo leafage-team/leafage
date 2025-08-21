@@ -1,9 +1,9 @@
-import { utils } from '@leafage/toolkit';
+import { imports, utils } from '@leafage/toolkit';
 
 export const serverPreset = async (ctx) => {
   const importServer = async () => {
     try {
-      const { Component } = await ctx.renderer.import('server');
+      const { Component } = await imports.importServerModule('server', ctx.options);
 
       utils.applyPresets(ctx, [Component]);
     } catch (e) {

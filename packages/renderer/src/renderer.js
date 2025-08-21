@@ -1,7 +1,6 @@
 import { utils } from '@leafage/toolkit';
 import { createContext } from './common/utils';
 import { loadResourcesPreset } from './presets/loadResources';
-import { importPreset } from './presets/import';
 import { renderAndViewPreset } from './presets/renderAndView';
 import { renderAndRouterPreset } from './presets/renderAndRouter';
 
@@ -14,7 +13,6 @@ export const createRenderer = (context) => {
     ctx,
     [
       loadResourcesPreset,
-      importPreset,
       renderAndViewPreset,
       renderAndRouterPreset,
     ],

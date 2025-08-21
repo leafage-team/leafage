@@ -2,6 +2,7 @@ import { uneval } from 'devalue';
 import React from 'react';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { Helmet, RenderJudge } from '@leafage/component';
+import { imports } from '@leafage/toolkit';
 
 const genScripts = (resource) => ({ defer = true, ...props }) => resource.scripts.map((src) => (
   <script
@@ -39,9 +40,9 @@ export const renderAndViewPreset = (ctx) => {
     if (!resource) {
       return;
     }
-    const { Component: Document } = await ctx.import('Document');
-    const { Component: App } = await ctx.import('App');
-    const { Component } = await ctx.import(resource.view);
+    const { Component: Document } = await imports.importServerModule('Document', ctx.options);
+    const { Component: App } = await imports.importServerModule('App', ctx.options);
+    const { Component } = await imports.importServerModule(resource.view, ctx.options);
     // render body
     const body = renderToString(<App Component={Component} props={props} />);
     // helmet

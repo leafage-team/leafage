@@ -1,3 +1,4 @@
+import path from 'path';
 import { pathToFileURL } from 'url';
 import { resolveModulePath } from 'exsolve';
 import importFresh from 'import-fresh';
@@ -17,4 +18,18 @@ export const importModule = async (id, options = {}) => {
   const module = await import(pathToFileURL(resolvedPath).href);
 
   return module?.default ?? module;
+};
+export const importServerModule = async (name, options) => {
+  const module = await importModule(
+    `./${name}`,
+    {
+      isDev: options.dev,
+      url: path.join(options.dir.root, options.dir.dist, options.dir.server),
+    },
+  );
+
+  return {
+    loader: module?.loader,
+    Component: module?.default ?? module,
+  };
 };
