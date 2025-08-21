@@ -1,26 +1,11 @@
-import { match as createRegexpMatch } from 'path-to-regexp';
 import { imports, utils } from '@leafage/toolkit';
 
 export const renderRoutePreset = (ctx) => {
-  const matchOptions = {
-    decode: decodeURIComponent,
-    strict: true,
-    end: true,
-    sensitive: false,
-  };
   ctx.renderRoute = async (req, res) => {
-    const resource = ctx.resources.find((row) => {
-      const matchFn = createRegexpMatch(row.path, matchOptions);
-      const result = matchFn(req.pathname);
-      if (result) {
-        req.params = result.params || {};
-      }
+    const resource = ctx.findResource(req.pathname);
+    if (!resource) return;
 
-      return result;
-    });
-    if (!resource) {
-      return;
-    }
+    req.params = resource.params;
     const { loader: appLoader } = await imports.importServerModule('App', ctx.options);
     const { loader: viewLoader } = await imports.importServerModule(resource.view, ctx.options);
     const loaderContext = { req, res };

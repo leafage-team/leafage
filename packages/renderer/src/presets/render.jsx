@@ -36,10 +36,9 @@ const getRenderContext = (props, options) => (
 
 export const renderPreset = (ctx) => {
   ctx.render = async (view, props) => {
-    const resource = ctx.resources.find((row) => row.view === view);
-    if (!resource) {
-      return;
-    }
+    const resource = ctx.findResource(view);
+    if (!resource) return;
+
     const { Component: Document } = await imports.importServerModule('Document', ctx.options);
     const { Component: App } = await imports.importServerModule('App', ctx.options);
     const { Component } = await imports.importServerModule(resource.view, ctx.options);
