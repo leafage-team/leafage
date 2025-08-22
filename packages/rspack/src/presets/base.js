@@ -1,4 +1,3 @@
-import path from 'pathe';
 import WebpackBarPlugin from 'webpackbar/rspack';
 
 export const basePreset = (ctx) => {
@@ -19,9 +18,7 @@ export const basePreset = (ctx) => {
     },
     resolve: {
       extensions: ['.js', '.jsx', '.json'],
-      alias: {
-        '@': path.join(ctx.options.dir.root, ctx.options.dir.src),
-      },
+      alias: {},
     },
     resolveLoader: {
       alias: {},
