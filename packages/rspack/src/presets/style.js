@@ -17,6 +17,7 @@ export const stylePreset = (ctx) => {
         modules: {
           localIdentName: getFileName(ctx, 'cssModuleName'),
         },
+        esModule: false,
         sourceMap,
       },
     };
