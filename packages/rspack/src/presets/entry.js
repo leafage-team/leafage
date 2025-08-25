@@ -9,9 +9,7 @@ export const entryPreset = (ctx) => {
   const pattern = path.join(ctx.options.dir.root, ctx.options.dir.src, ctx.options.dir.page, ctx.options.dir.pattern);
   const { base } = globBase(pattern);
 
-  const entry = {
-    Error: getInnerComponentPath('Error', ctx.options),
-  };
+  const entry = {};
   if (ctx.isServer) {
     const serverEntryPath = searchFileByName('server', ctx.options);
     if (serverEntryPath) {
@@ -27,7 +25,11 @@ export const entryPreset = (ctx) => {
 
     entry[name] = file;
   });
-  Object.keys(entry).reverse().forEach((name) => {
+  const errorEntryPath = searchFileByName('Error', ctx.options);
+  if (errorEntryPath) {
+    entry.Error = errorEntryPath;
+  }
+  Object.keys(entry).forEach((name) => {
     const file = entry[name];
     if (ctx.isServer) {
       ctx.config.entry[name] = file;
