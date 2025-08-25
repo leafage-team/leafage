@@ -1,5 +1,5 @@
 import { rspack } from '@rspack/core';
-import { getFileName } from '@/common/utils';
+import { getFileName } from '../common/utils';
 
 export const stylePreset = (ctx) => {
   const getCssLoaders = () => {
@@ -15,6 +15,7 @@ export const stylePreset = (ctx) => {
       loader: require.resolve('css-loader'),
       options: {
         modules: {
+          auto: /\.module\.\w+$/i,
           localIdentName: getFileName(ctx, 'cssModuleName'),
         },
         esModule: false,
