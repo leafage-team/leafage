@@ -10,4 +10,12 @@ export default {
     path: '/public',
     handle: join(process.cwd(), 'public'),
   },
+  // 代理
+  // proxy: {
+  //   '/api': {
+  //     target: 'https://xxx.com/api',
+  //     changeOrigin: true,
+  //   },
+  // },
+  proxy: {},
 };
