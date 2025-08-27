@@ -1,3 +1,5 @@
+const path = require('path');
+const fs = require('fs');
 const { execSync } = require('child_process');
 const { prompt } = require('enquirer');
 const semver = require('semver');
@@ -36,6 +38,12 @@ const run = async () => {
     message: `Releasing v${targetVersion}. Confirm?`,
   });
   if (!confirm) return;
+  const { npmToken } = await prompt({
+    type: 'input',
+    name: 'npmToken',
+    message: 'Input npm token',
+    validate: (value) => value.length > 0,
+  });
 
   execCommand('pnpm run clean:dist-all', 'Clean dist');
   execCommand(
@@ -54,10 +62,17 @@ const run = async () => {
     'Committing changes',
   );
   execCommand('pnpm run build', 'Build packages');
+  const npmrcPath = path.join(process.cwd(), '.npmrc');
+  fs.writeFileSync(
+    npmrcPath,
+    `//registry.npmjs.org/:_authToken=${npmToken}`,
+    { encoding: 'utf-8' },
+  );
   execCommand(
-    'pnpm -r --filter=./packages/* publish --access public --registry https://registry.npmjs.org',
+    'pnpm -r --filter=./packages/* publish --access public --no-git-checks --registry https://registry.npmjs.org',
     'Publish packages',
   );
+  fs.unlinkSync(npmrcPath);
   execCommand(
     [
       `git tag -a v${targetVersion} -m "Release v${targetVersion}"`,
