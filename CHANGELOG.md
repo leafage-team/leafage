@@ -1,3 +1,31 @@
+## [1.3.2](https://github.com/leafage-team/leafage/compare/v1.3.1...v1.3.2) (2025-08-27)
+
+
+### Features
+
+* **example:** 去掉无用依赖项 ([65674f1](https://github.com/leafage-team/leafage/commit/65674f1decda6404a322840ad296dd1be6cab3be))
+* **example:** 增加错误页面 ([2427145](https://github.com/leafage-team/leafage/commit/24271452181575c23463792311fdf8aa68e866f8))
+* **example:** 增加样式文件 ([e79209b](https://github.com/leafage-team/leafage/commit/e79209b8c890273cbacae85ede9725d355d2c091))
+* **renderer:** 方法名修改 ([767fa25](https://github.com/leafage-team/leafage/commit/767fa25535d1ec88fa7d35c2935f1a4db7f2c824))
+* **renderer:** 将获取资源的方法统一封装 ([1579196](https://github.com/leafage-team/leafage/commit/15791966a1c53bc845871f904ea584bb1c81e165))
+* **renderer:** 修改匹配规则的逻辑 ([4bf19a0](https://github.com/leafage-team/leafage/commit/4bf19a053fb84124ac3c7cb727ad7cb330efd2fe))
+* **rspack:** 错误页面组件增加loader处理 ([cb7213f](https://github.com/leafage-team/leafage/commit/cb7213fb0f1d68889ac50d788795a078535c44e0))
+* **rspack:** 设置生成css文件的条件 ([9e6e210](https://github.com/leafage-team/leafage/commit/9e6e210b7a390d438d8c1de988e7d9209b79c0fd))
+* **rspack:** 升级rspack版本到1.5.0 ([15646af](https://github.com/leafage-team/leafage/commit/15646afb26f0abbc6f8db707ef6c112367ac4f13))
+* **rspack:** 修改错误页面的实现方式 ([99f1d1c](https://github.com/leafage-team/leafage/commit/99f1d1ccf00faa5699ac50356bde74c7093c69d1))
+* **rspack:** 修改进度条的颜色 ([1512c16](https://github.com/leafage-team/leafage/commit/1512c16c3ebf6f93d5d9071ea17ac4c99d48aa91))
+* **rspack:** 修改loader规则以及external的加载顺序 ([cc89945](https://github.com/leafage-team/leafage/commit/cc89945139bdd5f1d2a4846fd54016528ae32b89))
+* **rspack:** 增加设置别名预设 ([2f17578](https://github.com/leafage-team/leafage/commit/2f1757828379b7c8d0789c144adbaa46195f0a34))
+* **rspack:** 增加搜索文件的方法 ([ee82083](https://github.com/leafage-team/leafage/commit/ee820834aa75ad87da1c5a8a6ea738a26dfbe7fb))
+* **rspack:** 增加server文件打包 ([2de8b15](https://github.com/leafage-team/leafage/commit/2de8b154eff3ed47573d9f151e89b1df66741065))
+* **rspack:** 支持普通样式导入 ([0575bb5](https://github.com/leafage-team/leafage/commit/0575bb57a47add326d0edd9fe795ca2ccb267bc3))
+* **rspack:** cssModule导出方式修改 ([563211e](https://github.com/leafage-team/leafage/commit/563211e5eac4da2981a70d05d5d8a2276a073744))
+* **server:** 加载server文件 ([6d7c7e6](https://github.com/leafage-team/leafage/commit/6d7c7e6170fffa8262204ae89701562a8d067ac6))
+* **server:** 增加http代理配置 ([23727f2](https://github.com/leafage-team/leafage/commit/23727f2d6ea317813f87a63345b9e9c660cdbb8a))
+* **toolkit:** 新增导入server模块方法 ([12e7988](https://github.com/leafage-team/leafage/commit/12e7988dd6ae6558d111d82a38440e32dc8df8aa))
+
+
+
 ## [1.3.1](https://github.com/leafage-team/leafage/compare/v1.3.0...v1.3.1) (2025-08-19)
 
 
