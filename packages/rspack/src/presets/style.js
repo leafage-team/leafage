@@ -2,6 +2,8 @@ import { rspack } from '@rspack/core';
 import { getFileName } from '../common/utils';
 
 export const stylePreset = (ctx) => {
+  const targets = ctx.options.builder.browserslist;
+
   const getCssLoaders = () => {
     const sourceMap = ctx.isDev && ctx.isClient;
 
@@ -27,6 +29,7 @@ export const stylePreset = (ctx) => {
       loader: 'builtin:lightningcss-loader',
       options: {
         sourceMap,
+        targets,
       },
     };
 
@@ -73,7 +76,11 @@ export const stylePreset = (ctx) => {
       }),
     );
     ctx.config.optimization.minimizer.push(
-      new rspack.LightningCssMinimizerRspackPlugin(),
+      new rspack.LightningCssMinimizerRspackPlugin({
+        minimizerOptions: {
+          targets,
+        },
+      }),
     );
   }
 };

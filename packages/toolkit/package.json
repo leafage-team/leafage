@@ -7,6 +7,7 @@
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
   "dependencies": {
+    "browserslist": "^4.25.3",
     "c12": "^3.1.0",
     "consola": "^3.4.2",
     "dotenv-defaults": "^5.0.2",

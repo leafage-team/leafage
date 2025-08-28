@@ -3,6 +3,8 @@ import { rspack } from '@rspack/core';
 import ReactRefreshPlugin from '@rspack/plugin-react-refresh';
 
 export const scriptPreset = (ctx) => {
+  const targets = ctx.options.builder.browserslist;
+
   ctx.config.module.rules.push({
     test: /\.jsx?$/,
     use: [{
@@ -19,6 +21,9 @@ export const scriptPreset = (ctx) => {
               refresh: ctx.isDev && ctx.isClient,
             },
           },
+        },
+        env: {
+          targets,
         },
       },
     }],

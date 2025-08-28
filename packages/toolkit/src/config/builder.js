@@ -1,3 +1,5 @@
+import browserslist from 'browserslist';
+
 // builder配置
 export default {
   // 访问根路径
@@ -15,4 +17,9 @@ export default {
   },
   // watch options
   watch: {},
+  // browserslist
+  browserslist: browserslist.loadConfig({
+    path: process.cwd(),
+    env: process.env.NODE_ENV || 'production',
+  }),
 };
