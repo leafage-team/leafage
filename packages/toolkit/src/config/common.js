@@ -4,6 +4,10 @@ import dotEnv from 'dotenv-defaults';
 import { mergeProps } from '../utils';
 
 const root = process.cwd();
+const dev = Boolean(isDevelopment);
+if (!process.env.NODE_ENV) {
+  process.env.NODE_ENV = dev ? 'development' : 'production';
+}
 const env = mergeProps(
   process.env,
   dotEnv.config({
@@ -15,7 +19,7 @@ const env = mergeProps(
 
 export default {
   // 是否是开发环境
-  dev: Boolean(isDevelopment),
+  dev,
   // 环境
   env,
   // 导入外部文件
