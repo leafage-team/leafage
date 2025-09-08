@@ -3,6 +3,7 @@ const rimraf = require('rimraf');
 
 const packages = [
   'toolkit',
+  'cli',
   'component',
   'renderer',
   'rspack',

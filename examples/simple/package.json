@@ -5,9 +5,9 @@
   "author": "mingdev <mingdev@163.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development node ./bin/dev.js",
-    "build": "cross-env NODE_ENV=production node ./bin/build.js",
-    "start": "cross-env NODE_ENV=production node ./bin/start.js"
+    "dev": "leafage dev",
+    "build": "leafage build",
+    "start": "leafage start"
   },
   "dependencies": {
     "leafage": "workspace:*",
@@ -16,7 +16,6 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
     "sass": "^1.89.2",
     "sass-loader": "^16.0.5"
   },

@@ -1,28 +1,21 @@
 {
-  "name": "leafage",
+  "name": "@leafage/cli",
   "version": "1.3.2",
   "description": "The React Server Side Render Framework",
   "author": "mingdev <mingdev@163.com>",
   "license": "MIT",
   "main": "dist/index.js",
-  "module": "dist/esm/index.js",
   "bin": {
     "leafage": "bin/cli.js"
   },
   "dependencies": {
-    "@leafage/server": "workspace:*",
-    "@leafage/toolkit": "workspace:*",
-    "@leafage/rspack": "workspace:*",
-    "@leafage/renderer": "workspace:*",
-    "@leafage/component": "workspace:*",
-    "@leafage/cli": "workspace:*",
-    "hookable": "^5.5.3"
+    "leafage": "workspace:*",
+    "@leafage/toolkit": "workspace:*"
   },
   "homepage": "https://github.com/leafage-team/leafage",
   "files": [
     "bin",
-    "dist",
-    "component.js"
+    "dist"
   ],
   "keywords": [
     "webpack",

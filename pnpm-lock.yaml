@@ -102,15 +102,21 @@ importers:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
     devDependencies:
-      cross-env:
-        specifier: ^7.0.3
-        version: 7.0.3
       sass:
         specifier: ^1.89.2
         version: 1.89.2
       sass-loader:
         specifier: ^16.0.5
         version: 16.0.5(@rspack/core@1.5.0)(sass@1.89.2)(webpack@5.101.0)
+
+  packages/cli:
+    dependencies:
+      '@leafage/toolkit':
+        specifier: workspace:*
+        version: link:../toolkit
+      leafage:
+        specifier: workspace:*
+        version: link:../leafage
 
   packages/component:
     dependencies:
@@ -124,6 +130,9 @@ importers:
 
   packages/leafage:
     dependencies:
+      '@leafage/cli':
+        specifier: workspace:*
+        version: link:../cli
       '@leafage/component':
         specifier: workspace:*
         version: link:../component
@@ -1727,11 +1736,6 @@ packages:
 
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
-
-  cross-env@7.0.3:
-    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
-    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
-    hasBin: true
 
   cross-spawn@5.1.0:
     resolution: {integrity: sha512-pTgQJ5KC0d2hcY8eyL1IzlBPYjTkyH72XRZPnLyKus2mBfNjQs3klqbJU2VILqZryAZUt9JOb3h/mWMy23/f5A==}
@@ -5292,10 +5296,6 @@ snapshots:
       browserslist: 4.25.3
 
   core-util-is@1.0.3: {}
-
-  cross-env@7.0.3:
-    dependencies:
-      cross-spawn: 7.0.6
 
   cross-spawn@5.1.0:
     dependencies:
