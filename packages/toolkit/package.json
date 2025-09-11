@@ -10,12 +10,12 @@
     "browserslist": "^4.25.3",
     "c12": "^3.1.0",
     "consola": "^3.4.2",
-    "defu": "^6.1.4",
     "dotenv-defaults": "^5.0.2",
     "exsolve": "^1.0.7",
     "import-fresh": "^3.3.1",
     "lodash": "^4.17.21",
-    "std-env": "^3.9.0"
+    "std-env": "^3.9.0",
+    "untyped": "^2.0.0"
   },
   "homepage": "https://github.com/leafage-team/leafage",
   "files": [

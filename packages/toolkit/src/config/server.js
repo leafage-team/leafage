@@ -1,14 +1,27 @@
 import { join } from 'path';
+import isPlainObjectFn from 'lodash/isPlainObject';
 
 export default {
   // host
-  host: process.env.HOST || process.env.npm_config_host || 'localhost',
+  host: {
+    $resolve: (val) => val || process.env.HOST || process.env.npm_config_host || 'localhost',
+  },
   // 端口
-  port: process.env.PORT || process.env.npm_config_port || 7749,
+  port: {
+    $resolve: (val) => val || process.env.PORT || process.env.npm_config_port || 7749,
+  },
   // 静态资源目录
   static: {
-    path: '/public',
-    handle: join(process.cwd(), 'public'),
+    $resolve: async (val, get) => {
+      if (isPlainObjectFn(val) || Array.isArray(val)) return val;
+
+      const root = await get('dir.root');
+
+      return {
+        path: '/public',
+        handle: join(root, 'public'),
+      };
+    },
   },
   // 代理
   // proxy: {
@@ -17,5 +30,11 @@ export default {
   //     changeOrigin: true,
   //   },
   // },
-  proxy: {},
+  proxy: {
+    $resolve: (val) => {
+      if (isPlainObjectFn(val)) return val;
+
+      return {};
+    },
+  },
 };

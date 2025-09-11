@@ -1,33 +1,49 @@
 import { join } from 'path';
 import { isDevelopment } from 'std-env';
 import dotEnv from 'dotenv-defaults';
+import isPlainObjectFn from 'lodash/isPlainObject';
 import { mergeProps } from '../utils';
 
-const root = process.cwd();
-const dev = Boolean(isDevelopment);
-if (!process.env.NODE_ENV) {
-  process.env.NODE_ENV = dev ? 'development' : 'production';
-}
-const env = mergeProps(
-  process.env,
-  dotEnv.config({
-    path: join(root, `.env.${process.env.NODE_ENV}`),
-    encoding: 'utf8',
-    defaults: join(root, '.env'),
-  }).parsed,
-);
-
 export default {
+  envName: {
+    $resolve: async (val, get) => {
+      if (typeof val === 'string') return val;
+
+      const dev = await get('dev');
+
+      return dev ? 'development' : 'production';
+    },
+  },
   // 是否是开发环境
-  dev,
+  dev: {
+    $resolve: (val) => (typeof val === 'boolean' ? val : Boolean(isDevelopment)),
+  },
   // 环境
-  env,
+  env: {
+    $resolve: async (val, get) => {
+      if (isPlainObjectFn(val) && Object.keys(val).length) return val;
+
+      const root = await get('dir.root');
+      const envName = await get('envName');
+
+      return mergeProps(
+        process.env,
+        dotEnv.config({
+          path: join(root, `.env.${envName}`),
+          defaults: join(root, '.env'),
+          encoding: 'utf8',
+        }).parsed,
+      );
+    },
+  },
   // 导入外部文件
   external: [],
   // 目录
   dir: {
     // 根目录
-    root,
+    root: {
+      $resolve: (val) => val || process.cwd(),
+    },
     // 构建目录
     dist: 'dist',
     // 源码目录

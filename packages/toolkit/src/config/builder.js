@@ -1,4 +1,5 @@
 import browserslist from 'browserslist';
+import isPlainObjectFn from 'lodash/isPlainObject';
 
 // builder配置
 export default {
@@ -6,7 +7,7 @@ export default {
   publicPath: '/',
   // 文件名
   filenames: {
-    // { isDev, isClient, isServer }
+    // { name, context, options, isDev, isClient, isServer }
     app: ({ isDev }) => (isDev ? '[name].js' : 'static/js/[contenthash:10].js'),
     chunk: ({ isDev }) => (isDev ? '[name].js' : 'static/js/[contenthash:10].js'),
     css: ({ isDev }) => (isDev ? '[name].css' : 'static/css/[contenthash:10].css'),
@@ -16,10 +17,27 @@ export default {
     cssModuleName: ({ isDev }) => (isDev ? '[name]__[local]--[hash:base64:8]' : '_[hash:base64:10]'),
   },
   // watch options
-  watch: {},
+  watch: {
+    $resolve: (val) => {
+      if (isPlainObjectFn(val)) return val;
+
+      return {};
+    },
+  },
   // browserslist
-  browserslist: browserslist.loadConfig({
-    path: process.cwd(),
-    env: process.env.NODE_ENV || 'production',
-  }),
+  browserslist: {
+    $resolve: async (val, get) => {
+      if (typeof val === 'string' || Array.isArray(val)) return val;
+
+      const root = await get('dir.root');
+      const envName = await get('envName');
+
+      const targets = browserslist.loadConfig({
+        path: root,
+        env: envName,
+      });
+
+      return targets || [];
+    },
+  },
 };
