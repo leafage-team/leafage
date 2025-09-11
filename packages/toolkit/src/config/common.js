@@ -1,8 +1,6 @@
-import { join } from 'path';
 import { isDevelopment } from 'std-env';
-import dotEnv from 'dotenv-defaults';
 import isPlainObjectFn from 'lodash/isPlainObject';
-import { mergeProps } from '../utils';
+import { loadEnv } from '../loadEnv';
 
 export default {
   envName: {
@@ -25,15 +23,14 @@ export default {
 
       const root = await get('dir.root');
       const envName = await get('envName');
+      const { parsed } = loadEnv({
+        cwd: root,
+        mode: envName,
+        systemVars: true,
+        processEnv: process.env,
+      });
 
-      return mergeProps(
-        process.env,
-        dotEnv.config({
-          path: join(root, `.env.${envName}`),
-          defaults: join(root, '.env'),
-          encoding: 'utf8',
-        }).parsed,
-      );
+      return parsed;
     },
   },
   // 导入外部文件

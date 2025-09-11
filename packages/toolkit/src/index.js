@@ -8,3 +8,5 @@ export * as imports from './imports';
 export { runWithContext, useContext } from './context';
 // logger
 export { logger, useLogger } from './logger';
+// env
+export { loadEnv } from './loadEnv';

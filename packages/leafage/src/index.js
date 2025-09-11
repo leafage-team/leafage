@@ -1,4 +1,4 @@
-export { loadConfig, logger } from '@leafage/toolkit';
+export { loadConfig, logger, loadEnv } from '@leafage/toolkit';
 export { createServer } from '@leafage/server';
 export { createRenderer } from '@leafage/renderer';
 export { bundle } from '@leafage/rspack';

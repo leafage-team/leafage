@@ -10,7 +10,7 @@
     "browserslist": "^4.25.3",
     "c12": "^3.1.0",
     "consola": "^3.4.2",
-    "dotenv-defaults": "^5.0.2",
+    "dotenv-expand": "^12.0.3",
     "exsolve": "^1.0.7",
     "import-fresh": "^3.3.1",
     "lodash": "^4.17.21",
