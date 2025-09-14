@@ -24,6 +24,7 @@ const execCommand = (command, description) => {
     throw error;
   }
 };
+const npmrcPath = path.join(process.cwd(), '.npmrc');
 const run = async () => {
   const { release } = await prompt({
     type: 'select',
@@ -62,7 +63,6 @@ const run = async () => {
     'Committing changes',
   );
   execCommand('pnpm run build', 'Build packages');
-  const npmrcPath = path.join(process.cwd(), '.npmrc');
   fs.writeFileSync(
     npmrcPath,
     `//registry.npmjs.org/:_authToken=${npmToken}`,
@@ -85,6 +85,7 @@ const run = async () => {
 
 run()
   .catch((err) => {
+    fs.unlinkSync(npmrcPath);
     log.error(err);
     process.exit(1);
   });
