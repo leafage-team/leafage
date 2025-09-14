@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
   "bin": {
-    "leafage": "bin/cli.js"
+    "leafage": "bin/cli.mjs"
   },
   "dependencies": {
     "@leafage/server": "workspace:*",

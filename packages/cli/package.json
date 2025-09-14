@@ -6,11 +6,12 @@
   "license": "MIT",
   "main": "dist/index.js",
   "bin": {
-    "leafage": "bin/cli.js"
+    "leafage": "bin/cli.mjs"
   },
   "dependencies": {
-    "leafage": "workspace:*",
-    "@leafage/toolkit": "workspace:*"
+    "@leafage/toolkit": "workspace:*",
+    "cac": "^6.7.14",
+    "leafage": "workspace:*"
   },
   "homepage": "https://github.com/leafage-team/leafage",
   "files": [
