@@ -1,3 +1,20 @@
+## [1.3.3](https://github.com/leafage-team/leafage/compare/v1.3.2...v1.3.3) (2025-09-14)
+
+
+### Features
+
+* **cli:** 优化命令行支持参数 ([9448500](https://github.com/leafage-team/leafage/commit/9448500aba58ad9b62c85fc4a5286d1b84559574))
+* **cli:** 增加命令模块 ([53e952e](https://github.com/leafage-team/leafage/commit/53e952e23e99d186212a1ad0be6108334b4fd7f2))
+* **example:** 删除无用文件 ([df39a78](https://github.com/leafage-team/leafage/commit/df39a7855a669b2bfa11aa3866092bfb575fb21b))
+* **example:** 增加浏览器目标打包配置 ([0d2b4ce](https://github.com/leafage-team/leafage/commit/0d2b4ced7d4dceed5254e1e397360b3df8c6d301))
+* **rspack:** 增加browserslist获取配置 ([4152aff](https://github.com/leafage-team/leafage/commit/4152aff59c1744428861680aa8e1489eceab6734))
+* **toolkit:** 修改配置的合并方式 ([a0cf1a1](https://github.com/leafage-team/leafage/commit/a0cf1a14c55877ccff44b3acfd8cc898f9eb7c7e))
+* **toolkit:** 修改配置的合并方式以及修改脚本的逻辑 ([0a8d4a0](https://github.com/leafage-team/leafage/commit/0a8d4a0a791d6914fb0fb48505257c9c82dba6df))
+* **toolkit:** 修改配置的默认配置 ([b8d2303](https://github.com/leafage-team/leafage/commit/b8d23035571e45fdac8dd2157b40fb6d52d04590))
+* **toolkit:** 增加加载env环境的方法并暴露出去 ([1fde0fd](https://github.com/leafage-team/leafage/commit/1fde0fda051cb860ffd3cacb80cdaaa3b7d2cb14))
+
+
+
 ## [1.3.2](https://github.com/leafage-team/leafage/compare/v1.3.1...v1.3.2) (2025-08-27)
 
 
