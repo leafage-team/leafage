@@ -11,6 +11,7 @@ export const applyDevCommand = (cli) => {
     // Load config
     const config = await loadConfig({
       cwd: root,
+      envName: options.envName,
       overrides: {
         dev: true,
         envName: options.envName,
