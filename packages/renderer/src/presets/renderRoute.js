@@ -1,18 +1,61 @@
 import { imports, utils } from '@leafage/toolkit';
 
+const redirectStatusCodes = new Set([301, 302, 303, 307, 308]);
+const isRedirectStatusCode = (statusCode) => redirectStatusCodes.has(statusCode);
+const redirect = (url, init = 302) => {
+  const responseInit = typeof init === 'number' ? { status: init } : init;
+
+  const headers = new Headers(responseInit.headers);
+  headers.set('Location', url);
+
+  return new Response(null, utils.mergeProps(responseInit, { headers }));
+};
+export const json = (data, init = 200) => {
+  const responseInit = typeof init === 'number' ? { status: init } : init;
+
+  const headers = new Headers(responseInit.headers);
+  headers.set('Content-Type', 'text/html; charset=utf-8');
+
+  return new Response(JSON.stringify(data), utils.mergeProps(responseInit, { headers }));
+};
+const loaderHandle = async (loaderFn, loaderContext, response) => {
+  const res = await loaderFn?.(loaderContext);
+  if (!(res instanceof Response)) return;
+
+  res.headers.forEach((value, key) => response.setHeader(key, value));
+  response.statusCode = res.status;
+
+  if (isRedirectStatusCode(res.status)) return { redirected: true };
+  if (res.ok) return res.json();
+};
+
 export const renderRoutePreset = (ctx) => {
-  ctx.renderRoute = async (req, res) => {
-    const resource = ctx.findResource(req.pathname);
-    if (!resource) return;
+  ctx.renderRoute = async (request, response) => {
+    try {
+      const resource = ctx.findResource(request.pathname);
+      if (!resource) return;
 
-    req.params = resource.params;
-    const { loader: appLoader } = await imports.importServerModule('App', ctx.options);
-    const { loader: viewLoader } = await imports.importServerModule(resource.view, ctx.options);
-    const loaderContext = { req, res };
-    const appProps = await appLoader?.(loaderContext);
-    const viewProps = await viewLoader?.(loaderContext);
-    const props = utils.mergeProps(appProps, viewProps);
+      request.params = resource.params;
+      const appLoaderContext = {
+        request,
+        params: request.params,
+        query: request.query,
+        json,
+      };
+      const loaderContext = utils.mergeProps(appLoaderContext, { redirect });
 
-    return ctx.render(resource.view, props);
+      const { loader: appLoader } = await imports.importServerModule('App', ctx.options);
+      const { loader: viewLoader } = await imports.importServerModule(resource.view, ctx.options);
+
+      const appProps = await loaderHandle(appLoader, appLoaderContext, response);
+      const viewProps = await loaderHandle(viewLoader, loaderContext, response);
+      if (viewProps && viewProps.redirected) return { redirected: true };
+
+      const html = await ctx.render(resource.view, utils.mergeProps(appProps, viewProps));
+
+      return { html };
+    } catch (e) {
+      return { error: e };
+    }
   };
 };
