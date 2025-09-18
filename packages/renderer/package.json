@@ -10,7 +10,7 @@
     "@leafage/component": "workspace:*",
     "@leafage/toolkit": "workspace:*",
     "devalue": "^5.1.1",
-    "path-to-regexp": "^8.2.0"
+    "path-to-regexp": "^6.3.0"
   },
   "devDependencies": {
     "react": "^18.2.0",
