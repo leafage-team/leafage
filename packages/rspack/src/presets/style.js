@@ -17,10 +17,12 @@ export const stylePreset = (ctx) => {
       loader: require.resolve('css-loader'),
       options: {
         modules: {
-          auto: /\.module\.\w+$/i,
+          auto: true,
+          namedExport: false,
+          exportGlobals: false,
+          exportLocalsConvention: 'as-is',
           localIdentName: getFileName(ctx, 'cssModuleName'),
         },
-        esModule: false,
         sourceMap,
       },
     };
