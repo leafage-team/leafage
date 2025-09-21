@@ -1,3 +1,16 @@
+## [1.3.4](https://github.com/leafage-team/leafage/compare/v1.3.3...v1.3.4) (2025-09-21)
+
+
+### Features
+
+* **cli:** 加载配置文件增加envName参数 ([3c4167d](https://github.com/leafage-team/leafage/commit/3c4167daeb85c9057ee5f4252c64c916c2563b5e))
+* **cli:** 优化命令行信息 ([59ff95b](https://github.com/leafage-team/leafage/commit/59ff95b1f629a845dfeb8c139f3813e3794ab607))
+* **renderer:** 增加参数可选的配置 ([4598cd7](https://github.com/leafage-team/leafage/commit/4598cd79f5f8fabe12a020e1d85736974f44fe13))
+* **renderer:** 支持重定向以及返回数据格式修改 ([9af3a9b](https://github.com/leafage-team/leafage/commit/9af3a9bb424cbdca4483cda08b6f28538654cb18))
+* **rspack:** 修改css-loader导出cssModule设置 ([91e2565](https://github.com/leafage-team/leafage/commit/91e25655e5dfc6e4c4a0abac3bb6620f47025b56))
+
+
+
 ## [1.3.3](https://github.com/leafage-team/leafage/compare/v1.3.2...v1.3.3) (2025-09-14)
 
 
