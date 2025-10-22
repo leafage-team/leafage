@@ -37,4 +37,12 @@ export default {
       return {};
     },
   },
+  // 自定义路由 "页面路径": "自定义路由"
+  customRoutes: {
+    $resolve: (val) => {
+      if (isPlainObjectFn(val)) return val;
+
+      return {};
+    },
+  },
 };

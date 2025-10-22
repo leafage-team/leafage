@@ -1,5 +1,6 @@
 import path from 'pathe';
 import { RspackManifestPlugin } from 'rspack-manifest-plugin';
+import { utils } from '@leafage/toolkit';
 
 export const manifestPreset = (ctx) => {
   if (ctx.isClient) {
@@ -30,9 +31,12 @@ export const manifestPreset = (ctx) => {
               if (/\.js$/.test(file) && !/\.hot-update.js$/.test(file)) scripts.push(file);
             });
 
+            const pagePath = `/${routeArr.join('/')}`;
+            const pageRoute = utils.toArray(ctx.options.server.customRoutes[pagePath] ?? pagePath).filter(Boolean);
+
             return {
               view,
-              path: `/${routeArr.join('/')}`,
+              path: pageRoute,
               styles,
               scripts,
             };
