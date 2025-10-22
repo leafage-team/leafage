@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Document = ({ Scripts, Links, helmet, context, children }) => (
+const Document = ({ Scripts, Links, Context, helmet, children }) => (
   <html {...helmet.htmlAttributes.toComponent()}>
     <head>
       {helmet.base.toComponent()}
@@ -13,7 +13,7 @@ const Document = ({ Scripts, Links, helmet, context, children }) => (
     </head>
     <body {...helmet.bodyAttributes.toComponent()}>
       {children}
-      {context}
+      <Context />
       <Scripts />
       {helmet.script.toComponent()}
     </body>

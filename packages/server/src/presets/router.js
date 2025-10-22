@@ -1,8 +1,13 @@
 import createError from 'http-errors';
 
 export const routerPreset = (ctx) => {
-  ctx.app.get(async (req, res, next) => {
+  ctx.app.use(async (req, res, next) => {
     try {
+      if (req.method.toLowerCase() !== 'get') {
+        next(new createError.NotFound());
+        return;
+      }
+
       const result = await ctx.renderer.renderRoute(req, res);
       const { html, error, redirected } = result || {};
 

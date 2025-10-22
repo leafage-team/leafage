@@ -21,14 +21,15 @@ const genLinks = (resource) => (props) => resource.styles.map((href) => (
     {...props}
   />
 ));
-const getRenderContext = (props, options) => (
+const genContext = (data, options) => (props) => (
   <RenderJudge
-    value={Object.keys(props || {})?.length}
+    value={Object.keys(data || {})?.length}
     active={(
       <script
         type="text/javascript"
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: `${options.globals.context}=${uneval(props)}` }}
+        dangerouslySetInnerHTML={{ __html: `${options.globals.context}=${uneval(data)}` }}
+        {...props}
       />
     )}
   />
@@ -51,8 +52,8 @@ export const renderPreset = (ctx) => {
       <Document
         Scripts={genScripts(resource)}
         Links={genLinks(resource)}
+        Context={genContext(props, ctx.options)}
         helmet={helmet}
-        context={getRenderContext(props, ctx.options)}
       >
         {/* eslint-disable-next-line react/no-danger */}
         <div id={ctx.options.globals.id} dangerouslySetInnerHTML={{ __html: body }} />
