@@ -1,7 +1,6 @@
 import { imports, utils } from '@leafage/toolkit';
 
-const redirectStatusCodes = new Set([301, 302, 303, 307, 308]);
-const isRedirectStatusCode = (statusCode) => redirectStatusCodes.has(statusCode);
+const isRedirectStatusCode = (statusCode) => new Set([301, 302, 303, 307, 308]).has(statusCode);
 const redirect = (url, init = 302) => {
   const responseInit = typeof init === 'number' ? { status: init } : init;
 
@@ -14,7 +13,6 @@ export const json = (data, init = 200) => {
   const responseInit = typeof init === 'number' ? { status: init } : init;
 
   const headers = new Headers(responseInit.headers);
-  headers.set('Content-Type', 'text/html; charset=utf-8');
 
   return new Response(JSON.stringify(data), utils.mergeProps(responseInit, { headers }));
 };
@@ -22,8 +20,8 @@ const loaderHandle = async (loaderFn, loaderContext, response) => {
   const res = await loaderFn?.(loaderContext);
   if (!(res instanceof Response)) return;
 
-  res.headers.forEach((value, key) => response.setHeader(key, value));
-  response.statusCode = res.status;
+  res.headers.forEach((value, key) => response.set(key, value));
+  response.status(res.status);
 
   if (isRedirectStatusCode(res.status)) return { redirected: true };
   if (res.ok) return res.json();

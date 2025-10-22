@@ -1,7 +1,7 @@
 import createError from 'http-errors';
 
 export const routerPreset = (ctx) => {
-  ctx.app.use(async (req, res, next) => {
+  ctx.app.get(async (req, res, next) => {
     try {
       const result = await ctx.renderer.renderRoute(req, res);
       const { html, error, redirected } = result || {};
@@ -19,6 +19,7 @@ export const routerPreset = (ctx) => {
         return;
       }
 
+      res.set('Content-Type', 'text/html; charset=utf-8');
       res.send(html);
     } catch (err) {
       next(createError(err.status || 500, err));
