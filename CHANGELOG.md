@@ -1,3 +1,14 @@
+## [1.3.5](https://github.com/leafage-team/leafage/compare/v1.3.4...v1.3.5) (2025-10-24)
+
+
+### Features
+
+* **renderer:** 增加请求方法的验证以及组件属性的更新 ([0036df0](https://github.com/leafage-team/leafage/commit/0036df0a737703ff28ea4e5c38d2d5b98e037888))
+* **server:** 使用express的方法代替原生方法 ([6b84b3c](https://github.com/leafage-team/leafage/commit/6b84b3ce06976f001457f300be8b184ecb2438f1))
+* **server:** 增加自定义路由的配置 ([9ce816f](https://github.com/leafage-team/leafage/commit/9ce816fbd05ae4641f7322dafb1c907be9671022))
+
+
+
 ## [1.3.4](https://github.com/leafage-team/leafage/compare/v1.3.3...v1.3.4) (2025-09-21)
 
 
