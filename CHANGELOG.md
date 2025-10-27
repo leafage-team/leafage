@@ -1,3 +1,18 @@
+## [1.3.7](https://github.com/leafage-team/leafage/compare/v1.3.6...v1.3.7) (2025-10-27)
+
+
+### Bug Fixes
+
+* **server:** 修复自定义server加载顺序问题 ([fab9819](https://github.com/leafage-team/leafage/commit/fab98195026fc1c00b37093b411c8f88679d91ff))
+
+
+### Features
+
+* **renderer:** 错误渲染统一在渲染库中处理 ([5913525](https://github.com/leafage-team/leafage/commit/59135255cc403efafbd78a4c4dd4a353b2b2cf68))
+* **renderer:** 增加loader的参数 ([1e5342c](https://github.com/leafage-team/leafage/commit/1e5342ca7c6127e2f987b4f2a8295817e6b62dad))
+
+
+
 ## [1.3.6](https://github.com/leafage-team/leafage/compare/v1.3.5...v1.3.6) (2025-10-27)
 
 
