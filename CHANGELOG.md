@@ -1,3 +1,13 @@
+## [1.3.6](https://github.com/leafage-team/leafage/compare/v1.3.5...v1.3.6) (2025-10-27)
+
+
+### Features
+
+* **rspack:** 外部文件支持别名导入 ([1bc3787](https://github.com/leafage-team/leafage/commit/1bc378770f69e84f23954fe80984cb5cd5eb9806))
+* **rspack:** 增加别名的配置 ([8ea00a4](https://github.com/leafage-team/leafage/commit/8ea00a45e3a40423a51871360a665931439c4bc2))
+
+
+
 ## [1.3.5](https://github.com/leafage-team/leafage/compare/v1.3.4...v1.3.5) (2025-10-24)
 
 
