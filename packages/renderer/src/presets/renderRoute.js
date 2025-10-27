@@ -38,6 +38,9 @@ export const renderRoutePreset = (ctx) => {
         request,
         params: request.params,
         query: request.query,
+        context: ctx.context,
+        options: ctx.options,
+        isDev: ctx.isDev,
         json,
       };
       const loaderContext = utils.mergeProps(appLoaderContext, { redirect });
