@@ -1,3 +1,4 @@
+import path from 'path';
 import browserslist from 'browserslist';
 import isPlainObjectFn from 'lodash/isPlainObject';
 
@@ -22,6 +23,18 @@ export default {
       if (isPlainObjectFn(val)) return val;
 
       return {};
+    },
+  },
+  // alias
+  alias: {
+    $resolve: async (val, get) => {
+      if (isPlainObjectFn(val)) return val;
+
+      const root = await get('dir.root');
+      const src = await get('dir.src');
+      return {
+        '@': path.join(root, src),
+      };
     },
   },
   // browserslist
