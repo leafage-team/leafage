@@ -2,23 +2,28 @@ import path from 'path';
 import { EOL } from 'os';
 import { normalize } from 'pathe';
 import { imports, useContext } from '@leafage/toolkit';
-import { getInnerComponentPath } from '@/common/utils';
+import { getInnerComponentPath } from '../common/utils';
 
 export default function clientEntryLoader() {
   const context = useContext();
   const app = getInnerComponentPath('App', context.options);
   const { external } = context.options;
-  const resolveModule = (id) => imports.resolveModule(
-    id,
-    {
-      paths: [
-        import.meta.url,
-        path.join(context.options.dir.root, context.options.dir.src),
-        context.options.dir.root,
-        path.join(context.options.dir.root, 'node_modules'),
-      ],
-    },
-  );
+  const resolveModule = (id) => {
+    const modulePath = imports.resolveModule(
+      id,
+      {
+        paths: [
+          import.meta.url,
+          path.join(context.options.dir.root, context.options.dir.src),
+          context.options.dir.root,
+          path.join(context.options.dir.root, 'node_modules'),
+        ],
+        try: true,
+      },
+    );
+
+    return modulePath ?? id;
+  };
 
   return `
     import React from 'react';

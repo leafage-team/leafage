@@ -7,6 +7,7 @@ export const directoryToURL = (dir) => pathToFileURL(`${dir}/`);
 export const resolveModule = (id, options = {}) => resolveModulePath(id, {
   from: options.url ?? options.paths ?? [import.meta.url],
   extensions: ['.js', '.mjs', '.jsx', '.cjs', '.ts', '.mts', '.cts', '.tsx'],
+  try: !!options.try,
 });
 export const importModule = async (id, options = {}) => {
   const resolvedPath = resolveModule(id, options);
