@@ -1,6 +1,6 @@
 import createError from 'http-errors';
 
-export const routerPreset = (ctx) => {
+export const routePreset = (ctx) => {
   ctx.app.use(async (req, res, next) => {
     try {
       if (req.method.toLowerCase() !== 'get') {

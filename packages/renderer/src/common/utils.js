@@ -5,5 +5,6 @@ export const createContext = (context) => ({
   resources: [],
   findResource: () => null,
   renderRoute: () => '',
+  renderError: () => '',
   render: () => '',
 });

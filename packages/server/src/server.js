@@ -8,7 +8,7 @@ import { devPreset } from './presets/dev';
 import { staticPreset } from './presets/static';
 import { proxyPreset } from './presets/proxy';
 import { serverPreset } from './presets/server';
-import { routerPreset } from './presets/router';
+import { routePreset } from './presets/route';
 import { errorPreset } from './presets/error';
 
 const startServer = (app, context) => {
@@ -36,7 +36,7 @@ export const createServer = (context) => {
         staticPreset,
         proxyPreset,
         serverPreset,
-        routerPreset,
+        routePreset,
         errorPreset,
       ],
     );
