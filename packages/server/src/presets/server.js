@@ -1,11 +1,22 @@
-import { imports, utils } from '@leafage/toolkit';
+import express from 'express';
+import { imports } from '@leafage/toolkit';
 
 export const serverPreset = async (ctx) => {
+  const router = express.Router();
+
+  ctx.app.use(router);
+
   const importServer = async () => {
     try {
       const { Component } = await imports.importServerModule('server', ctx.options);
 
-      utils.applyPresets(ctx, [Component]);
+      Component?.({
+        router,
+        context: ctx.context,
+        options: ctx.options,
+        renderer: ctx.renderer,
+        isDev: ctx.isDev,
+      });
     } catch (e) {
       /* empty */
     }
