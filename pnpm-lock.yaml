@@ -86,6 +86,10 @@ importers:
       '@leafage/toolkit':
         specifier: workspace:*
         version: link:../../packages/toolkit
+    devDependencies:
+      cross-env:
+        specifier: ^10.1.0
+        version: 10.1.0
 
   examples/simple:
     dependencies:
@@ -109,18 +113,6 @@ importers:
         specifier: ^16.0.5
         version: 16.0.5(@rspack/core@1.5.0)(sass@1.89.2)(webpack@5.101.0)
 
-  packages/cli:
-    dependencies:
-      '@leafage/toolkit':
-        specifier: workspace:*
-        version: link:../toolkit
-      cac:
-        specifier: ^6.7.14
-        version: 6.7.14
-      leafage:
-        specifier: workspace:*
-        version: link:../leafage
-
   packages/component:
     dependencies:
       react-helmet:
@@ -133,9 +125,6 @@ importers:
 
   packages/leafage:
     dependencies:
-      '@leafage/cli':
-        specifier: workspace:*
-        version: link:../cli
       '@leafage/component':
         specifier: workspace:*
         version: link:../component
@@ -281,9 +270,6 @@ importers:
       exsolve:
         specifier: ^1.0.7
         version: 1.0.7
-      import-fresh:
-        specifier: ^3.3.1
-        version: 3.3.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -847,6 +833,9 @@ packages:
 
   '@emnapi/wasi-threads@1.0.4':
     resolution: {integrity: sha512-PJR+bOmMOPH8AtcTGAyYNiuJ3/Fcoj2XN/gBEWzDIKh254XO+mM9XoXHk5GNEhodxeMznbg7BlRojVbKN+gC6g==}
+
+  '@epic-web/invariant@1.0.0':
+    resolution: {integrity: sha512-lrTPqgvfFQtR/eY/qkIzp98OGdNJu0m5ji3q/nJI8v3SXkRKEnWiOxMmbvcSoAIzv/cGiuvRy57k4suKQSAdwA==}
 
   '@eslint-community/eslint-utils@4.7.0':
     resolution: {integrity: sha512-dyybb3AcajC7uha6CvhdVRJqaKyn7w2YKqKyAN37NKYgZT36w+iRb0Dymmc5qEJ549c/S31cMMSFd75bteCpCw==}
@@ -1563,10 +1552,6 @@ packages:
       magicast:
         optional: true
 
-  cac@6.7.14:
-    resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
-    engines: {node: '>=8'}
-
   call-bind-apply-helpers@1.0.2:
     resolution: {integrity: sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==}
     engines: {node: '>= 0.4'}
@@ -1743,6 +1728,11 @@ packages:
 
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
+
+  cross-env@10.1.0:
+    resolution: {integrity: sha512-GsYosgnACZTADcmEyJctkJIoqAhHjttw7RsFrVoJNXbsWWqaq6Ym+7kZjq6mS45O0jij6vtiReppKQEtqWy6Dw==}
+    engines: {node: '>=20'}
+    hasBin: true
 
   cross-spawn@5.1.0:
     resolution: {integrity: sha512-pTgQJ5KC0d2hcY8eyL1IzlBPYjTkyH72XRZPnLyKus2mBfNjQs3klqbJU2VILqZryAZUt9JOb3h/mWMy23/f5A==}
@@ -4418,6 +4408,8 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
+  '@epic-web/invariant@1.0.0': {}
+
   '@eslint-community/eslint-utils@4.7.0(eslint@8.57.1)':
     dependencies:
       eslint: 8.57.1
@@ -5132,8 +5124,6 @@ snapshots:
       pkg-types: 2.2.0
       rc9: 2.1.2
 
-  cac@6.7.14: {}
-
   call-bind-apply-helpers@1.0.2:
     dependencies:
       es-errors: 1.3.0
@@ -5311,6 +5301,11 @@ snapshots:
       browserslist: 4.25.3
 
   core-util-is@1.0.3: {}
+
+  cross-env@10.1.0:
+    dependencies:
+      '@epic-web/invariant': 1.0.0
+      cross-spawn: 7.0.6
 
   cross-spawn@5.1.0:
     dependencies:
