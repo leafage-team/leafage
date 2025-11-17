@@ -145,7 +145,7 @@ export default {
   head: {
     $resolve: (val) => {
       if ((isPlainObjectFn(val) && Object.keys(val).length)) return val;
-      // { name, context, config, isDev, isClient, isServer }
+      // { context, config, isDev }
       if (isFunctionFn(val)) return val;
 
       return {

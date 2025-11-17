@@ -166,9 +166,6 @@ importers:
       devalue:
         specifier: ^5.1.1
         version: 5.1.1
-      path-to-regexp:
-        specifier: ^6.3.0
-        version: 6.3.0
     devDependencies:
       react:
         specifier: ^18.2.0
@@ -2899,9 +2896,6 @@ packages:
 
   path-to-regexp@0.1.12:
     resolution: {integrity: sha512-RA1GjUVMnvYFxuqovrEqZoxxW5NUZqbwKtYz/Tt7nXerk0LbLblQmrsgdeOxV5SFHf0UDggjS/bSeOZwt1pmEQ==}
-
-  path-to-regexp@6.3.0:
-    resolution: {integrity: sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ==}
 
   pathe@2.0.3:
     resolution: {integrity: sha512-WUjGcAqP1gQacoQe+OBJsFA7Ld4DyXuUIjZ5cc75cLHvJ7dtNsTugphxIADwspS+AraAUePCKrSVtPLFj/F88w==}
@@ -6604,8 +6598,6 @@ snapshots:
       minipass: 7.1.2
 
   path-to-regexp@0.1.12: {}
-
-  path-to-regexp@6.3.0: {}
 
   pathe@2.0.3: {}
 

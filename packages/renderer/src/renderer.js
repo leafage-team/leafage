@@ -1,22 +1,26 @@
 import { utils } from '@leafage/toolkit';
-import { createContext } from './common/utils';
-import { resourcePreset } from './presets/resource';
+import { findResourcePreset } from './presets/findResource';
+import { loadResourcePreset } from './presets/loadResource';
 import { renderPreset } from './presets/render';
-import { renderRoutePreset } from './presets/renderRoute';
-import { renderErrorPreset } from './presets/renderError';
 
 export const createRenderer = (context) => {
-  const ctx = createContext(context);
+  const ctx = {
+    context,
+    config: context.config,
+    isDev: context.config.dev,
+    resources: [],
+    findResource: () => null,
+    render: () => '',
+  };
 
   context.callHook('renderer:create');
 
-  return context.runWithContext(() => utils.applyPresets(
+  return utils.applyPresets(
     ctx,
     [
-      resourcePreset,
+      findResourcePreset,
+      loadResourcePreset,
       renderPreset,
-      renderRoutePreset,
-      renderErrorPreset,
     ],
-  ));
+  );
 };
