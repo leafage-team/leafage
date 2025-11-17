@@ -1,5 +1,5 @@
 export default {
-  dir: {
+  output: {
     dist: 'dist2',
   },
 };

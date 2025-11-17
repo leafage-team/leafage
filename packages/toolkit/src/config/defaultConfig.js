@@ -1,5 +1,4 @@
 import path from 'path';
-import { isDevelopment } from 'std-env';
 import browserslist from 'browserslist';
 import isPlainObjectFn from 'lodash/isPlainObject';
 import isFunctionFn from 'lodash/isFunction';
@@ -30,7 +29,7 @@ export default {
   },
   // 是否是开发环境
   dev: {
-    $resolve: (val) => (isBooleanFn(val) ? val : Boolean(isDevelopment)),
+    $resolve: (val) => (isBooleanFn(val) ? val : process.env.NODE_ENV === 'development'),
   },
   // 环境
   env: {
