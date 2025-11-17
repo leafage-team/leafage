@@ -10,3 +10,5 @@ export { runWithContext, useContext } from './context';
 export { logger, useLogger } from './logger';
 // env
 export { loadEnv } from './loadEnv';
+// error
+export { BundleError, RenderError } from './error';
