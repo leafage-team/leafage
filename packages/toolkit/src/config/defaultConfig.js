@@ -3,12 +3,15 @@ import { isDevelopment } from 'std-env';
 import browserslist from 'browserslist';
 import isPlainObjectFn from 'lodash/isPlainObject';
 import isFunctionFn from 'lodash/isFunction';
+import isBooleanFn from 'lodash/isBoolean';
+import isStringFn from 'lodash/isString';
+import isNumberFn from 'lodash/isNumber';
 import { mergeProps } from '../utils';
 
 const genStrValResolve = (parentStr, defaultStr) => async (val, get) => {
   const parent = await get(parentStr);
 
-  if (typeof val === 'string') path.join(parent, val);
+  if (isStringFn(val)) path.join(parent, val);
   return path.join(parent, defaultStr);
 };
 export default {
@@ -18,7 +21,7 @@ export default {
   },
   envName: {
     $resolve: async (val, get) => {
-      if (typeof val === 'string') return val;
+      if (isStringFn(val)) return val;
 
       const dev = await get('dev');
 
@@ -27,7 +30,7 @@ export default {
   },
   // 是否是开发环境
   dev: {
-    $resolve: (val) => (typeof val === 'boolean' ? val : Boolean(isDevelopment)),
+    $resolve: (val) => (isBooleanFn(val) ? val : Boolean(isDevelopment)),
   },
   // 环境
   env: {
@@ -83,7 +86,7 @@ export default {
           media: maxSize,
         });
 
-        if (typeof val === 'number') return genRes(val);
+        if (isNumberFn(val)) return genRes(val);
 
         const defaultVal = genRes(1000);
         if (isPlainObjectFn(val) && Object.keys(val).length) return mergeProps(defaultVal, val);
@@ -125,7 +128,7 @@ export default {
     // browserslist
     browserslist: {
       $resolve: async (val, get) => {
-        if (typeof val === 'string' || Array.isArray(val)) return val;
+        if (isStringFn(val) || Array.isArray(val)) return val;
 
         const root = await get('root');
         const envName = await get('envName');
@@ -178,6 +181,15 @@ export default {
         return {
           '@': src,
         };
+      },
+    },
+    // 自定义 rspack 配置
+    // config, { name, context, config, isDev, isClient, isServer }
+    rspack: {
+      $resolve: (val) => {
+        if (isFunctionFn(val)) return val;
+
+        return (config) => config;
       },
     },
   },
