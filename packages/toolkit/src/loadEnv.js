@@ -2,6 +2,7 @@ import fs from 'fs';
 import { join } from 'path';
 import { expand } from 'dotenv-expand';
 import { mergeProps } from './utils';
+import { ConfigError } from './error/ConfigError';
 
 const DOTENV_LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/gm;
 const isFileSync = (filePath) => {
@@ -60,7 +61,7 @@ export const loadEnv = ({
   processEnv = process.env,
 } = {}) => {
   if (mode === 'local') {
-    throw new Error(
+    throw new ConfigError(
       'local cannot be used as a value for env mode, because .env.local represents a temporary local file. Please use another value.',
     );
   }
@@ -94,8 +95,5 @@ export const loadEnv = ({
     parsed = mergeProps(parsed, processEnv);
   }
 
-  return {
-    parsed,
-    filePaths,
-  };
+  return parsed;
 };
