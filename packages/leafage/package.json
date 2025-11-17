@@ -10,7 +10,17 @@
   "homepage": "https://github.com/leafage-team/leafage",
   "license": "MIT",
   "author": "mingdev <mingdev@163.com>",
-  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "default": "./dist/cjs/index.js"
+    },
+    "./component": {
+      "import": "./dist/esm/client/component.js",
+      "default": "./dist/cjs/client/component.js"
+    }
+  },
+  "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "bin": {
     "leafage": "bin/cli.mjs"

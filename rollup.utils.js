@@ -34,7 +34,7 @@ const getRollupConfig = ({ packageDir, config, format } = {}) => {
     defineConfig({
       input: resolveFn('src/index.js'),
       output: {
-        dir: resolveFn(format === 'cjs' ? 'dist' : `dist/${format || ''}`),
+        dir: resolveFn(`dist/${format || ''}`),
         format,
         preserveModules: true,
         exports: 'named',
