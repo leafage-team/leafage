@@ -13,6 +13,7 @@
   "main": "dist-cjs/index.js",
   "module": "dist-esm/index.js",
   "files": [
+    "compiled",
     "dist-cjs",
     "dist-esm"
   ],
