@@ -11,13 +11,15 @@
   "license": "MIT",
   "author": "mingdev <mingdev@163.com>",
   "exports": {
+    ".": {
+      "import": "./dist-esm/index.js",
+      "default": "./dist-cjs/index.js"
+    },
     "./component": {
       "import": "./dist-esm/client/component.js",
       "default": "./dist-cjs/client/component.js"
     }
   },
-  "main": "dist-cjs/index.js",
-  "module": "dist-esm/index.js",
   "files": [
     "dist-cjs",
     "dist-esm"
