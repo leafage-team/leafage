@@ -2,7 +2,7 @@ import { rspack } from '@rspack/core';
 import { getCompiledPath, getFileName } from '../common/utils';
 
 export const stylePreset = (ctx) => {
-  const targets = ctx.options.builder.browserslist;
+  const targets = ctx.options.output.browserslist;
 
   const getCssLoaders = () => {
     const sourceMap = ctx.isDev && ctx.isClient;

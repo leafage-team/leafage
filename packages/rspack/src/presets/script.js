@@ -3,7 +3,7 @@ import { rspack } from '@rspack/core';
 import ReactRefreshPlugin from '@rspack/plugin-react-refresh';
 
 export const scriptPreset = (ctx) => {
-  const targets = ctx.options.builder.browserslist;
+  const targets = ctx.options.output.browserslist;
 
   ctx.config.module.rules.push({
     test: /\.jsx?$/,
@@ -50,7 +50,7 @@ export const scriptPreset = (ctx) => {
 
               const hasJs = /\.js$/.test(resource);
 
-              return hasJs && resource.indexOf(path.join(ctx.options.dir.root, 'node_modules')) === 0;
+              return hasJs && resource.indexOf(path.join(ctx.options.root, 'node_modules')) === 0;
             },
           },
           async: {

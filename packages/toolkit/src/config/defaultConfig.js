@@ -144,11 +144,11 @@ export default {
   // 页面头部配置
   head: {
     $resolve: (val) => {
-      if ((isPlainObjectFn(val) && Object.keys(val).length)) return val;
+      if ((isPlainObjectFn(val) && Object.keys(val).length)) return () => val;
       // { context, config, isDev }
-      if (isFunctionFn(val)) return val;
+      if (isFunctionFn(val)) return (...params) => (val?.(...params) || {});
 
-      return {
+      return () => ({
         title: 'Leafage',
         meta: [
           {
@@ -158,7 +158,7 @@ export default {
             content: 'text/html; charset=UTF-8',
           },
         ],
-      };
+      });
     },
   },
   // 构建器配置

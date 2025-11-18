@@ -1,1 +1,1 @@
-export { bundle } from './bundle';
+export { createBundle } from './bundle';

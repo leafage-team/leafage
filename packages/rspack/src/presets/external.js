@@ -1,6 +1,10 @@
 import WebpackNodeExternals from 'webpack-node-externals';
 
 export const externalPreset = (ctx) => {
+  ctx.config.externals.push(
+    ...ctx.options.output.externals || [],
+  );
+
   if (ctx.isServer) {
     ctx.config.externals.push(
       WebpackNodeExternals({

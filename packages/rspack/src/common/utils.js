@@ -1,23 +1,30 @@
 import { join, normalize } from 'pathe';
 import glob from 'fast-glob';
-import { logger } from '@leafage/toolkit';
+import { BundleError, logger } from '@leafage/toolkit';
 
-export const createContext = (context) => ({
+export const createContext = (context, name) => ({
   context,
-  options: context.options,
+  options: context.config,
 
   config: {},
 
-  name: 'base',
-  isDev: context.options.dev,
-  isServer: false,
-  isClient: false,
+  name,
+  isDev: context.config.dev,
+  isServer: name === 'server',
+  isClient: name === 'client',
 });
 export const getFileName = (ctx, key) => {
-  let fileName = ctx.options.builder.filenames?.[key];
+  let fileName = ctx.options.output.filename?.[key];
 
   if (typeof fileName === 'function') {
-    fileName = fileName(ctx);
+    fileName = fileName({
+      name: ctx.name,
+      context: ctx.context,
+      config: ctx.context.config,
+      isDev: ctx.isDev,
+      isClient: ctx.isClient,
+      isServer: ctx.isServer,
+    });
   }
   if (typeof fileName === 'string' && ctx.isDev) {
     const hash = /\[(chunkhash|contenthash|hash)(?::\d+)?\]/.exec(fileName);
@@ -28,9 +35,10 @@ export const getFileName = (ctx, key) => {
 
   return fileName;
 };
+export const getDataUriLimit = (ctx, key) => ctx.options.output.dataUriLimit?.[key];
 export const searchFiles = (pattern, options) => glob.sync(normalize(pattern), options);
 export const searchFileByName = (name, options) => {
-  const [filePath] = searchFiles(join(options.dir.root, options.dir.src, `${name}.{js,jsx}`));
+  const [filePath] = searchFiles(join(options.input.src, `${name}.{js,jsx}`));
 
   return filePath;
 };
@@ -40,7 +48,7 @@ export const getInnerComponentPath = (name, options) => {
   return filePath || normalize(require.resolve(`@leafage/component/${name}`));
 };
 export const getBuildStatsError = (stats) => {
-  const error = new Error('Builder error');
+  const error = new BundleError('Builder error');
   error.stack = stats.toString('normal');
   return error;
 };

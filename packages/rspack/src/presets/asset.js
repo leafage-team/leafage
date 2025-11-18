@@ -1,4 +1,4 @@
-import { getFileName } from '@/common/utils';
+import { getDataUriLimit, getFileName } from '../common/utils';
 
 export const assetPreset = (ctx) => {
   ctx.config.module.rules.push({
@@ -10,7 +10,7 @@ export const assetPreset = (ctx) => {
     },
     parser: {
       dataUrlCondition: {
-        maxSize: 1000,
+        maxSize: getDataUriLimit(ctx, 'image'),
       },
     },
   }, {
@@ -22,7 +22,7 @@ export const assetPreset = (ctx) => {
     },
     parser: {
       dataUrlCondition: {
-        maxSize: 1000,
+        maxSize: getDataUriLimit(ctx, 'media'),
       },
     },
   }, {
@@ -34,7 +34,7 @@ export const assetPreset = (ctx) => {
     },
     parser: {
       dataUrlCondition: {
-        maxSize: 1000,
+        maxSize: getDataUriLimit(ctx, 'font'),
       },
     },
   });

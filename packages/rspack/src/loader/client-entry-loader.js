@@ -5,18 +5,17 @@ import { imports, useContext } from '@leafage/toolkit';
 import { getInnerComponentPath } from '../common/utils';
 
 export default function clientEntryLoader() {
-  const context = useContext();
-  const app = getInnerComponentPath('App', context.options);
-  const { external } = context.options;
+  const ctx = useContext();
+  const app = getInnerComponentPath('App', ctx.options);
   const resolveModule = (id) => {
     const modulePath = imports.resolveModule(
       id,
       {
         paths: [
           import.meta.url,
-          path.join(context.options.dir.root, context.options.dir.src),
-          context.options.dir.root,
-          path.join(context.options.dir.root, 'node_modules'),
+          ctx.options.input.src,
+          ctx.options.root,
+          path.join(ctx.options.root, 'node_modules'),
         ],
         try: true,
       },
@@ -24,18 +23,34 @@ export default function clientEntryLoader() {
 
     return modulePath ?? id;
   };
+  // head config
+  const headConfig = ctx.options.head({
+    context: ctx.context,
+    config: ctx.options,
+    isDev: ctx.isDev,
+  });
 
   return `
     import React from 'react';
     import { createRoot } from 'react-dom/client';
-    ${external.map((row) => `import '${resolveModule(row)}';`).join(EOL)}
+    import { Helmet } from '@leafage/component';
+    ${ctx.options.externals.map((row) => `import '${resolveModule(row)}';`).join(EOL)}
 
     import App from '${app}';
     import Component from '${normalize(this.resourcePath)}';
 
-    const props = ${context.options.globals.context};
-    const mainEl = document.getElementById('${context.options.globals.id}');
+    const props = ${ctx.options.globals.context};
+    const mainEl = document.getElementById('${ctx.options.globals.id}');
 
-    createRoot(mainEl).render(React.createElement(App, { Component, props }));
+    const main = React.createElement(
+      React.Fragment,
+      null,
+      React.createElement(Helmet, ${JSON.stringify(headConfig)}),
+      React.createElement(App, {
+        Component,
+        props,
+      }),
+    );
+    createRoot(mainEl).render(main);
   `;
 }

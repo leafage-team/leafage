@@ -1,13 +1,21 @@
-import path from 'path';
 import { rspack } from '@rspack/core';
 import rm from 'rimraf';
 import pify from 'pify';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import { getBuildStatsError } from '@/common/utils';
-import { createMfs } from '@/common/mfs';
-import { client } from './config/client';
-import { server } from './config/server';
+import { utils } from '@leafage/toolkit';
+import { createContext, getBuildStatsError } from './common/utils';
+import { createMfs } from './common/mfs';
+import { basePreset } from './presets/base';
+import { aliasPreset } from './presets/alias';
+import { assetPreset } from './presets/asset';
+import { entryPreset } from './presets/entry';
+import { envPreset } from './presets/env';
+import { externalPreset } from './presets/external';
+import { manifestPreset } from './presets/manifest';
+import { outputPreset } from './presets/output';
+import { scriptPreset } from './presets/script';
+import { stylePreset } from './presets/style';
 
 const webpackDev = async (compiler, context) => {
   const devMiddleware = pify(
@@ -34,12 +42,12 @@ const webpackDev = async (compiler, context) => {
 const webpackCompile = async (compiler, context) => {
   await context.callHook('bundle:compile', { name: compiler.options.name, compiler });
 
-  if (context.options.dev) {
+  if (context.config.dev) {
     compiler.hooks.done.tap('bundle-compiled', async (stats) => {
-      await context.callHook('bundle:compiled', { name: compiler.options.name, compiler, stats });
+      await context.callHook('bundle:compiled', { name: compiler.config.name, compiler, stats });
     });
 
-    if (compiler.options.name === 'client') {
+    if (compiler.config.name === 'client') {
       compiler.outputFileSystem = createMfs();
       compiler.hooks.done.tap('load-resources', async () => {
         await context.callHook('bundle:resources', compiler.outputFileSystem);
@@ -61,7 +69,7 @@ const webpackCompile = async (compiler, context) => {
 
     if (compiler.options.name === 'server') {
       return new Promise((resolve, reject) => {
-        compiler.watch(context.options.builder.watch, (err, stats) => {
+        compiler.watch(context.config.builder.watch, (err, stats) => {
           if (err) {
             reject(err);
             return;
@@ -86,15 +94,48 @@ const webpackCompile = async (compiler, context) => {
     throw getBuildStatsError(stats);
   }
 };
-const build = async (context) => {
-  const configs = [client, server].map((preset) => preset(context));
+export const build = async ([client, server], context) => {
+  rm.sync(context.config.output.dist);
 
-  await context.callHook('bundle:config', configs);
-
-  await Promise.all(configs.map((c) => webpackCompile(rspack(c), context)));
+  await Promise.all([client, server].map((c) => webpackCompile(rspack(c), context)));
 };
-export const bundle = async (context) => {
-  rm.sync(path.join(context.options.dir.root, context.options.dir.dist));
+export const createBundle = (context) => {
+  context.callHook('bundle:create');
 
-  await context.runWithContext(() => build(context));
+  const clientCtx = createContext(context, 'client');
+  const serverCtx = createContext(context, 'server');
+
+  const [client, server] = [clientCtx, serverCtx].map((ctx) => {
+    const preset = utils.applyPresets(
+      ctx,
+      [
+        basePreset,
+        aliasPreset,
+        assetPreset,
+        entryPreset,
+        envPreset,
+        externalPreset,
+        manifestPreset,
+        outputPreset,
+        scriptPreset,
+        stylePreset,
+      ],
+    );
+
+    return context.config.builder.rspack(
+      preset.config,
+      {
+        name: ctx.name,
+        context,
+        config: context.config,
+        isDev: ctx.isDev,
+        isClient: ctx.isClient,
+        isServer: ctx.isServer,
+      },
+    );
+  });
+
+  return {
+    build: () => build([client, server], context),
+  };
 };

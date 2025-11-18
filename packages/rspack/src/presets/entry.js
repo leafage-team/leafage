@@ -1,12 +1,13 @@
 import path from 'pathe';
 import globBase from 'glob-base';
 import glob from 'fast-glob';
+import { runWithContext } from '@leafage/toolkit';
 import { getInnerComponentPath, searchFileByName } from '../common/utils';
 
 const CLIENT_ENTRY_LOADER = 'client-entry-loader';
 
 export const entryPreset = (ctx) => {
-  const pattern = path.join(ctx.options.dir.root, ctx.options.dir.src, ctx.options.dir.page, ctx.options.dir.pattern);
+  const { pattern } = ctx.options.input;
   const { base } = globBase(pattern);
 
   const entry = {};
@@ -46,6 +47,6 @@ export const entryPreset = (ctx) => {
   });
 
   if (ctx.isClient) {
-    ctx.config.resolveLoader.alias[CLIENT_ENTRY_LOADER] = require.resolve('../loader/client-entry-loader');
+    ctx.config.resolveLoader.alias[CLIENT_ENTRY_LOADER] = runWithContext(ctx, () => require.resolve('../loader/client-entry-loader'));
   }
 };

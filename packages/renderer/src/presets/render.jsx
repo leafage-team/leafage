@@ -45,14 +45,11 @@ export const renderPreset = (ctx) => {
       const App = await imports.importServerModule('App');
       const Component = await imports.importServerModule(resource.view);
       // head config
-      let headConfig = ctx.config.head;
-      if (typeof headConfig === 'function') {
-        headConfig = ctx.config.head({
-          context: ctx.context,
-          config: ctx.config,
-          isDev: ctx.isDev,
-        }) || {};
-      }
+      const headConfig = ctx.config.head({
+        context: ctx.context,
+        config: ctx.config,
+        isDev: ctx.isDev,
+      });
       // render body
       const body = renderToString(
         <>
