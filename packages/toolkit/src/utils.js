@@ -11,3 +11,5 @@ export const applyPresets = (ctx, presets = []) => {
 
   return applyPresets(ctx, rest);
 };
+export const emptyFn = () => {
+};
