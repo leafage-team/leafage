@@ -15,7 +15,7 @@ export const createRenderer = (context) => {
 
   context.callHook('renderer:create');
 
-  return utils.applyPresets(
+  utils.applyPresets(
     ctx,
     [
       findResourcePreset,
@@ -23,4 +23,9 @@ export const createRenderer = (context) => {
       renderPreset,
     ],
   );
+
+  return {
+    findResource: ctx.findResource,
+    render: ctx.render,
+  };
 };
