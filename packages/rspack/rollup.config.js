@@ -20,7 +20,7 @@ module.exports = ({ packageDir }) => {
       config: {
         input: resolve('src/loader/client-entry-loader.js'),
         output: {
-          dir: resolve('dist/loader'),
+          dir: resolve('dist-cjs/loader'),
           preserveModules: false,
         },
       },
@@ -31,7 +31,7 @@ module.exports = ({ packageDir }) => {
       config: {
         input: resolve('src/loader/client-entry-loader.js'),
         output: {
-          dir: resolve('dist/esm/loader'),
+          dir: resolve('dist-esm/loader'),
           preserveModules: false,
         },
       },

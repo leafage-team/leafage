@@ -37,10 +37,11 @@ export const searchFileByName = (name, options) => {
 export const getInnerComponentPath = (name, options) => {
   const filePath = searchFileByName(name, options);
 
-  return filePath || normalize(require.resolve(`@leafage/component/dist/${name}`));
+  return filePath || normalize(require.resolve(`@leafage/component/${name}`));
 };
 export const getBuildStatsError = (stats) => {
   const error = new Error('Builder error');
   error.stack = stats.toString('normal');
   return error;
 };
+export const getCompiledPath = (packageName) => join(__dirname, '../../compiled', packageName, 'index.js');

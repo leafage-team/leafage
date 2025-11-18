@@ -1,5 +1,5 @@
 import { rspack } from '@rspack/core';
-import { getFileName } from '../common/utils';
+import { getCompiledPath, getFileName } from '../common/utils';
 
 export const stylePreset = (ctx) => {
   const targets = ctx.options.builder.browserslist;
@@ -14,7 +14,7 @@ export const stylePreset = (ctx) => {
       },
     };
     const cssLoader = {
-      loader: require.resolve('css-loader'),
+      loader: getCompiledPath('css-loader'),
       options: {
         modules: {
           auto: true,
@@ -50,7 +50,7 @@ export const stylePreset = (ctx) => {
       }
 
       if (ctx.isClient && ctx.isDev) {
-        return [require.resolve('style-loader')].concat(loaders);
+        return [getCompiledPath('style-loader')].concat(loaders);
       }
 
       return [cssExtractLoader].concat(loaders);

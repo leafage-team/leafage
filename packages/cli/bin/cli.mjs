@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import nodeModule from 'node:module';
-import { run } from '../dist/main.js';
+import { run } from '../dist-cjs/main.js';
 
 // enable on-disk code caching of all modules loaded by Node.js
 // requires Nodejs >= 22.8.0

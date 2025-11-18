@@ -31,5 +31,8 @@ pom.xml.versionsBackup
 .vscode/
 node_modules/
 dist/
+dist-cjs/
+dist-esm/
+compiled/
 package-lock.json
 yarn.lock

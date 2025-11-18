@@ -19,7 +19,7 @@ module.exports = ({ packageDir }) => {
       config: {
         input: resolve('src/client/component.js'),
         output: {
-          dir: resolve('dist/cjs/client'),
+          dir: resolve('dist-cjs/client'),
           preserveModules: false,
         },
       },
@@ -30,7 +30,7 @@ module.exports = ({ packageDir }) => {
       config: {
         input: resolve('src/client/component.js'),
         output: {
-          dir: resolve('dist/esm/client'),
+          dir: resolve('dist-esm/client'),
           preserveModules: false,
         },
       },
