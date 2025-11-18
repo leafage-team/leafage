@@ -1,16 +1,14 @@
-import path from 'path';
-import { utils } from '@leafage/toolkit';
+import serveStatic from 'serve-static';
 import { useMiddleware } from '../common/utils';
 
 export const staticPreset = (ctx) => {
-  const staticList = utils.toArray(ctx.context.options.server.static).filter(Boolean);
-
-  if (!ctx.context.options.dev && !/^https?:\/\//.test(ctx.context.options.builder.publicPath)) {
-    staticList.push({
-      path: ctx.context.options.builder.publicPath,
-      handle: path.join(ctx.context.options.dir.root, ctx.context.options.dir.dist, ctx.context.options.dir.client),
-    });
+  if (!ctx.context.config.dev && !/^https?:\/\//.test(ctx.context.config.output.assetPrefix)) {
+    useMiddleware(
+      ctx,
+      {
+        route: ctx.context.config.output.assetPrefix,
+        handle: serveStatic(ctx.context.config.output.client),
+      },
+    );
   }
-
-  staticList.forEach((row) => useMiddleware(ctx, row));
 };

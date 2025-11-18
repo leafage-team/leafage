@@ -1,49 +1,24 @@
-import express from 'express';
-// 捕获express promise异常
-import 'express-async-errors';
-import { logger, utils } from '@leafage/toolkit';
-import { createRenderer } from '@leafage/renderer';
+import connect from 'connect';
+import { utils } from '@leafage/toolkit';
 import { basePreset } from './presets/base';
 import { devPreset } from './presets/dev';
 import { staticPreset } from './presets/static';
-import { proxyPreset } from './presets/proxy';
-import { serverPreset } from './presets/server';
-import { routePreset } from './presets/route';
-import { errorPreset } from './presets/error';
 
-const startServer = (app, context) => {
-  app.listen(context.options.server.port, context.options.server.host, () => {
-    context.callHook('server:start');
-
-    logger.ready({
-      message: `Server listening on http://${context.options.server.host}:${context.options.server.port}`,
-      badge: true,
-    });
-  });
-};
 export const createServer = (context) => {
-  const app = express();
-  const renderer = createRenderer(context);
+  const server = connect();
 
   context.callHook('server:create');
 
-  context.runWithContext(() => {
-    utils.applyPresets(
-      { app, context, options: context.options, renderer, isDev: context.options.dev },
-      [
-        basePreset,
-        devPreset,
-        staticPreset,
-        proxyPreset,
-        serverPreset,
-        routePreset,
-        errorPreset,
-      ],
-    );
-  });
+  utils.applyPresets(
+    { server, context, config: context.config, isDev: context.config.dev },
+    [
+      basePreset,
+      devPreset,
+      staticPreset,
+    ],
+  );
 
   return {
-    app,
-    start: () => startServer(app, context),
+    server,
   };
 };

@@ -1,5 +1,4 @@
 import path from 'path';
-import express from 'express';
 import { imports } from '@leafage/toolkit';
 
 export const useMiddleware = (ctx, middleware) => {
@@ -9,12 +8,11 @@ export const useMiddleware = (ctx, middleware) => {
     const handle = imports.importModule(
       middleware,
       {
-        isDev: ctx.context.options.dev,
         paths: [
           import.meta.url,
-          path.join(ctx.context.options.dir.root, ctx.context.options.dir.src),
-          ctx.context.options.dir.root,
-          path.join(ctx.context.options.dir.root, 'node_modules'),
+          ctx.context.config.input.src,
+          ctx.context.config.root,
+          path.join(ctx.context.config.root, 'node_modules'),
         ],
       },
     );
@@ -23,13 +21,8 @@ export const useMiddleware = (ctx, middleware) => {
   }
 
   if (typeof middleware === 'object') {
-    const route = middleware.path || '/';
-
-    if (typeof middleware.handle === 'string') {
-      return ctx.app.use(route, express.static(middleware.handle));
-    }
-    return ctx.app.use(route, middleware.handle);
+    return ctx.server.use(middleware.route || '/', middleware.handle);
   }
 
-  return ctx.app.use(middleware);
+  return ctx.server.use(middleware);
 };
