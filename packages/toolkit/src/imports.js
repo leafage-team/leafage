@@ -14,8 +14,10 @@ export const importModule = async (id, options = {}) => {
 
   return module?.default ?? module;
 };
-export const importServerModule = (name) => {
+export const importServerModule = async (name) => {
   const ctx = useContext();
 
-  return importModule(`./${name}`, { url: ctx.config.output.server });
+  const module = await importModule(`./${name}`, { url: ctx.config.output.server });
+
+  return module?.default ?? module;
 };
