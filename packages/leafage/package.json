@@ -18,16 +18,11 @@
   },
   "main": "dist-cjs/index.js",
   "module": "dist-esm/index.js",
-  "bin": {
-    "leafage": "bin/cli.mjs"
-  },
   "files": [
-    "bin",
     "dist-cjs",
     "dist-esm"
   ],
   "dependencies": {
-    "@leafage/cli": "workspace:*",
     "@leafage/component": "workspace:*",
     "@leafage/renderer": "workspace:*",
     "@leafage/rspack": "workspace:*",
