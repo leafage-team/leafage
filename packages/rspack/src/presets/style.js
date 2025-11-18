@@ -16,13 +16,7 @@ export const stylePreset = (ctx) => {
     const cssLoader = {
       loader: getCompiledPath('css-loader'),
       options: {
-        modules: {
-          auto: true,
-          namedExport: false,
-          exportGlobals: false,
-          exportLocalsConvention: 'as-is',
-          localIdentName: getFileName(ctx, 'cssModuleName'),
-        },
+        modules: ctx.options.output.cssModules,
         sourceMap,
       },
     };

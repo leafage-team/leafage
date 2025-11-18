@@ -103,7 +103,7 @@ export default {
           namedExport: false,
           exportGlobals: false,
           exportLocalsConvention: 'camelCase',
-          cssModuleName: (isDev ? '[path][name]__[local]_[hash:base64:10]' : '_[hash:base64:10]'),
+          localIdentName: (isDev ? '[path][name]__[local]_[hash:base64:10]' : '_[hash:base64:10]'),
         };
 
         if (isPlainObjectFn(val) && Object.keys(val).length) return mergeProps(defaultVal, val);

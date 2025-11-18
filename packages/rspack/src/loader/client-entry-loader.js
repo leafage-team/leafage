@@ -2,11 +2,11 @@ import path from 'path';
 import { EOL } from 'os';
 import { normalize } from 'pathe';
 import { imports, useContext } from '@leafage/toolkit';
-import { getInnerComponentPath } from '../common/utils';
+import { getComponentPath } from '../common/utils';
 
 export default function clientEntryLoader() {
   const ctx = useContext();
-  const app = getInnerComponentPath('App', ctx.options);
+  const app = getComponentPath('App', ctx.options);
   const resolveModule = (id) => {
     const modulePath = imports.resolveModule(
       id,

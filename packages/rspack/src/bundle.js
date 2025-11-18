@@ -1,9 +1,9 @@
 import { rspack } from '@rspack/core';
 import rm from 'rimraf';
-import pify from 'pify';
+import pifyLib from 'pify';
+import { utils } from '@leafage/toolkit';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import { utils } from '@leafage/toolkit';
 import { createContext, getBuildStatsError } from './common/utils';
 import { createMfs } from './common/mfs';
 import { basePreset } from './presets/base';
@@ -16,6 +16,8 @@ import { manifestPreset } from './presets/manifest';
 import { outputPreset } from './presets/output';
 import { scriptPreset } from './presets/script';
 import { stylePreset } from './presets/style';
+
+const pify = pifyLib.default ?? pifyLib;
 
 const webpackDev = async (compiler, context) => {
   const devMiddleware = pify(

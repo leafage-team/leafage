@@ -42,7 +42,7 @@ export const searchFileByName = (name, options) => {
 
   return filePath;
 };
-export const getInnerComponentPath = (name, options) => {
+export const getComponentPath = (name, options) => {
   const filePath = searchFileByName(name, options);
 
   return filePath || normalize(require.resolve(`@leafage/component/${name}`));

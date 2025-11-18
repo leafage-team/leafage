@@ -2,7 +2,7 @@ import path from 'pathe';
 import globBase from 'glob-base';
 import glob from 'fast-glob';
 import { runWithContext } from '@leafage/toolkit';
-import { getInnerComponentPath, searchFileByName } from '../common/utils';
+import { getComponentPath, searchFileByName } from '../common/utils';
 
 const CLIENT_ENTRY_LOADER = 'client-entry-loader';
 
@@ -17,11 +17,11 @@ export const entryPreset = (ctx) => {
       entry.server = serverEntryPath;
     }
 
-    entry.Document = getInnerComponentPath('Document', ctx.options);
-    entry.App = getInnerComponentPath('App', ctx.options);
+    entry.Document = getComponentPath('Document', ctx.options);
+    entry.App = getComponentPath('App', ctx.options);
   }
   // page entry
-  glob.sync(pattern).forEach((file) => {
+  glob.sync(path.normalize(pattern)).forEach((file) => {
     const name = path.relative(base, file).replace(path.extname(file), '');
 
     entry[name] = file;
