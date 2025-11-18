@@ -1,3 +1,5 @@
 export default {
-  external: ['normalize.css', './src/assets/sass/main.scss'],
+  input: {
+    externals: ['normalize.css', '@/assets/sass/main.scss'],
+  },
 };
