@@ -56,6 +56,9 @@ importers:
       eslint-plugin-react:
         specifier: ^7.37.5
         version: 7.37.5(eslint@8.57.1)
+      fast-glob:
+        specifier: ^3.3.3
+        version: 3.3.3
       lint-staged:
         specifier: ^13.1.2
         version: 13.3.0(enquirer@2.4.1)
@@ -112,18 +115,6 @@ importers:
         specifier: ^16.0.5
         version: 16.0.5(@rspack/core@1.6.3)(sass@1.89.2)(webpack@5.101.0)
 
-  packages/cli:
-    dependencies:
-      '@leafage/toolkit':
-        specifier: workspace:*
-        version: link:../toolkit
-      cac:
-        specifier: ^6.7.14
-        version: 6.7.14
-      leafage:
-        specifier: workspace:*
-        version: link:../leafage
-
   packages/component:
     dependencies:
       react-helmet:
@@ -136,9 +127,6 @@ importers:
 
   packages/leafage:
     dependencies:
-      '@leafage/cli':
-        specifier: workspace:*
-        version: link:../cli
       '@leafage/component':
         specifier: workspace:*
         version: link:../component
@@ -1663,10 +1651,6 @@ packages:
     peerDependenciesMeta:
       magicast:
         optional: true
-
-  cac@6.7.14:
-    resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
-    engines: {node: '>=8'}
 
   call-bind-apply-helpers@1.0.2:
     resolution: {integrity: sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==}
@@ -5249,8 +5233,6 @@ snapshots:
       perfect-debounce: 2.0.0
       pkg-types: 2.3.0
       rc9: 2.1.2
-
-  cac@6.7.14: {}
 
   call-bind-apply-helpers@1.0.2:
     dependencies:
