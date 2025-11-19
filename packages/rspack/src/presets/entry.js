@@ -2,7 +2,7 @@ import path from 'pathe';
 import globBase from 'glob-base';
 import glob from 'fast-glob';
 import { runWithContext } from '@leafage/toolkit';
-import { getComponentPath, searchFileByName } from '../common/utils';
+import { getComponentPath, searchFileByName } from '@/common/utils';
 
 const CLIENT_ENTRY_LOADER = 'client-entry-loader';
 

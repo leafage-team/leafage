@@ -1,5 +1,5 @@
 import { rspack } from '@rspack/core';
-import { getCompiledPath, getFileName } from '../common/utils';
+import { getCompiledPath, getFileName } from '@/common/utils';
 
 export const stylePreset = (ctx) => {
   const targets = ctx.options.output.browserslist;

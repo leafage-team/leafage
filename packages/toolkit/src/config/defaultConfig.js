@@ -1,11 +1,11 @@
-import path from 'path';
+import path from 'node:path';
 import browserslist from 'browserslist';
 import isPlainObjectFn from 'lodash/isPlainObject';
 import isFunctionFn from 'lodash/isFunction';
 import isBooleanFn from 'lodash/isBoolean';
 import isStringFn from 'lodash/isString';
 import isNumberFn from 'lodash/isNumber';
-import { mergeProps } from '../utils';
+import { mergeProps } from '@/utils';
 
 const genStrValResolve = (parentStr, defaultStr) => async (val, get) => {
   const parent = await get(parentStr);

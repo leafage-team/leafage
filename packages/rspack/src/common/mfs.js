@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'node:path';
 import { mkdirp } from 'mkdirp';
 import { fs as mfs } from 'memfs';
 

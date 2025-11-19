@@ -1,4 +1,4 @@
-import { getDataUriLimit, getFileName } from '../common/utils';
+import { getDataUriLimit, getFileName } from '@/common/utils';
 
 export const assetPreset = (ctx) => {
   ctx.config.module.rules.push({

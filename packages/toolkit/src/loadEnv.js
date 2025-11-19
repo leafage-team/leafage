@@ -1,8 +1,8 @@
-import fs from 'fs';
-import { join } from 'path';
+import fs from 'node:fs';
+import { join } from 'node:path';
 import { expand } from 'dotenv-expand';
+import { ConfigError } from '@/error';
 import { mergeProps } from './utils';
-import { ConfigError } from './error/ConfigError';
 
 const DOTENV_LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/gm;
 const isFileSync = (filePath) => {

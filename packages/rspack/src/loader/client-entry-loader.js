@@ -1,8 +1,7 @@
-import path from 'path';
-import { EOL } from 'os';
-import { normalize } from 'pathe';
+import { EOL } from 'node:os';
+import { join, normalize } from 'pathe';
 import { imports, useContext } from '@leafage/toolkit';
-import { getComponentPath } from '../common/utils';
+import { getComponentPath } from '@/common/utils';
 
 export default function clientEntryLoader() {
   const ctx = useContext();
@@ -15,7 +14,7 @@ export default function clientEntryLoader() {
           import.meta.url,
           ctx.options.input.src,
           ctx.options.root,
-          path.join(ctx.options.root, 'node_modules'),
+          join(ctx.options.root, 'node_modules'),
         ],
         try: true,
       },

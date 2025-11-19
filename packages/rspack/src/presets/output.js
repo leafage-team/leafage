@@ -1,4 +1,4 @@
-import { getFileName } from '../common/utils';
+import { getFileName } from '@/common/utils';
 
 export const outputPreset = (ctx) => {
   const result = {
