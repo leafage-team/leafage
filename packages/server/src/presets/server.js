@@ -1,22 +1,28 @@
-import express from 'express';
+import serverRouter from 'router';
 import { imports } from '@leafage/toolkit';
 
 export const serverPreset = async (ctx) => {
-  const router = express.Router();
+  const router = serverRouter();
 
   ctx.app.use(router);
 
   const importServer = async () => {
     try {
-      const { Component } = await imports.importServerModule('server', ctx.options);
+      const server = await imports.importServerModule(
+        'server',
+        {
+          url: ctx.config.output.server,
+          try: true,
+        },
+      );
 
-      Component?.({
+      ctx.getServer = () => server?.({
         router,
         context: ctx.context,
-        options: ctx.options,
+        config: ctx.config,
         renderer: ctx.renderer,
         isDev: ctx.isDev,
-      });
+      }) || {};
     } catch (e) {
       /* empty */
     }

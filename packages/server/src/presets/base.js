@@ -1,18 +1,11 @@
-import express from 'express';
+import bodyParser from 'body-parser';
 import parseUrl from 'parseurl';
 
 export const basePreset = (ctx) => {
-  // 关闭版权
-  ctx.app.disable('x-powered-by');
-  // 解决代理时取不到ip地址
-  ctx.app.set('trust proxy', 'loopback');
-  if (ctx.context.options.dev) {
-    ctx.app.set('etag', false);
-  }
   // 解析json数据
-  ctx.app.use(express.json());
+  ctx.app.use(bodyParser.json());
   // 解析 application/x-www-form-urlencoded
-  ctx.app.use(express.urlencoded({ extended: false }));
+  ctx.app.use(bodyParser.urlencoded({ extended: false }));
   ctx.app.use((req, res, next) => {
     // 设置pathname
     req.pathname = parseUrl(req)?.pathname || '/';

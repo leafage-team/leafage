@@ -1,7 +1,7 @@
 export const devPreset = (ctx) => {
   let devMiddleware = null;
 
-  if (ctx.context.options.dev) {
+  if (ctx.config.dev) {
     ctx.context.hook('bundle:devMiddleware', (middleware) => {
       devMiddleware = middleware;
     });

@@ -193,6 +193,52 @@ export default {
       },
     },
   },
+  // 服务配置
+  server: {
+    // host
+    host: {
+      $resolve: (val) => val || process.env.HOST || process.env.npm_config_host || 'localhost',
+    },
+    // 端口
+    port: {
+      $resolve: (val) => val || process.env.PORT || process.env.npm_config_port || 7749,
+    },
+    // 静态资源目录
+    static: {
+      $resolve: async (val, get) => {
+        if (isPlainObjectFn(val) || Array.isArray(val)) return val;
+
+        const root = await get('root');
+
+        return {
+          route: '/',
+          handle: path.join(root, 'public'),
+        };
+      },
+    },
+    // 代理
+    // proxy: {
+    //   '/api': {
+    //     target: 'https://xxx.com/api',
+    //     changeOrigin: true,
+    //   },
+    // },
+    proxy: {
+      $resolve: (val) => {
+        if (isPlainObjectFn(val)) return val;
+
+        return {};
+      },
+    },
+    // 自定义路由 "页面路径": "自定义路由"
+    customRoutes: {
+      $resolve: (val) => {
+        if (isPlainObjectFn(val)) return val;
+
+        return {};
+      },
+    },
+  },
   // 全局设置
   globals: {
     // 全局id设置

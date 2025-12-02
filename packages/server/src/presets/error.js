@@ -1,14 +1,10 @@
-import { handleErrorResponse } from '../common/handleErrorResponse';
-
 export const errorPreset = (ctx) => {
   ctx.app.use(async (err, req, res, next) => {
-    const { statusCode, message } = handleErrorResponse(err, req, res);
-    err.statusCode = statusCode;
-    err.message = message;
+    const { statusCode, message } = err;
 
-    res.status(statusCode);
+    res.statusCode = statusCode;
 
-    const { html } = await ctx.renderer.renderError(err) || {};
+    const html = await ctx.renderer.render('Error', { statusCode, message });
     if (html) {
       res.send(html);
     }
