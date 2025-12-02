@@ -1,5 +1,5 @@
 // config
-export { loadConfig } from './config';
+export { loadConfig, mergeConfig } from './config';
 // utils
 export * as utils from './utils';
 // imports
@@ -10,3 +10,5 @@ export { runWithContext, useContext } from './context';
 export { logger, useLogger } from './logger';
 // env
 export { loadEnv } from './loadEnv';
+// error
+export * from './error';
