@@ -1,20 +1,11 @@
 const path = require('path');
+const glob = require('fast-glob');
 const rimraf = require('rimraf');
 
-const packages = [
-  'toolkit',
-  'cli',
-  'component',
-  'renderer',
-  'rspack',
-  'server',
-  'leafage',
-];
 module.exports = () => {
-  rimraf.sync('./packages/*/dist/', { glob: { nodir: false } });
+  rimraf.sync('./packages/*/{dist,dist-cjs,dist-esm}/', { glob: { nodir: false } });
 
-  return packages.flatMap((id) => {
-    const configPath = `./packages/${id}/rollup.config.js`;
+  return glob.sync('./packages/*/rollup.config.js').flatMap((configPath) => {
     // eslint-disable-next-line import/no-dynamic-require
     const module = require(configPath);
 

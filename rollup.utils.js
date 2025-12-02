@@ -13,7 +13,7 @@ const resolve = (...dir) => path.join(process.cwd(), ...dir);
 
 const createBanner = (packageDir) => {
   // eslint-disable-next-line import/no-dynamic-require
-  const { name, version } = require(resolve(packageDir, 'package.json'));
+  const { name, version, license } = require(resolve(packageDir, 'package.json'));
 
   return `/**
  * ${name} v${version}
@@ -23,22 +23,25 @@ const createBanner = (packageDir) => {
  * This source code is licensed under the MIT license found in the
  * LICENSE.md file in the root directory of this source tree.
  *
- * @license MIT
+ * @license ${license}
  */`;
 };
 
-const getRollupConfig = ({ packageDir, config, format } = {}) => {
+const getRollupConfig = ({ packageDir, config, format }) => {
   const resolveFn = (dir) => resolve(packageDir, dir);
 
   return mergeFn(
     defineConfig({
       input: resolveFn('src/index.js'),
       output: {
-        dir: resolveFn(format === 'cjs' ? 'dist' : `dist/${format || ''}`),
+        dir: resolveFn(`dist-${format}`),
         format,
         preserveModules: true,
         exports: 'named',
         banner: createBanner(packageDir),
+        generatedCode: {
+          constBindings: true,
+        },
       },
       plugins: [
         // 支持第三方模块
