@@ -1,21 +1,21 @@
 import React from 'react';
 
-const Document = ({ Scripts, Links, Context, helmet, children }) => (
-  <html {...helmet.htmlAttributes.toComponent()}>
+const Document = ({ Scripts, Links, Context, head, children }) => (
+  <html {...head.htmlAttributes.toComponent()}>
     <head>
-      {helmet.base.toComponent()}
-      {helmet.title.toComponent()}
-      {helmet.meta.toComponent()}
-      {helmet.link.toComponent()}
-      {helmet.style.toComponent()}
-      {helmet.noscript.toComponent()}
+      {head.base.toComponent()}
+      {head.title.toComponent()}
+      {head.meta.toComponent()}
+      {head.link.toComponent()}
+      {head.style.toComponent()}
+      {head.noscript.toComponent()}
       <Links />
     </head>
-    <body {...helmet.bodyAttributes.toComponent()}>
+    <body {...head.bodyAttributes.toComponent()}>
       {children}
       <Context />
       <Scripts />
-      {helmet.script.toComponent()}
+      {head.script.toComponent()}
     </body>
   </html>
 );

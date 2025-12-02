@@ -3,17 +3,48 @@
   "version": "1.3.7",
   "description": "The React Server Side Render Framework",
   "keywords": [
-    "webpack",
+    "leafage",
     "react",
-    "leafage"
+    "bundle"
   ],
   "homepage": "https://github.com/leafage-team/leafage",
   "license": "MIT",
   "author": "mingdev <mingdev@163.com>",
-  "main": "dist/index.js",
-  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist-esm/index.js",
+      "default": "./dist-cjs/index.js"
+    },
+    "./App": {
+      "import": "./dist-esm/App.js",
+      "default": "./dist-cjs/App.js"
+    },
+    "./Document": {
+      "import": "./dist-esm/Document.js",
+      "default": "./dist-cjs/Document.js"
+    },
+    "./Error": {
+      "import": "./dist-esm/Error.js",
+      "default": "./dist-cjs/Error.js"
+    },
+    "./Head": {
+      "import": "./dist-esm/Head.js",
+      "default": "./dist-cjs/Head.js"
+    },
+    "./Link": {
+      "import": "./dist-esm/Link.js",
+      "default": "./dist-cjs/Link.js"
+    },
+    "./RenderJudge": {
+      "import": "./dist-esm/RenderJudge.js",
+      "default": "./dist-cjs/RenderJudge.js"
+    }
+  },
+  "main": "dist-cjs/index.js",
+  "module": "dist-esm/index.js",
   "files": [
-    "dist"
+    "dist-cjs",
+    "dist-esm"
   ],
   "dependencies": {
     "react-helmet": "^6.1.0"

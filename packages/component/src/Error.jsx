@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Helmet } from 'react-helmet';
+import Head from './Head';
 
 const styles = {
   container: {
@@ -39,13 +39,9 @@ const Error = ({ statusCode, message }) => {
 
   return (
     <div style={styles.container}>
-      <Helmet>
+      <Head>
         <title>{title}</title>
-        <meta
-          name="viewport"
-          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
-        />
-      </Helmet>
+      </Head>
       <div style={styles.wrapper}>
         <div style={styles.title}>{status}</div>
         <div style={styles.desc}>{msg}</div>
