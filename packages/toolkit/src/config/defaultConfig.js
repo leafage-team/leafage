@@ -10,7 +10,8 @@ import { mergeProps } from '@/utils';
 const genStrValResolve = (parentStr, defaultStr) => async (val, get) => {
   const parent = await get(parentStr);
 
-  if (isStringFn(val)) path.join(parent, val);
+  if (isStringFn(val)) return path.join(parent, val);
+
   return path.join(parent, defaultStr);
 };
 export default {
