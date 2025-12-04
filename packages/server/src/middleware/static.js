@@ -1,7 +1,6 @@
 import { utils } from '@leafage/toolkit';
-import { useMiddleware } from '@/common/utils';
 
-export const staticPreset = (ctx) => {
+export const staticMiddleware = (ctx) => {
   const staticList = utils.toArray(ctx.config.server.static).filter(Boolean);
 
   if (!ctx.isDev && !/^https?:\/\//.test(ctx.config.output.assetPrefix)) {
@@ -11,5 +10,5 @@ export const staticPreset = (ctx) => {
     });
   }
 
-  staticList.forEach((row) => useMiddleware(ctx, row));
+  staticList.forEach((row) => ctx.useMiddleware(ctx, row));
 };

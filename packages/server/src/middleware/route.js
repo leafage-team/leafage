@@ -1,9 +1,9 @@
 import { ServerError } from '@leafage/toolkit';
 
-export const routePreset = (ctx) => {
-  ctx.app.get(async (req, res, next) => {
+export const routeMiddleware = (server) => {
+  server.app.get(async (req, res, next) => {
     try {
-      const result = await ctx.renderer.renderRoute(req, res);
+      const result = await server.renderer.renderRoute(req, res);
       const {
         // `html` html字符串
         html,

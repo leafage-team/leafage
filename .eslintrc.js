@@ -44,5 +44,6 @@ module.exports = {
     'class-methods-use-this': 0,
     'no-param-reassign': 0,
     'no-promise-executor-return': 0,
+    'no-underscore-dangle': 0,
   },
 };

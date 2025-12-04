@@ -1,73 +1,171 @@
+import path from 'node:path';
 import http from 'node:http';
 import finalhandler from 'finalhandler';
 import serverRouter from 'router';
 import enableDestroy from 'server-destroy';
-import {utils} from '@leafage/toolkit';
-import {createRenderer} from '@leafage/renderer';
-import {basePreset} from './presets/base';
-import {devPreset} from './presets/dev';
-import {staticPreset} from './presets/static';
-import {proxyPreset} from './presets/proxy';
-import {serverPreset} from './presets/server';
-import {routePreset} from './presets/route';
-import {errorPreset} from './presets/error';
+import serveStatic from 'serve-static';
+import { imports, utils } from '@leafage/toolkit';
+import { Renderer } from '@leafage/renderer';
+import { baseMiddleware } from '@/middleware/base';
+import { devMiddleware } from '@/middleware/dev';
+import { staticMiddleware } from '@/middleware/static';
+import { proxyMiddleware } from '@/middleware/proxy';
+import { serverMiddleware } from '@/middleware/server';
+import { routeMiddleware } from '@/middleware/route';
+import { errorMiddleware } from '@/middleware/error';
 
-const startServer = async (ctx) => {
-  await ctx.renderer?.ready();
+class Server {
+  constructor(leafage) {
+    this.leafage = leafage;
+    this.config = leafage.config;
+    this.app = serverRouter();
+    this.serverModuleRouter = serverRouter();
+    this.server = {};
+    this.devMiddleware = null;
 
-  utils.applyPresets(
-    ctx,
-    [
-      basePreset,
-      devPreset,
-      staticPreset,
-      proxyPreset,
-      serverPreset,
-      routePreset,
-      errorPreset,
-    ],
-  );
+    this.listener = http.createServer((req, res) => this.app(req, res, finalhandler(req, res)));
+    // Enable destroy support
+    enableDestroy(this.listener);
 
-  const server = http.createServer((req, res) => ctx.app(req, res, finalhandler(req, res)));
+    // Close hook
+    leafage.hook('close', () => this.close());
 
-  await new Promise((resolve) => server.listen(ctx.config.server.port, ctx.config.server.host, () => resolve(server)));
-
-  // Enable destroy support
-  enableDestroy(server);
-
-  await ctx.context.callHook('server:start', ctx.app);
-
-  ctx.context.hook('server:close', () => new Promise((resolve) => {
-    server.removeAllListeners();
-
-    server.destroy(() => {
-      ctx.context.removeHook('server:close');
-
-      resolve();
-    });
-  }));
-};
-const closeServer = async (ctx) => {
-  await ctx.renderer?.close();
-
-  if (ctx.app.stack?.length) {
-    ctx.app.stack = [];
+    if (this.config.dev) {
+      this.leafage.hook('build:devMiddleware', (m) => {
+        this.devMiddleware = m;
+      });
+      this.leafage.hook('bundle:compiled', ({ name }) => {
+        if (name === 'server') {
+          this.importServerEntry().then(utils.emptyFn);
+        }
+      });
+    } else {
+      this.importServerEntry().then(utils.emptyFn);
+    }
   }
 
-  await ctx.context.callHook('server:close');
-};
-export const createServer = (context) => {
-  const app = serverRouter();
-  const renderer = createRenderer(context);
+  get isDev() {
+    return this.leafage.isDev;
+  }
 
-  const ctx = { app, context, config: context.config, renderer, isDev: context.config.dev };
+  async importServerEntry() {
+    try {
+      const serverModule = await imports.importServerModule(
+        'server',
+        {
+          url: this.config.output.server,
+          try: true,
+        },
+      );
 
-  context.callHook('server:create');
+      this.server = await serverModule?.({
+        router: this.serverModuleRouter,
+        leafage: this.server.leafage,
+        config: this.config,
+        renderer: this.server.renderer,
+        isDev: this.server.isDev,
+      }) || {};
+    } catch (e) {
+      /* empty */
+    }
+  }
 
-  return {
-    app,
-    getServer: () => ({}),
-    start: () => startServer(ctx),
-    close: () => closeServer(ctx),
-  };
-};
+  async ready() {
+    if (this._readyCalled) return this;
+    this._readyCalled = true;
+
+    await this.leafage.callHook('server:before', this);
+
+    this.renderer = new Renderer(this.leafage);
+    await this.renderer.ready();
+
+    // Setup nuxt middleware
+    await this.setupMiddleware();
+
+    // Call done hook
+    await this.leafage.callHook('server:done', this);
+
+    return this;
+  }
+
+  async setupMiddleware() {
+    await this.leafage.callHook('server:setupMiddleware', this.app);
+
+    utils.applyPresets(this, [
+      baseMiddleware,
+      devMiddleware,
+      staticMiddleware,
+      proxyMiddleware,
+      serverMiddleware,
+      routeMiddleware,
+      errorMiddleware,
+    ]);
+  }
+
+  useMiddleware(middleware) {
+    if (!middleware) return;
+
+    if (typeof middleware === 'string') {
+      const handle = imports.importServerModule(
+        middleware,
+        {
+          url: [
+            import.meta.url,
+            this.config.input.src,
+            this.config.root,
+            path.join(this.config.root, 'node_modules'),
+          ],
+          try: true,
+        },
+      );
+
+      this.useMiddleware(handle);
+      return;
+    }
+
+    if (typeof middleware === 'object') {
+      const route = middleware.route || '/';
+
+      if (typeof middleware.handle === 'string') {
+        this.app.use(route, serveStatic(middleware.handle));
+        return;
+      }
+      this.app.use(route, middleware.handle);
+      return;
+    }
+
+    this.app.use(middleware);
+  }
+
+  async listen() {
+    this._closed = false;
+
+    // Ensure nuxt is ready
+    await this.leafage.ready();
+    // Listen
+    await new Promise((resolve) => this.listener.listen(this.config.server.port, this.config.server.host, () => resolve()));
+
+    await this.leafage.callHook('listen', this.listener, this);
+
+    return this.listener;
+  }
+
+  async close() {
+    if (this._closed) return;
+    this._closed = true;
+
+    await this.renderer?.close();
+
+    if (this.app.stack?.length) {
+      this.app.stack = [];
+    }
+    if (this.serverModuleRouter.stack?.length) {
+      this.serverModuleRouter.stack = [];
+    }
+
+    this.listener.removeAllListeners();
+    await new Promise((resolve) => this.listener.destroy?.(resolve));
+  }
+}
+
+export { Server };

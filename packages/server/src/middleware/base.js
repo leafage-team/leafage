@@ -1,12 +1,12 @@
 import bodyParser from 'body-parser';
 import parseUrl from 'parseurl';
 
-export const basePreset = (ctx) => {
+export const baseMiddleware = (server) => {
   // 解析json数据
-  ctx.app.use(bodyParser.json());
+  server.useMiddleware(bodyParser.json());
   // 解析 application/x-www-form-urlencoded
-  ctx.app.use(bodyParser.urlencoded({ extended: false }));
-  ctx.app.use((req, res, next) => {
+  server.useMiddleware(bodyParser.urlencoded({ extended: false }));
+  server.useMiddleware((req, res, next) => {
     // 设置pathname
     req.pathname = parseUrl(req)?.pathname || '/';
     // 设置默认params和query
