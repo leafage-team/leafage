@@ -1,11 +1,9 @@
 import path from 'node:path';
-import http from 'node:http';
-import finalhandler from 'finalhandler';
 import serverRouter from 'router';
-import enableDestroy from 'server-destroy';
 import serveStatic from 'serve-static';
 import { imports, utils } from '@leafage/toolkit';
 import { Renderer } from '@leafage/renderer';
+import { Listener } from './listener';
 import { baseMiddleware } from '@/middleware/base';
 import { devMiddleware } from '@/middleware/dev';
 import { staticMiddleware } from '@/middleware/static';
@@ -23,9 +21,7 @@ class Server {
     this.server = {};
     this.devMiddleware = null;
 
-    this.listener = http.createServer((req, res) => this.app(req, res, finalhandler(req, res)));
-    // Enable destroy support
-    enableDestroy(this.listener);
+    this.listener = new Listener({ app: this.app, host: this.config.host, port: this.config.port });
 
     // Close hook
     leafage.hook('close', () => this.close());
@@ -138,12 +134,12 @@ class Server {
   }
 
   async listen() {
-    this._closed = false;
+    if (this.listener.listening) return;
 
     // Ensure nuxt is ready
     await this.leafage.ready();
     // Listen
-    await new Promise((resolve) => this.listener.listen(this.config.server.port, this.config.server.host, () => resolve()));
+    await this.listener.listen();
 
     await this.leafage.callHook('listen', this.listener, this);
 
@@ -151,8 +147,7 @@ class Server {
   }
 
   async close() {
-    if (this._closed) return;
-    this._closed = true;
+    if (!this.listener.listening) return;
 
     await this.renderer?.close();
 
@@ -163,8 +158,7 @@ class Server {
       this.serverModuleRouter.stack = [];
     }
 
-    this.listener.removeAllListeners();
-    await new Promise((resolve) => this.listener.destroy?.(resolve));
+    await this.listener.close();
   }
 }
 
