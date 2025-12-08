@@ -1,5 +1,7 @@
 export class ServerError extends Error {
-  constructor({ message, statusCode, headers, stack } = {}) {
+  constructor(err) {
+    const { message, statusCode, headers, stack } = err || {};
+
     super(message);
 
     this.name = 'ServerError';

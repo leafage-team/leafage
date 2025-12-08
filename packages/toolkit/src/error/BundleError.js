@@ -1,6 +1,6 @@
 export class BundleError extends Error {
-  constructor(message) {
-    super(message);
+  constructor(err) {
+    super(err?.message ?? err);
 
     this.name = 'BundleError';
   }
