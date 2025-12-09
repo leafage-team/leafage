@@ -15,8 +15,8 @@ export const applyPresets = (ctx, presets = []) => {
 export const emptyFn = () => {
 };
 // @doc https://www.npmjs.com/package/pify
-export const promisify = (...args) => {
+export const promisify = (input, ...args) => {
   const pifyFn = pify?.default ?? pify;
 
-  return pifyFn.apply(pifyFn, args);
+  return pifyFn.apply(pifyFn, [input ?? emptyFn].concat(args));
 };
