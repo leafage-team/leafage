@@ -21,7 +21,7 @@ class Server {
     this.server = {};
     this.devMiddleware = null;
 
-    this.listener = new Listener({ app: this.app, host: this.config.host, port: this.config.port });
+    this.listener = new Listener(this);
 
     // Close hook
     leafage.hook('close', () => this.close());
@@ -75,7 +75,7 @@ class Server {
     this.renderer = new Renderer(this.leafage);
     await this.renderer.ready();
 
-    // Setup nuxt middleware
+    // Setup middleware
     await this.setupMiddleware();
 
     // Call done hook
@@ -136,7 +136,7 @@ class Server {
   async listen() {
     if (this.listener.listening) return;
 
-    // Ensure nuxt is ready
+    // ready
     await this.leafage.ready();
     // Listen
     await this.listener.listen();
