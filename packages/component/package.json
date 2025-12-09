@@ -27,11 +27,21 @@
       "import": "./dist-esm/Error.js",
       "default": "./dist-cjs/Error.js"
     },
+    "./Head": {
+      "import": "./dist-esm/Head.js",
+      "default": "./dist-cjs/Head.js"
+    },
+    "./Link": {
+      "import": "./dist-esm/Link.js",
+      "default": "./dist-cjs/Link.js"
+    },
     "./RenderJudge": {
       "import": "./dist-esm/RenderJudge.js",
       "default": "./dist-cjs/RenderJudge.js"
     }
   },
+  "main": "dist-cjs/index.js",
+  "module": "dist-esm/index.js",
   "files": [
     "dist-cjs",
     "dist-esm"
