@@ -1,4 +1,5 @@
 import mergeFn from 'lodash/merge';
+import pify from 'pify';
 
 export const mergeProps = (...args) => mergeFn({}, ...args);
 export const toArray = (value) => (Array.isArray(value) ? value : [value]).filter(Boolean);
@@ -12,4 +13,10 @@ export const applyPresets = (ctx, presets = []) => {
   return applyPresets(ctx, rest);
 };
 export const emptyFn = () => {
+};
+// @doc https://www.npmjs.com/package/pify
+export const promisify = (...args) => {
+  const pifyFn = pify?.default ?? pify;
+
+  return pifyFn.apply(pifyFn, args);
 };

@@ -293,6 +293,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      pify:
+        specifier: ^6.1.0
+        version: 6.1.0
       untyped:
         specifier: ^2.0.0
         version: 2.0.0
@@ -3023,6 +3026,10 @@ packages:
   pify@5.0.0:
     resolution: {integrity: sha512-eW/gHNMlxdSP6dmG6uJip6FXN0EQBwm2clYYd8Wul42Cwu/DK8HEftzsapcNdYe2MfLiIwZqsDk2RDEsTE79hA==}
     engines: {node: '>=10'}
+
+  pify@6.1.0:
+    resolution: {integrity: sha512-KocF8ve28eFjjuBKKGvzOBGzG8ew2OqOOSxTTZhirkzH7h3BI1vyzqlR0qbfcDBve1Yzo3FVlWUAtCRrbVN8Fw==}
+    engines: {node: '>=14.16'}
 
   pkg-types@2.3.0:
     resolution: {integrity: sha512-SIqCzDRg0s9npO5XQ3tNZioRY1uK06lA41ynBC1YmFTmnY6FjUjVt6s4LoADmwoig1qqD0oK8h1p/8mlMx8Oig==}
@@ -6756,6 +6763,8 @@ snapshots:
   pidtree@0.6.0: {}
 
   pify@5.0.0: {}
+
+  pify@6.1.0: {}
 
   pkg-types@2.3.0:
     dependencies:
