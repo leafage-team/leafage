@@ -1,25 +1,25 @@
 import path from 'node:path';
 import serverRouter from 'router';
 import serveStatic from 'serve-static';
+import bodyParser from 'body-parser';
+import parseUrl from 'parseurl';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 import { imports, utils } from '@leafage/toolkit';
 import { Renderer } from '@leafage/renderer';
 import { Listener } from './listener';
-import { baseMiddleware } from '@/middleware/base';
-import { devMiddleware } from '@/middleware/dev';
-import { staticMiddleware } from '@/middleware/static';
-import { proxyMiddleware } from '@/middleware/proxy';
-import { serverMiddleware } from '@/middleware/server';
 import { routeMiddleware } from '@/middleware/route';
 import { errorMiddleware } from '@/middleware/error';
 
 class Server {
+  #devMiddleware = null;
+
+  #router = serverRouter();
+
   constructor(leafage) {
     this.leafage = leafage;
     this.config = leafage.config;
     this.app = serverRouter();
-    this.serverModuleRouter = serverRouter();
     this.server = {};
-    this.devMiddleware = null;
 
     this.listener = new Listener(this);
 
@@ -28,7 +28,7 @@ class Server {
 
     if (this.config.dev) {
       this.leafage.hook('build:devMiddleware', (m) => {
-        this.devMiddleware = m;
+        this.#devMiddleware = m;
       });
       this.leafage.hook('bundle:compiled', ({ name }) => {
         if (name === 'server') {
@@ -55,11 +55,11 @@ class Server {
       );
 
       this.server = await serverModule?.({
-        router: this.serverModuleRouter,
-        leafage: this.server.leafage,
+        router: this.#router,
+        leafage: this.leafage,
         config: this.config,
-        renderer: this.server.renderer,
-        isDev: this.server.isDev,
+        renderer: this.renderer,
+        isDev: this.isDev,
       }) || {};
     } catch (e) {
       /* empty */
@@ -87,15 +87,58 @@ class Server {
   async setupMiddleware() {
     await this.leafage.callHook('server:setupMiddleware', this.app);
 
-    utils.applyPresets(this, [
-      baseMiddleware,
-      devMiddleware,
-      staticMiddleware,
-      proxyMiddleware,
-      serverMiddleware,
-      routeMiddleware,
-      errorMiddleware,
-    ]);
+    // 解析json数据
+    this.useMiddleware(bodyParser.json());
+    // 解析 application/x-www-form-urlencoded
+    this.useMiddleware(bodyParser.urlencoded({ extended: false }));
+    this.useMiddleware((req, res, next) => {
+      // 设置pathname
+      req.pathname = parseUrl(req)?.pathname || '/';
+      // 设置默认params和query
+      req.params = req.params || {};
+      req.query = req.query || {};
+      // 设置自定义版权
+      res.set('x-powered-by', `${process.env.PACKAGE_NAME}/${process.env.PACKAGE_VERSION}`);
+
+      next();
+    });
+    // dev middleware
+    this.useMiddleware((req, res, next) => {
+      if (this.#devMiddleware) {
+        // Safari over-caches JS (breaking HMR) and the seemingly only way to turn
+        // this off in dev mode is to set Vary: * header
+        if (req.url.startsWith(this.config.output.assetPrefix) && req.url.endsWith('.js')) {
+          res.setHeader('Vary', '*');
+        }
+        this.#devMiddleware?.(req, res, next);
+        return;
+      }
+
+      next();
+    });
+    // static middleware
+    const staticList = utils.toArray(this.config.server.static).filter(Boolean);
+    if (!this.isDev && !/^https?:\/\//.test(this.config.output.assetPrefix)) {
+      staticList.push({
+        route: this.config.output.assetPrefix,
+        handle: this.config.output.client,
+      });
+    }
+    staticList.forEach((row) => this.useMiddleware(row));
+    // proxy middleware
+    Object.keys(this.config.server.proxy || {}).forEach((key) => {
+      this.useMiddleware(key, createProxyMiddleware(this.config.server.proxy[key]));
+    });
+    // router middleware
+    this.useMiddleware(this.#router);
+    // path middleware
+    this.app.get(routeMiddleware({
+      renderRoute: this.renderer.renderRoute,
+    }));
+    // error middleware
+    this.useMiddleware(errorMiddleware({
+      render: this.renderer.render,
+    }));
   }
 
   useMiddleware(middleware) {
@@ -154,8 +197,8 @@ class Server {
     if (this.app.stack?.length) {
       this.app.stack = [];
     }
-    if (this.serverModuleRouter.stack?.length) {
-      this.serverModuleRouter.stack = [];
+    if (this.#router.stack?.length) {
+      this.#router.stack = [];
     }
 
     await this.listener.close();

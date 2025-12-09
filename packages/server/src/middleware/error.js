@@ -1,14 +1,12 @@
-export const errorMiddleware = (server) => {
-  server.useMiddleware(async (err, req, res, next) => {
-    const { statusCode, message } = err;
+export const errorMiddleware = ({ render }) => async (err, req, res, next) => {
+  const { statusCode, message } = err;
 
-    res.statusCode = statusCode;
+  res.statusCode = statusCode;
 
-    const html = await server.renderer.render('Error', { statusCode, message });
-    if (html) {
-      res.send(html);
-    }
+  const html = await render('Error', { statusCode, message });
+  if (html) {
+    res.send(html);
+  }
 
-    next();
-  });
+  next();
 };
