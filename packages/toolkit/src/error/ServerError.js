@@ -1,6 +1,6 @@
 export class ServerError extends Error {
   constructor(err) {
-    const { message, statusCode, headers, stack } = err || {};
+    const { message, statusCode, headers, stack } = typeof err === 'string' ? ({ message: err }) : (err || {});
 
     super(message);
 
