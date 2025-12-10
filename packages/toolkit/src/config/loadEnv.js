@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { expand } from 'dotenv-expand';
 import { ConfigError } from '@/error';
-import { mergeProps } from './utils';
+import { mergeProps } from '@/utils';
 
 const DOTENV_LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/gm;
 const isFileSync = (filePath) => {
@@ -58,7 +58,7 @@ export const loadEnv = ({
   cwd = process.cwd(),
   mode = process.env.NODE_ENV,
   systemVars = true,
-  processEnv = process.env,
+  processEnv = {},
 } = {}) => {
   if (mode === 'local') {
     throw new ConfigError(

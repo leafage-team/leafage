@@ -1,13 +1,13 @@
 import React from 'react';
-import { Helmet } from 'leafage/component';
+import { Head } from 'leafage/component';
 
 import styles from './style.module.scss';
 
 const HomePage = () => (
   <>
-    <Helmet>
+    <Head>
       <title>home title</title>
-    </Helmet>
+    </Head>
     <div className={styles.container}>HomePage</div>
   </>
 );

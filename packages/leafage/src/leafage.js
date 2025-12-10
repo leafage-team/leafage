@@ -1,32 +1,32 @@
-import { mergeConfig, useContext, utils } from '@leafage/toolkit';
+import { config, context, utils } from '@leafage/toolkit';
 import { hooksPreset } from './presets/hooks';
 import { rendererPreset } from './presets/renderer';
 import { serverPreset } from './presets/server';
 import { bundlePreset } from './presets/bundle';
 
 export const useConfig = () => {
-  const ctx = useContext();
+  const ctx = context.useContext();
 
   return ctx?.config;
 };
 export const useServer = () => {
-  const ctx = useContext();
+  const ctx = context.useContext();
 
   return ctx?.server;
 };
 export const useFindResource = () => {
-  const ctx = useContext();
+  const ctx = context.useContext();
 
   return ctx?.findResource;
 };
 export const useRender = () => {
-  const ctx = useContext();
+  const ctx = context.useContext();
 
   return ctx?.render;
 };
-export const createLeafage = async ({ config = {} } = {}) => {
-  const leafageConfig = await mergeConfig(config);
-  const context = {
+export const createLeafage = async ({ config: configArgs = {} } = {}) => {
+  const leafageConfig = await config.mergeConfig(configArgs);
+  const ctx = {
     version: process.env.PACKAGE_VERSION,
     config: leafageConfig,
     hook: utils.emptyFn,
@@ -38,7 +38,7 @@ export const createLeafage = async ({ config = {} } = {}) => {
   };
 
   return utils.applyPresets(
-    context,
+    ctx,
     [
       hooksPreset,
       rendererPreset,

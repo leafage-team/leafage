@@ -1,4 +1,5 @@
 import WebpackBarPlugin from 'webpackbar/rspack';
+import { InjectContextPlugin } from '@/plugin/InjectContextPlugin';
 
 export const basePreset = (ctx) => {
   ctx.config = {
@@ -23,6 +24,7 @@ export const basePreset = (ctx) => {
         name: ctx.name,
         color: { client: '#00b400', server: '#ffac00' }[ctx.name],
       }),
+      new InjectContextPlugin(ctx),
     ],
     externals: [],
     optimization: {

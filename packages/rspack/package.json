@@ -30,7 +30,6 @@
     "memfs": "^4.51.0",
     "mkdirp": "^3.0.1",
     "pathe": "^2.0.3",
-    "pify": "^6.1.0",
     "react-refresh": "^0.18.0",
     "rimraf": "^6.1.0",
     "rspack-manifest-plugin": "^5.1.0",

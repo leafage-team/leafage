@@ -1,6 +1,7 @@
 import * as c12 from 'c12';
 import { applyDefaults } from 'untyped';
 import defaultConfig from './defaultConfig';
+import { loadEnv } from './loadEnv';
 
 export const loadConfig = async ({ cwd, path } = {}) => {
   const { config: loadUserConfig } = await c12.loadConfig({
@@ -14,3 +15,4 @@ export const loadConfig = async ({ cwd, path } = {}) => {
   return loadUserConfig;
 };
 export const mergeConfig = async (config = {}) => applyDefaults(defaultConfig, config);
+export { loadEnv };

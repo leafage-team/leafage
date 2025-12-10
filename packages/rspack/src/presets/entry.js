@@ -1,7 +1,6 @@
 import path from 'pathe';
 import globBase from 'glob-base';
 import glob from 'fast-glob';
-import { runWithContext } from '@leafage/toolkit';
 import { getComponentPath, searchFileByName } from '@/common/utils';
 
 const CLIENT_ENTRY_LOADER = 'client-entry-loader';
@@ -47,6 +46,6 @@ export const entryPreset = (ctx) => {
   });
 
   if (ctx.isClient) {
-    ctx.config.resolveLoader.alias[CLIENT_ENTRY_LOADER] = runWithContext(ctx, () => require.resolve('../loader/client-entry-loader'));
+    ctx.config.resolveLoader.alias[CLIENT_ENTRY_LOADER] = require.resolve('../loader/client-entry-loader');
   }
 };

@@ -1,6 +1,6 @@
 import { join, normalize } from 'pathe';
 import glob from 'fast-glob';
-import { BundleError, logger } from '@leafage/toolkit';
+import { error, logger } from '@leafage/toolkit';
 
 export const createContext = (context, name) => ({
   context,
@@ -48,8 +48,8 @@ export const getComponentPath = (name, options) => {
   return filePath || normalize(require.resolve(`@leafage/component/${name}`));
 };
 export const getBuildStatsError = (stats) => {
-  const error = new BundleError('Builder error');
-  error.stack = stats.toString('normal');
-  return error;
+  const err = new error.BundleError('Builder error');
+  err.stack = stats.toString('normal');
+  return err;
 };
 export const getCompiledPath = (packageName) => join(__dirname, '../../compiled', packageName, 'index.js');

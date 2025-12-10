@@ -1,7 +1,10 @@
 export class BundleError extends Error {
-  constructor(message) {
+  constructor(err) {
+    const { message, stack } = typeof err === 'string' ? ({ message: err }) : (err || {});
+
     super(message);
 
     this.name = 'BundleError';
+    this.stack = stack || [];
   }
 }

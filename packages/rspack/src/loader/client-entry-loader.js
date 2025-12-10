@@ -1,10 +1,10 @@
 import { EOL } from 'node:os';
 import { join, normalize } from 'pathe';
-import { imports, useContext } from '@leafage/toolkit';
+import { imports } from '@leafage/toolkit';
 import { getComponentPath } from '@/common/utils';
 
 export default function clientEntryLoader() {
-  const ctx = useContext();
+  const ctx = this.bundleContext;
   const app = getComponentPath('App', ctx.options);
   const resolveModule = (id) => {
     const modulePath = imports.resolveModule(
@@ -32,8 +32,8 @@ export default function clientEntryLoader() {
   return `
     import React from 'react';
     import { createRoot } from 'react-dom/client';
-    import { Helmet } from '@leafage/component';
-    ${ctx.options.externals.map((row) => `import '${resolveModule(row)}';`).join(EOL)}
+    import { Head } from 'leafage/component';
+    ${ctx.options.input.externals.map((row) => `import '${resolveModule(row)}';`).join(EOL)}
 
     import App from '${app}';
     import Component from '${normalize(this.resourcePath)}';
@@ -44,7 +44,7 @@ export default function clientEntryLoader() {
     const main = React.createElement(
       React.Fragment,
       null,
-      React.createElement(Helmet, ${JSON.stringify(headConfig)}),
+      React.createElement(Head, ${JSON.stringify(headConfig)}),
       React.createElement(App, {
         Component,
         props,

@@ -1,8 +1,8 @@
 import { uneval } from 'devalue';
 import React from 'react';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
-import { Helmet, RenderJudge } from '@leafage/component';
-import { imports, RenderError } from '@leafage/toolkit';
+import { Head as HeadComponent, RenderJudge } from '@leafage/component';
+import { error, imports } from '@leafage/toolkit';
 
 const genScripts = (resource) => ({ defer = true, ...props }) => resource.scripts.map((src) => (
   <script
@@ -41,9 +41,9 @@ export const renderPreset = (ctx) => {
       const resource = ctx.findResource(view);
       if (!resource) return '';
 
-      const Document = await imports.importServerModule('Document');
-      const App = await imports.importServerModule('App');
-      const Component = await imports.importServerModule(resource.view);
+      const Document = await imports.importServerModule('Document', { url: ctx.config.output.server });
+      const App = await imports.importServerModule('App', { url: ctx.config.output.server });
+      const Component = await imports.importServerModule(resource.view, { url: ctx.config.output.server });
       // head config
       const headConfig = ctx.config.head({
         context: ctx.context,
@@ -53,19 +53,19 @@ export const renderPreset = (ctx) => {
       // render body
       const body = renderToString(
         <>
-          <Helmet {...headConfig} />
+          <HeadComponent {...headConfig} />
           <App Component={Component} props={props} />
         </>,
       );
-      // helmet
-      const helmet = Helmet.renderStatic();
+      // head
+      const headStatic = HeadComponent.renderStatic();
       // render content
       const content = renderToStaticMarkup(
         <Document
           Scripts={genScripts(resource)}
           Links={genLinks(resource)}
           Context={genContext(props, ctx.config)}
-          helmet={helmet}
+          head={headStatic}
         >
           {/* eslint-disable-next-line react/no-danger */}
           <div id={ctx.config.globals.id} dangerouslySetInnerHTML={{ __html: body }} />
@@ -74,10 +74,7 @@ export const renderPreset = (ctx) => {
 
       return `<!doctype html>${content}`;
     } catch (e) {
-      const err = new RenderError(e.message);
-      err.stack = e.stack || [];
-
-      return Promise.reject(err);
+      return Promise.reject(new error.RenderError(e));
     }
   };
 };

@@ -1,6 +1,5 @@
 import { rspack } from '@rspack/core';
 import rm from 'rimraf';
-import pifyLib from 'pify';
 import { utils } from '@leafage/toolkit';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
@@ -17,16 +16,14 @@ import { outputPreset } from './presets/output';
 import { scriptPreset } from './presets/script';
 import { stylePreset } from './presets/style';
 
-const pify = pifyLib.default ?? pifyLib;
-
 const webpackDev = async (compiler, context) => {
-  const devMiddleware = pify(
+  const devMiddleware = utils.promisify(
     webpackDevMiddleware(compiler, {
       stats: false,
       outputFileSystem: compiler.outputFileSystem,
     }),
   );
-  const hotMiddleware = pify(
+  const hotMiddleware = utils.promisify(
     webpackHotMiddleware(compiler, {
       log: false,
       heartbeat: 10000,
@@ -89,7 +86,7 @@ const webpackCompile = async (compiler, context) => {
     return;
   }
 
-  compiler.run = pify(compiler.run);
+  compiler.run = utils.promisify(compiler.run);
   const stats = await compiler.run();
 
   if (stats?.hasErrors()) {
