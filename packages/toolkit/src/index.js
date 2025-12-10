@@ -7,6 +7,6 @@ export * as imports from './imports';
 // context
 export * as context from './context';
 // logger
-export * from './logger';
+export * as logger from 'consola';
 // error
 export * as error from './error';
