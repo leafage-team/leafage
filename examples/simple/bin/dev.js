@@ -14,9 +14,10 @@ const run = async () => {
     res.end(html);
   });
 
-  leafage.server.listen(3000, () => {
-    logger.info('Server is running on port 3000');
-  });
+  const { host, port } = leafage.config.server;
+  await leafage.server.listen(port, host);
+
+  logger.info(`Server is running on http://${host}:${port}`);
 };
 
 run().catch((error) => {
