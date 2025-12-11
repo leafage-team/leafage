@@ -39,7 +39,12 @@ export const renderPreset = (ctx) => {
   ctx.render = async (view, props) => {
     try {
       const resource = ctx.findResource(view);
-      if (!resource) return '';
+      if (!resource) {
+        return Promise.reject(new error.ServerError({
+          message: `${view} not found`,
+          statusCode: 404,
+        }));
+      }
 
       const Document = await imports.importServerModule('Document', { url: ctx.config.output.server });
       const App = await imports.importServerModule('App', { url: ctx.config.output.server });
@@ -74,7 +79,7 @@ export const renderPreset = (ctx) => {
 
       return `<!doctype html>${content}`;
     } catch (e) {
-      return Promise.reject(new error.RenderError(e));
+      return Promise.reject(new error.ServerError(e));
     }
   };
 };

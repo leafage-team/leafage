@@ -14,6 +14,14 @@ const run = async () => {
     res.end(html);
   });
 
+  leafage.server.use(async (err, req, res, next) => {
+    const render = useRender();
+    const html = await render('Error', { message: err.message, statusCode: err.statusCode });
+
+    res.end(html);
+    next();
+  });
+
   const { host, port } = leafage.config.server;
   await leafage.server.listen(port, host);
 
